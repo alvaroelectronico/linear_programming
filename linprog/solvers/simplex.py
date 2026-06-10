@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 
-from linprog.parsing import StandardForm, parse_objective_coefficients
+from linprog.parsing import StandardForm
 from linprog.solvers._pivot import (
     argmax,
     argmin,
@@ -146,9 +146,7 @@ class Simplex:
         return self.tableau[0][key_column] < 0
 
     def _reset_objective_row(self) -> None:
-        self.tableau[0] = [Fraction(0)] * (self.sf.total_vars + 1)
-        for index, value in parse_objective_coefficients(self.sf.objective_expr).items():
-            self.tableau[0][index] = value
+        self.tableau[0] = list(self.sf.objective_coeffs) + [Fraction(0)]
 
     def _pivot(self, key_column: int, key_row: int | None = None) -> None:
         if key_row is None:
@@ -159,13 +157,14 @@ class Simplex:
         clear_pivot_column(self.tableau, key_column, key_row)
 
     def _read_solution(self) -> dict[str, Fraction]:
+        names = self.sf.variables
         solution: dict[str, Fraction] = {}
         for i, var in enumerate(self.basic_vars):
             if var < self.sf.num_vars:
-                solution[f"x_{var + 1}"] = self.tableau[i + 1][-1]
+                solution[names[var]] = self.tableau[i + 1][-1]
         for i in range(self.sf.num_vars):
             if i not in self.basic_vars:
-                solution[f"x_{i + 1}"] = Fraction(0)
+                solution[names[i]] = Fraction(0)
         return solution
 
     def _warn_if_alternate_optimum(self) -> None:

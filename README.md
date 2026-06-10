@@ -18,17 +18,13 @@ pip install -e ".[gurobi]"  # add the optional Gurobi backend
 ```python
 from linprog import LinearProgram
 
+# The variable count is inferred; variables can be any letter, spaces optional.
 problem = LinearProgram(
-    num_vars=4,
-    objective=("max", "3x_1 + 2x_2 + 1x_3 + 2x_4"),
-    constraints=[
-        "1x_1 + 3x_2 + 0x_3 = 60",
-        "2x_1 + 1x_2 + 3x_3 + 1x_4 <= 100",
-        "2x_1 + 1x_2 + 1x_3 - 5x_4 >= 50",
-    ],
+    objective=("max", "2x + 3y"),
+    constraints=["x + y <= 4", "x+3y<=6"],
 )
 
-print(problem.solution)                 # {'x_1': 18, 'x_2': 14, ...}
+print(problem.solution)                 # {'x': 3, 'y': 1}
 print(problem.formulation_tex())         # original problem as LaTeX
 print(problem.compose_tableau(problem.basic_solutions))  # full LaTeX tableau
 
@@ -40,7 +36,6 @@ Lemke's method (no equality constraints):
 
 ```python
 problem = LinearProgram(
-    num_vars=2,
     objective=("min", "3x_1 + 2x_2"),
     constraints=["2x_1 + 4x_2 >= 80", "4x_1 + 3x_2 <= 60"],
     method="lemke",
@@ -51,8 +46,17 @@ See [examples/demo.py](examples/demo.py) — run it with `python -m examples.dem
 
 ## Input format
 
-- Variables are written `<coeff>x_<i>`, e.g. `3x_1`, with single-space-separated
-  tokens: `"2x_1 + 4x_2 >= 80"`.
+The parser is forgiving:
+
+- **Any letter** is a variable, with an optional subscript: `x`, `y`, `z`, `x1`,
+  `x_1`. The underscore is optional, so `x1` and `x_1` are the same variable
+  (canonical name `x_1`).
+- **Spaces are optional**, between terms and around the relation: `2x+3y<=10`.
+- **Coefficients may be implicit** (`x` = 1, `-y` = -1) and may be integers,
+  decimals or fractions: `2.5x`, `3/2 y`.
+- The **number of variables is inferred** from the text (no `num_vars`).
+  Variables are ordered by first appearance (objective first, then constraints).
+- Variables and constants may appear on **either side** of a constraint.
 - The objective is a `(sense, expression)` tuple where `sense` contains `"max"`
   or `"min"`.
 - Constraint relations: `<=`, `>=`, `=` (Simplex); `<=`, `>=` only (Lemke).

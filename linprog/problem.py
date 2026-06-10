@@ -11,16 +11,18 @@ from linprog.solvers import Lemke, Simplex
 class LinearProgram:
     """Parse, solve and report on a linear program.
 
+    The number of variables is inferred from the text; variables may be any
+    letter with an optional subscript (``x``, ``y``, ``x_1`` ...).
+
     Args:
-        num_vars: number of decision variables.
-        constraints: list of constraint strings, e.g. ``"2x_1 + 4x_2 >= 80"``.
-        objective: ``(sense, expression)`` tuple, e.g. ``("max", "3x_1 + 2x_2")``.
+        constraints: list of constraint strings, e.g. ``"2x + 4y >= 80"``.
+        objective: ``(sense, expression)`` tuple, e.g. ``("max", "3x + 2y")``.
         method: ``"simplex"`` (two-phase) or ``"lemke"``.
     """
 
-    def __init__(self, num_vars, constraints, objective, method="simplex"):
+    def __init__(self, constraints, objective, method="simplex"):
         self.method = method
-        self.standard_form = build_standard_form(num_vars, constraints, objective, method)
+        self.standard_form = build_standard_form(constraints, objective, method)
 
         solver = Simplex(self.standard_form) if method == "simplex" else Lemke(self.standard_form)
         self.result = solver.solve()
@@ -82,7 +84,7 @@ class LinearProgram:
                 expression = expression.replace(symbol, latex)
             tex += expression + "\\\\\n"
 
-        variables = ",\\,\\,".join(f"x_{i}" for i in range(1, sf.num_vars + 1))
+        variables = ",\\,\\,".join(sf.variables)
         tex += variables + "\\geq 0\\\\\n"
         tex += "\\end{split}\n\\end{equation}"
         return tex
