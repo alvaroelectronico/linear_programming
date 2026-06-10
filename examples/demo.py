@@ -9,8 +9,10 @@ from linprog import LinearProgram
 
 def simplex_example() -> None:
     objective = ("max", "3x_1 + 2y + 1x_3 + 2x_4")
+    # Variables omitted from a constraint are taken to have coefficient 0,
+    # so there is no need to write terms like "0x_3" or to list x_4 everywhere.
     constraints = [
-        "1x_1 + 3y + 0x_3 = 60",
+        "1x_1 + 3y = 60",
         "2x_1 + 1y + 3x_3 + 1x_4 <= 100",
         "2x_1 + 1y + 1x_3 >= 50",
     ]

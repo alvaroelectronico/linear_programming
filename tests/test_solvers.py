@@ -91,6 +91,29 @@ def test_variables_and_constants_on_both_sides():
     assert problem.solution == {"x": Fraction(7)}
 
 
+def test_omitted_variable_defaults_to_zero_coefficient():
+    # x_3 is omitted from the equality constraint (no "0x_3" needed) and x_4 is
+    # omitted from two constraints; both are treated as coefficient 0 there.
+    explicit = LinearProgram(
+        objective=("max", "3x_1 + 2y + 1x_3 + 2x_4"),
+        constraints=[
+            "1x_1 + 3y + 0x_3 + 0x_4 = 60",
+            "2x_1 + 1y + 3x_3 + 1x_4 <= 100",
+            "2x_1 + 1y + 1x_3 + 0x_4 >= 50",
+        ],
+    )
+    omitted = LinearProgram(
+        objective=("max", "3x_1 + 2y + 1x_3 + 2x_4"),
+        constraints=[
+            "1x_1 + 3y = 60",
+            "2x_1 + 1y + 3x_3 + 1x_4 <= 100",
+            "2x_1 + 1y + 1x_3 >= 50",
+        ],
+    )
+    assert omitted.solution == explicit.solution
+    assert omitted.standard_form.variables == explicit.standard_form.variables
+
+
 def test_objective_only_variable_raises():
     import pytest
 
