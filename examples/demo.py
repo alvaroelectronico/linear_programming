@@ -8,11 +8,11 @@ from linprog import LinearProgram
 
 
 def simplex_example() -> None:
-    objective = ("max", "3x_1 + 2x_2 + 1x_3 + 2x_4")
+    objective = ("max", "3x_1 + 2y + 1x_3 + 2x_4")
     constraints = [
-        "1x_1 + 3x_2 + 0x_3 = 60",
-        "2x_1 + 1x_2 + 3x_3 + 1x_4 <= 100",
-        "2x_1 + 1x_2 + 1x_3 >= 50",
+        "1x_1 + 3y + 0x_3 = 60",
+        "2x_1 + 1y + 3x_3 + 1x_4 <= 100",
+        "2x_1 + 1y + 1x_3 >= 50",
     ]
     problem = LinearProgram(constraints=constraints, objective=objective)
 

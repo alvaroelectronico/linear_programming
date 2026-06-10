@@ -31,6 +31,7 @@ class SimplexResult:
     optimal_base: list[int] | None
     solution: dict[str, Fraction]
     is_infeasible: bool
+    is_unbounded: bool
     objective_value: Fraction | None
 
 
@@ -47,6 +48,7 @@ class Simplex:
         self.tableau = [row[:] for row in standard_form.coeff_matrix]
         self.basic_vars: list[int] = [0] * len(standard_form.constraints)
         self.bases: list[list[int]] = []
+        self.is_unbounded = False
 
     def solve(self) -> SimplexResult:
         first_feasible_base, is_infeasible = self._phase_one()
@@ -58,16 +60,30 @@ class Simplex:
                 optimal_base=None,
                 solution={},
                 is_infeasible=True,
+                is_unbounded=False,
                 objective_value=None,
             )
 
         solution = self._phase_two()
+        if self.is_unbounded:
+            print("Unbounded problem")
+            return SimplexResult(
+                bases=self.bases,
+                first_feasible_base=first_feasible_base,
+                optimal_base=self.bases[-1],
+                solution={},
+                is_infeasible=False,
+                is_unbounded=True,
+                objective_value=None,
+            )
+
         return SimplexResult(
             bases=self.bases,
             first_feasible_base=first_feasible_base,
             optimal_base=self.bases[-1],
             solution=solution,
             is_infeasible=False,
+            is_unbounded=False,
             objective_value=self.tableau[0][-1],
         )
 
@@ -124,8 +140,9 @@ class Simplex:
         key_column = self._entering_column(eligible)
         while self._improves(key_column):
             key_row = min_ratio_row(self.tableau, key_column)
-            if key_row == -1:  # unbounded
-                break
+            if key_row == -1:  # no leaving variable -> objective is unbounded
+                self.is_unbounded = True
+                return {}
             self._pivot(key_column, key_row)
             key_column = self._entering_column(eligible)
             self._record_base()

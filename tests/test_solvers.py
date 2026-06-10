@@ -89,3 +89,21 @@ def test_variables_and_constants_on_both_sides():
     # "2x + 3 <= x + 10" normalises to "x <= 7".
     problem = LinearProgram(objective=("max", "x"), constraints=["2x + 3 <= x + 10"])
     assert problem.solution == {"x": Fraction(7)}
+
+
+def test_objective_only_variable_raises():
+    import pytest
+
+    with pytest.raises(ValueError, match="x_2"):
+        LinearProgram(
+            objective=("max", "3x_1 + 2x_2"),
+            constraints=["x_1 + y <= 10"],  # x_2 named differently here
+        )
+
+
+def test_unbounded_is_reported_as_status_not_raised():
+    # max x subject only to x >= 1: unbounded above.
+    problem = LinearProgram(objective=("max", "x"), constraints=["x >= 1"])
+    assert problem.result.is_unbounded is True
+    assert problem.solution == {}
+    assert problem.result.objective_value is None

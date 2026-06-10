@@ -195,6 +195,15 @@ def build_standard_form(constraints, objective_function, method="simplex"):
     if method == "lemke" and "=" in senses:
         raise ValueError("Equality constraints are not supported by Lemke's method")
 
+    constraint_vars = {name for coeffs in constraint_coeffs for name in coeffs}
+    orphan_vars = [name for name in objective_coeffs_map if name not in constraint_vars]
+    if orphan_vars:
+        raise ValueError(
+            f"Variable(s) {', '.join(orphan_vars)} appear in the objective but in "
+            f"no constraint. Check for a typo (e.g. a variable named differently in "
+            f"the constraints) or an unbounded direction."
+        )
+
     variables = _collect_variables(objective_coeffs_map, constraint_coeffs)
     var_index = {name: i for i, name in enumerate(variables)}
     num_vars = len(variables)
