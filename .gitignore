@@ -1,0 +1,21 @@
+# Gurobi
+gurobi.log
+*.lp
+*.mps
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling / IDE
+.idea/
+.vscode/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/

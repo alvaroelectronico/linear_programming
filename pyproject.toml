@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linprog"
+version = "0.1.0"
+description = "Educational linear-programming toolkit (two-phase Simplex, Lemke, exact arithmetic, LaTeX tableaux)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.21",
+]
+
+[project.optional-dependencies]
+gurobi = ["gurobipy>=10"]
+dev = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["linprog*"]
