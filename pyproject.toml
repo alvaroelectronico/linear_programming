@@ -16,5 +16,8 @@ dependencies = [
 gurobi = ["gurobipy>=10"]
 dev = ["pytest>=7"]
 
+[project.scripts]
+lp-exams = "exams.cli:main"
+
 [tool.setuptools.packages.find]
-include = ["linprog*"]
+include = ["linprog*", "exams*"]

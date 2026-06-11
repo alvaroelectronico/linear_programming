@@ -5,6 +5,7 @@ with ``python -m examples.demo`` from the repository root.
 """
 
 from linprog import LinearProgram
+from linprog.reporting import latex_document, render_worked_solution
 
 
 def simplex_example() -> None:
@@ -43,9 +44,23 @@ def flexible_syntax_example() -> None:
     print("Flexible-syntax solution:", dict(sorted(problem.solution.items())))
 
 
+def worked_solution_example() -> None:
+    """Assemble a full, compilable LaTeX document for a solved problem."""
+    problem = LinearProgram(
+        objective=("max", "5x_1 + 4x_2"),
+        constraints=["3x_1 + 2x_2 <= 18", "1x_1 + 2x_2 <= 12"],
+    )
+    body = render_worked_solution(problem)
+    document = latex_document(body, title="Worked solution")
+    print("Standalone LaTeX document (first lines):")
+    print("\n".join(document.splitlines()[:6]))
+
+
 if __name__ == "__main__":
     simplex_example()
     print("\n" + "=" * 60 + "\n")
     lemke_example()
     print("\n" + "=" * 60 + "\n")
     flexible_syntax_example()
+    print("\n" + "=" * 60 + "\n")
+    worked_solution_example()

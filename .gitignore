@@ -13,6 +13,15 @@ dist/
 .venv/
 venv/
 
+# Generated exams + LaTeX build artifacts
+exams/build/
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.out
+*.toc
+
 # Tooling / IDE
 .idea/
 .vscode/

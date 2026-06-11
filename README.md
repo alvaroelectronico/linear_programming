@@ -76,5 +76,43 @@ linprog/
 │   ├── lemke.py          # Lemke's method
 │   └── gurobi.py         # optional Gurobi backend (lazy import)
 └── reporting/
-    └── latex.py          # fraction/matrix/expression -> LaTeX
+    ├── latex.py          # fraction/matrix/expression -> LaTeX fragments
+    └── document.py       # latex_document + render_worked_solution (full assembly)
+```
+
+## Generating exams
+
+The `exams/` package is an application built on top of `linprog` that turns a
+bank of problems into exam and answer-key PDFs. It is installed by the same
+editable install and exposes the `lp-exams` command.
+
+```bash
+pip install -e .
+
+lp-exams list                                   # bank problems + exam definitions
+lp-exams problem mueblespro --solution --no-pdf # one problem (statement + key) -> .tex
+lp-exams exam mcio1_mad1_2627 --variant A            # blank exam, variant A -> PDF
+lp-exams exam mcio1_mad1_2627 --variant A --solutions # answer key -> PDF
+```
+
+- `--no-pdf` stops at the `.tex` file; otherwise the CLI compiles a PDF with
+  **latexmk**, which requires a system LaTeX distribution (MiKTeX or TeX Live).
+  It is not a Python dependency; if latexmk is missing the `.tex` is still
+  written and a clear message is printed.
+- `--frac` / `--no-frac` choose `\frac{a}{b}` vs `a/b` rendering.
+- Output defaults to `exams/build/` (git-ignored).
+
+To add a problem, drop a module in `exams/bank/` defining `build() -> ExamProblem`
+(objective, constraints, narrative). To add an exam, drop a module in
+`exams/exams_def/` defining `build(variant="A") -> Exam`. Both are discovered
+automatically — no registration step.
+
+```
+exams/
+├── models.py             # ProblemSpec, ExamProblem, Exam
+├── bank/                 # one module per problem -> build() -> ExamProblem
+├── exams_def/            # one module per course/year -> build(variant) -> Exam
+├── render.py             # assemble statements / solutions into LaTeX
+├── compile.py            # latexmk PDF compilation
+└── cli.py                # the `lp-exams` command
 ```

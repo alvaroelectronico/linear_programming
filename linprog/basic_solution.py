@@ -106,7 +106,9 @@ class BasicSolution:
         # Substitution-rate rows, one per basic variable.
         for i in range(self.A.shape[0]):
             tex += "${}$".format(self.var_names[self.basic_vars_id[i]])
-            tex += " & {} ".format(fraction_to_tex(self.uB[i][0], frac_command=frac_command))
+            tex += " & {} ".format(
+                fraction_to_tex(self.uB[i][0], use_dollar=True, frac_command=frac_command)
+            )
             for j in range(self.total_vars):
                 if j == artificial_column_start and not with_artificials:
                     break
