@@ -17,6 +17,8 @@ venv/
 exams/build/
 exams/*.pdf
 exams/*.log
+exams/coleccion/*.pdf
+exams/coleccion/*.log
 
 # LaTeX build artifacts
 *.aux

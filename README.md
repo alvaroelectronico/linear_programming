@@ -92,7 +92,7 @@ The `lp-exams` command (installed by `pip install -e .`) drives it.
 ```bash
 lp-exams list                       # generated problems, exams, unpaired fragments
 lp-exams render demo_muebles        # write ejercicios/demo_muebles{,_sol}.tex
-lp-exams collection --pdf           # build exams/coleccion.tex (+ PDF)
+lp-exams collection --pdf           # build exams/coleccion/coleccion.tex (+ PDF)
 lp-exams exam mcio1_mad1_2627 --pdf            # blank exam -> exams/examen .tex (+ PDF)
 lp-exams exam mcio1_mad1_2627 --solutions --pdf  # answer key
 ```
@@ -114,7 +114,9 @@ mix them freely. Exam definitions live in `exams/exams_def/` as
 ### Master documents and headers
 
 - The **collection** auto-includes every `<name>.tex`/`<name>_sol.tex` pair
-  found in `ejercicios/`, sorted. Its header is `exams/templates/coleccion_preamble.tex`.
+  found in `ejercicios/`, sorted. It is written to `exams/coleccion/` (master
+  `.tex`, PDF and LaTeX aux all live there). Its header is
+  `exams/templates/coleccion_preamble.tex`; `--strict` halts on the first error.
 - The **exam** header is `exams/templates/examen_preamble.tex` — a placeholder
   meant to be replaced by your official exam header. Edit these templates freely.
 - PDF compilation uses **latexmk** (a system LaTeX distribution: MiKTeX or TeX
@@ -134,6 +136,7 @@ exams/
 ├── bank/                 # generated LP problems -> build() -> ExamProblem
 ├── exams_def/            # exam definitions -> build(variant) -> Exam (item list)
 ├── ejercicios/           # fragment pairs (<name>.tex, <name>_sol.tex) + images
+├── coleccion/            # generated collection master + PDF/aux (only .tex tracked)
 ├── templates/            # collection / exam preambles (headers)
 ├── render.py             # fragments + master assembly
 ├── compile.py            # latexmk PDF compilation

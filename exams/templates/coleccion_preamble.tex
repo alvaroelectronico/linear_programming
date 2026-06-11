@@ -1,36 +1,62 @@
-% Preámbulo de la colección de problemas.
-% Edítalo a tu gusto; debe terminar justo después de \begin{document}
-% (y, si quieres, \maketitle / \tableofcontents). El generador añade el cuerpo
-% con los \input de cada problema y cierra con \end{document}.
-\documentclass[11pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[spanish,es-noshorthands]{babel}
+% Preámbulo de la colección de problemas (basado en tu preámbulo original).
+% El maestro coleccion.tex se genera en exams/coleccion/, por lo que los
+% fragmentos e imágenes (en ../ejercicios/) se resuelven vía \graphicspath y el
+% prefijo ../ejercicios de los \input. El generador añade el cuerpo y cierra
+% con \end{document}.
+\documentclass[a4paper,10pt,onecolumn]{report}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{comment}
-\usepackage{booktabs}
-\usepackage{multirow}
+\usepackage{array}
 \usepackage{enumitem}
-\usepackage{float}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=1cm,nohead,nofoot]{geometry}
+\decimalpoint % separador decimal con punto
+\usepackage{comment}
+% --- PSTricks: comentado, no se usa en los fragmentos y rompe pdflatex ---
+% \usepackage{pstricks}
+% \usepackage{pst-node}
+% \usepackage{pst-plot}
 \usepackage{tikz}
-\usetikzlibrary{arrows, arrows.meta, positioning, calc, automata, graphs, shapes.geometric}
+\usetikzlibrary{graphs, graphs.standard, quotes}
+\usetikzlibrary{positioning}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
-% --- Estilos TikZ personalizados (problemas de grafos) -----------------
-% Ajusta estas definiciones a las de tu preámbulo original si difieren.
-\tikzstyle{arn_n}=[fill=black, text=white, draw=black, circle, minimum size=22pt, inner sep=0pt]
-\tikzstyle{arn_r}=[fill=red,   text=white, draw=black, circle, minimum size=22pt, inner sep=0pt]
-\tikzstyle{arn_x}=[fill=white, text=black, draw=black, circle, minimum size=22pt, inner sep=0pt]
-% -----------------------------------------------------------------------
-\usepackage[margin=2.5cm]{geometry}
+\usetikzlibrary{intersections}
+\usetikzlibrary{fillbetween}
+\usepackage{svg} % sólo lo usa convex_hull_sol (requiere Inkscape + --shell-escape)
+\usepackage{booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\pagestyle{empty} % sin números de página
 
-\title{Colección de problemas de Programación Lineal}
-\author{}
-\date{}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows, babel, automata}
+\usepackage{tikz-qtree}
+
+%---------------------------- PARA DIAGRAMAS DE ARBOL -------------------
+\tikzset{
+  treenode/.style = {align=center, inner sep=0pt, text centered,
+    font=\sffamily},
+  arn_n/.style = {treenode, circle, black, font=\sffamily\bfseries, draw=black,
+    fill=white, text width=1.5em},% arbre rouge noir, noeud noir
+  arn_r/.style = {treenode, circle, red, draw=red,
+    text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+  arn_x/.style = {treenode, rectangle, draw=black,
+    minimum width=0.5em, minimum height=0.5em}% arbre rouge noir, nil
+}
+%-------------------------------------------------------------------
+\tikzset{
+  head/.style = {fill = orange!90!blue, label = center:\textsf{\Large H}},
+  tail/.style = {fill = blue!70!yellow, text = black, label = center:\textsf{\Large T}}
+}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{trees, arrows.meta, positioning}
+
+% Los fragmentos referencian imágenes como ejercicios/...; el maestro está en
+% exams/coleccion/, así que buscamos un nivel por encima.
+\graphicspath{{../}{./}}
 
 \begin{document}
-\maketitle
-\tableofcontents
-\clearpage

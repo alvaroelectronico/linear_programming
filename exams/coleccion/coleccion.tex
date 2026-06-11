@@ -1,0 +1,320 @@
+% Preámbulo de la colección de problemas (basado en tu preámbulo original).
+% El maestro coleccion.tex se genera en exams/coleccion/, por lo que los
+% fragmentos e imágenes (en ../ejercicios/) se resuelven vía \graphicspath y el
+% prefijo ../ejercicios de los \input. El generador añade el cuerpo y cierra
+% con \end{document}.
+\documentclass[a4paper,10pt,onecolumn]{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=1cm,nohead,nofoot]{geometry}
+\decimalpoint % separador decimal con punto
+\usepackage{comment}
+% --- PSTricks: comentado, no se usa en los fragmentos y rompe pdflatex ---
+% \usepackage{pstricks}
+% \usepackage{pst-node}
+% \usepackage{pst-plot}
+\usepackage{tikz}
+\usetikzlibrary{graphs, graphs.standard, quotes}
+\usetikzlibrary{positioning}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\usetikzlibrary{fillbetween}
+\usepackage{svg} % sólo lo usa convex_hull_sol (requiere Inkscape + --shell-escape)
+\usepackage{booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\pagestyle{empty} % sin números de página
+
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows, babel, automata}
+\usepackage{tikz-qtree}
+
+%---------------------------- PARA DIAGRAMAS DE ARBOL -------------------
+\tikzset{
+  treenode/.style = {align=center, inner sep=0pt, text centered,
+    font=\sffamily},
+  arn_n/.style = {treenode, circle, black, font=\sffamily\bfseries, draw=black,
+    fill=white, text width=1.5em},% arbre rouge noir, noeud noir
+  arn_r/.style = {treenode, circle, red, draw=red,
+    text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+  arn_x/.style = {treenode, rectangle, draw=black,
+    minimum width=0.5em, minimum height=0.5em}% arbre rouge noir, nil
+}
+%-------------------------------------------------------------------
+\tikzset{
+  head/.style = {fill = orange!90!blue, label = center:\textsf{\Large H}},
+  tail/.style = {fill = blue!70!yellow, text = black, label = center:\textsf{\Large T}}
+}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{trees, arrows.meta, positioning}
+
+% Los fragmentos referencian imágenes como ejercicios/...; el maestro está en
+% exams/coleccion/, así que buscamos un nivel por encima.
+\graphicspath{{../}{./}}
+
+\begin{document}
+
+\section{01a dos fases a}
+\input{../ejercicios/01a_dos_fases_a}
+\subsection*{Solución}
+\input{../ejercicios/01a_dos_fases_a_sol}
+\clearpage
+\section{01b dos fases b}
+\input{../ejercicios/01b_dos_fases_b}
+\subsection*{Solución}
+\input{../ejercicios/01b_dos_fases_b_sol}
+\clearpage
+\section{02a inversa base a}
+\input{../ejercicios/02a_inversa_base_a}
+\subsection*{Solución}
+\input{../ejercicios/02a_inversa_base_a_sol}
+\clearpage
+\section{02b inversa base b}
+\input{../ejercicios/02b_inversa_base_b}
+\subsection*{Solución}
+\input{../ejercicios/02b_inversa_base_b_sol}
+\clearpage
+\section{03a empresa minera a}
+\input{../ejercicios/03a_empresa_minera_a}
+\subsection*{Solución}
+\input{../ejercicios/03a_empresa_minera_a_sol}
+\clearpage
+\section{03b empresa minera b}
+\input{../ejercicios/03b_empresa_minera_b}
+\subsection*{Solución}
+\input{../ejercicios/03b_empresa_minera_b_sol}
+\clearpage
+\section{04 regla entrada lemke}
+\input{../ejercicios/04_regla_entrada_lemke}
+\subsection*{Solución}
+\input{../ejercicios/04_regla_entrada_lemke_sol}
+\clearpage
+\section{BandB 01}
+\input{../ejercicios/BandB_01}
+\subsection*{Solución}
+\input{../ejercicios/BandB_01_sol}
+\clearpage
+\section{BandB PE3}
+\input{../ejercicios/BandB_PE3}
+\subsection*{Solución}
+\input{../ejercicios/BandB_PE3_sol}
+\clearpage
+\section{BandB sin restricciones}
+\input{../ejercicios/BandB_sin restricciones}
+\subsection*{Solución}
+\input{../ejercicios/BandB_sin restricciones_sol}
+\clearpage
+\section{BranchAndBound mochila}
+\input{../ejercicios/BranchAndBound_mochila}
+\subsection*{Solución}
+\input{../ejercicios/BranchAndBound_mochila_sol}
+\clearpage
+\section{branchandbound a}
+\input{../ejercicios/branchandbound_a}
+\subsection*{Solución}
+\input{../ejercicios/branchandbound_a_sol}
+\clearpage
+\section{cargoplan a}
+\input{../ejercicios/cargoplan_a}
+\subsection*{Solución}
+\input{../ejercicios/cargoplan_a_sol}
+\clearpage
+\section{cartero chino}
+\input{../ejercicios/cartero_chino}
+\subsection*{Solución}
+\input{../ejercicios/cartero_chino_sol}
+\clearpage
+\section{convex hull}
+\input{../ejercicios/convex_hull}
+\subsection*{Solución}
+\input{../ejercicios/convex_hull_sol}
+\clearpage
+\section{degenerada optima multiple primal dual}
+\input{../ejercicios/degenerada_optima_multiple_primal_dual}
+\subsection*{Solución}
+\input{../ejercicios/degenerada_optima_multiple_primal_dual_sol}
+\clearpage
+\section{demo dieta}
+\input{../ejercicios/demo_dieta}
+\subsection*{Solución}
+\input{../ejercicios/demo_dieta_sol}
+\clearpage
+\section{demo muebles}
+\input{../ejercicios/demo_muebles}
+\subsection*{Solución}
+\input{../ejercicios/demo_muebles_sol}
+\clearpage
+\section{dos fases degenerada}
+\input{../ejercicios/dos_fases_degenerada}
+\subsection*{Solución}
+\input{../ejercicios/dos_fases_degenerada_sol}
+\clearpage
+\section{dos fases no acotado a}
+\input{../ejercicios/dos_fases_no_acotado_a}
+\subsection*{Solución}
+\input{../ejercicios/dos_fases_no_acotado_a_sol}
+\clearpage
+\section{dos fases no acotado b}
+\input{../ejercicios/dos_fases_no_acotado_b}
+\subsection*{Solución}
+\input{../ejercicios/dos_fases_no_acotado_b_sol}
+\clearpage
+\section{dos fases no factible a}
+\input{../ejercicios/dos_fases_no_factible_a}
+\subsection*{Solución}
+\input{../ejercicios/dos_fases_no_factible_a_sol}
+\clearpage
+\section{dos fases no factible b}
+\input{../ejercicios/dos_fases_no_factible_b}
+\subsection*{Solución}
+\input{../ejercicios/dos_fases_no_factible_b_sol}
+\clearpage
+\section{dualidad FO}
+\input{../ejercicios/dualidad_FO}
+\subsection*{Solución}
+\input{../ejercicios/dualidad_FO_sol}
+\clearpage
+\section{dualidad THC}
+\input{../ejercicios/dualidad_THC}
+\subsection*{Solución}
+\input{../ejercicios/dualidad_THC_sol}
+\clearpage
+\section{dualidad comprobar optimo}
+\input{../ejercicios/dualidad_comprobar_optimo}
+\subsection*{Solución}
+\input{../ejercicios/dualidad_comprobar_optimo_sol}
+\clearpage
+\section{dualidad graf dualnoacotado}
+\input{../ejercicios/dualidad_graf_dualnoacotado}
+\subsection*{Solución}
+\input{../ejercicios/dualidad_graf_dualnoacotado_sol}
+\clearpage
+\section{empresa minera 2}
+\input{../ejercicios/empresa_minera_2}
+\subsection*{Solución}
+\input{../ejercicios/empresa_minera_2_sol}
+\clearpage
+\section{falsa basica a}
+\input{../ejercicios/falsa_basica_a}
+\subsection*{Solución}
+\input{../ejercicios/falsa_basica_a_sol}
+\clearpage
+\section{falsa basica b}
+\input{../ejercicios/falsa_basica_b}
+\subsection*{Solución}
+\input{../ejercicios/falsa_basica_b_sol}
+\clearpage
+\section{gomory un corte}
+\input{../ejercicios/gomory_un_corte}
+\subsection*{Solución}
+\input{../ejercicios/gomory_un_corte_sol}
+\clearpage
+\section{gomory una iteracion}
+\input{../ejercicios/gomory_una_iteracion}
+\subsection*{Solución}
+\input{../ejercicios/gomory_una_iteracion_sol}
+\clearpage
+\section{grafos arbol generador}
+\input{../ejercicios/grafos_arbol_generador}
+\subsection*{Solución}
+\input{../ejercicios/grafos_arbol_generador_sol}
+\clearpage
+\section{interpretacion artificiales}
+\input{../ejercicios/interpretacion_artificiales}
+\subsection*{Solución}
+\input{../ejercicios/interpretacion_artificiales_sol}
+\clearpage
+\section{lemke}
+\input{../ejercicios/lemke}
+\subsection*{Solución}
+\input{../ejercicios/lemke_sol}
+\clearpage
+\section{lemke a}
+\input{../ejercicios/lemke_a}
+\subsection*{Solución}
+\input{../ejercicios/lemke_a_sol}
+\clearpage
+\section{lemke b}
+\input{../ejercicios/lemke_b}
+\subsection*{Solución}
+\input{../ejercicios/lemke_b_sol}
+\clearpage
+\section{miraflores caminomascorto}
+\input{../ejercicios/miraflores_caminomascorto}
+\subsection*{Solución}
+\input{../ejercicios/miraflores_caminomascorto_sol}
+\clearpage
+\section{postoptimizacion b teoria}
+\input{../ejercicios/postoptimizacion_b_teoria}
+\subsection*{Solución}
+\input{../ejercicios/postoptimizacion_b_teoria_sol}
+\clearpage
+\section{precio sombra no optima}
+\input{../ejercicios/precio_sombra_no_optima}
+\subsection*{Solución}
+\input{../ejercicios/precio_sombra_no_optima_sol}
+\clearpage
+\section{precio sombra sol opt}
+\input{../ejercicios/precio_sombra_sol_opt}
+\subsection*{Solución}
+\input{../ejercicios/precio_sombra_sol_opt_sol}
+\clearpage
+\section{quimica a}
+\input{../ejercicios/quimica_a}
+\subsection*{Solución}
+\input{../ejercicios/quimica_a_sol}
+\clearpage
+\section{quimica b}
+\input{../ejercicios/quimica_b}
+\subsection*{Solución}
+\input{../ejercicios/quimica_b_sol}
+\clearpage
+\section{red gas kurskal}
+\input{../ejercicios/red_gas_kurskal}
+\subsection*{Solución}
+\input{../ejercicios/red_gas_kurskal_sol}
+\clearpage
+\section{teorema fundamental}
+\input{../ejercicios/teorema_fundamental}
+\subsection*{Solución}
+\input{../ejercicios/teorema_fundamental_sol}
+\clearpage
+\section{toyco a}
+\input{../ejercicios/toyco_a}
+\subsection*{Solución}
+\input{../ejercicios/toyco_a_sol}
+\clearpage
+\section{toyco b}
+\input{../ejercicios/toyco_b}
+\subsection*{Solución}
+\input{../ejercicios/toyco_b_sol}
+\clearpage
+\section{transporte5 eulerhamilton}
+\input{../ejercicios/transporte5_eulerhamilton}
+\subsection*{Solución}
+\input{../ejercicios/transporte5_eulerhamilton_sol}
+\clearpage
+\section{transporte tasassutitucion}
+\input{../ejercicios/transporte_tasassutitucion}
+\subsection*{Solución}
+\input{../ejercicios/transporte_tasassutitucion_sol}
+\clearpage
+\section{transporte vogel degenerada}
+\input{../ejercicios/transporte_vogel_degenerada}
+\subsection*{Solución}
+\input{../ejercicios/transporte_vogel_degenerada_sol}
+\clearpage
+\section{voluntarios unidos}
+\input{../ejercicios/voluntarios_unidos}
+\subsection*{Solución}
+\input{../ejercicios/voluntarios_unidos_sol}
+\clearpage
+
+\end{document}

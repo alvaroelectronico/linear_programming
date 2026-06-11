@@ -15,6 +15,7 @@ compiled with the working directory set to ``exams/``.
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -71,9 +72,12 @@ def _cmd_render(args: argparse.Namespace) -> int:
 
 
 def _cmd_collection(args: argparse.Namespace) -> int:
-    tex = render.build_collection(args.ejercicios)
-    out_path = args.out / "coleccion.tex"
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_dir = args.out
+    out_dir.mkdir(parents=True, exist_ok=True)
+    # \input paths are relative to the master's directory (LaTeX uses /).
+    prefix = os.path.relpath(args.ejercicios, out_dir).replace(os.sep, "/")
+    tex = render.build_collection(args.ejercicios, ejercicios_prefix=prefix)
+    out_path = out_dir / "coleccion.tex"
     out_path.write_text(tex, encoding="utf-8")
     print(f"Wrote {out_path}")
     # The whole-corpus collection is heterogeneous: compile best-effort unless
@@ -107,7 +111,9 @@ def build_parser() -> argparse.ArgumentParser:
     p_render.set_defaults(func=_cmd_render)
 
     p_coll = sub.add_parser("collection", help="build the collection master document")
-    p_coll.add_argument("--out", type=Path, default=APP_DIR, help="where to write coleccion.tex")
+    p_coll.add_argument(
+        "--out", type=Path, default=APP_DIR / "coleccion", help="dir for coleccion.tex + PDF"
+    )
     p_coll.add_argument("--ejercicios", type=Path, default=DEFAULT_EJERCICIOS)
     p_coll.add_argument("--pdf", action="store_true", help="compile the PDF with latexmk")
     p_coll.add_argument(
