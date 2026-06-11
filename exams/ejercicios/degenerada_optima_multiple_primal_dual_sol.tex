@@ -1,0 +1,82 @@
+El problema dual tiene la forma:
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 80y_1 + 60y_2 + 15y_3\\
+\mbox{max. } z = - 80y_1 - 60y_2 - 15y_3\\
+s.a.:\\
+2y_1 + 4y_2 + y_3 \geq 3\\
+4y_1 + 3y_2 + y_3 \geq 2\\
+y_1,\,\,y_2,\,\,y_3\geq 0\\
+\end{split}
+\end{equation}
+
+La solución del dual es una solución óptima múltiple y, aplicando el método del simplex, se puede obtener una solución óptima alternativa:
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $y_1$ & $y_2$ & $y_3$ & $h_1$ & $h_2$\\ 
+ Base 1 & 45 & -50 & 0 & 0 & -15 & 0 \\ 
+\hline
+$h_2$ & 1  & -2 & 1 & 0 & -1 & 1\\ 
+$x_3$ & 3  & 2 & 4 & 1 & -1 & 0\\ 
+\hline
+Base 2  & 45 & -50 & 0 & 0 & -15 & 0 \\ 
+\hline
+$h_2$ & 1/4  & $\frac{-5}{2}$ & 0 & $\frac{-1}{4}$ & $\frac{-3}{4}$ & 1\\ 
+$y_2$ & 3/4  & $\frac{1}{2}$ & 1 & $\frac{1}{4}$ & $\frac{-1}{4}$ & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+% \begin{center}
+% \begin{tabular}{c|c|ccccccc|}
+%   & $z$ & $y_1$ & $y_2$ & $y_3$ & $h_1$ & $h_2$ & $a_1$ & $a_2$\\ 
+% Base 1 & 45 & -50 & 0 & 0 & -15 & 0 & 15 & 0 \\ 
+% \hline
+% $h_2$ & 1  & -2 & 1 & 0 & -1 & 1 & 1 & -1\\ 
+% $y_3$ & 3  & 2 & 4 & 1 & -1 & 0 & 1 & 0\\ 
+% \hline
+% Base 2 & 45 & -50 & 0 & 0 & -15 & 0 & 15 & 0 \\ 
+% \hline
+% $h_2$ & 1/4  & -5/2 & 0 & -1/4 & -3/4 & 1 & 3/4 & -1\\ 
+% $y_2$ & 3/4  & 1/2 & 1 & 1/4 & -1/4 & 0 & 1/4 & 0\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+% \begin{center}
+% \begin{tabular}{c|c|ccccccc|}
+ % & $z$ & $y_1$ & $y_2$ & $y_3$ & $h_1$ & $h_2$ & $a_1$ & $a_2$\\ 
+
+% \end{tabular}
+% \end{center}
+
+
+Por su parte, la solución del problema primal es una solución degenerada y, aplicando lemke, se puede obtener la misma solución con una base diferente:
+
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$\\ 
+Base 2 & -45 & 0 & -1/4 & 0 & -3/4 & 0 \\ 
+\hline
+$h_1$ & 50  & 0 & 5/2 & 1 & -1/2 & 0\\ 
+$x_1$ & 15  & 1 & 3/4 & 0 & 1/4 & 0\\ 
+$h_3$ & 0  & 0 & 1/4 & 0 & -1/4 & 1\\ 
+\hline
+Base 1 & -45 & 0 & -1 & 0 & 0 & -3 \\ 
+\hline
+$h_1$ & 50  & 0 & 2 & 1 & 0 & -2\\ 
+$x_1$ & 15  & 1 & 1 & 0 & 0 & 1\\ 
+$h_2$ & 0  & 0 & -1 & 0 & 1 & -4\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+La solución con la base 1 del primal se corresponde con la base 2 del dual, y se cumple el teorema fundamental de la dualidad ($y_1^*=\pi^B_1=0$, $y_2^*=\pi^B_2=0$,  $y_3^*=\pi^B_3=3$). Igualmente, La solución con la base 2 del primal se corresponde con la base 1 del dual, y se cumple el teorema fundamental de la dualidad ($y_1^*=\pi^B_1=0$, $y_2^*=\pi^B_2=3/4$, $y_3^*=\pi^B_3=0$)
+
+

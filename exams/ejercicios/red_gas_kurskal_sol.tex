@@ -1,0 +1,73 @@
+Una importante corporación energética global está planificando la interconexión de diez importantes centros urbanos (C1 a C10) para su nueva red de distribución de gas. El objetivo principal es construir una red de tuberías que garantice que todas las ciudades estén conectadas y puedan recibir suministro de gas, pero minimizando estrictamente el coste total de la infraestructura. Se han realizado estudios detallados para determinar el coste exacto de instalar tuberías entre cada par de ciudades conectables, y estos costes son todos diferentes entre sí.
+
+La siguiente \textbf{matriz de adyacencia} presenta las diez ciudades (nodos) y los 18 posibles tramos de tubería entre ellas, con sus costes asociados (pesos). Un valor de 0 indica que no hay conexión directa posible o que se refiere a la misma ciudad.
+
+$$
+\begin{array}{c|cccccccccc}
+& \text{C1} & \text{C2} & \text{C3} & \text{C4} & \text{C5} & \text{C6} & \text{C7} & \text{C8} & \text{C9} & \text{C10} \\
+\hline
+\text{C1} & 0 & 1 & 2 & 10 & 0 & 0 & 0 & 0 & 17 & 0 \\
+\text{C2} & 1 & 0 & 0 & 3 & 11 & 0 & 0 & 0 & 0 & 18 \\
+\text{C3} & 2 & 0 & 0 & 0 & 4 & 12 & 0 & 0 & 0 & 0 \\
+\text{C4} & 10 & 3 & 0 & 0 & 0 & 5 & 13 & 0 & 0 & 0 \\
+\text{C5} & 0 & 11 & 4 & 0 & 0 & 0 & 6 & 14 & 0 & 0 \\
+\text{C6} & 0 & 0 & 12 & 5 & 0 & 0 & 0 & 7 & 15 & 0 \\
+\text{C7} & 0 & 0 & 0 & 13 & 6 & 0 & 0 & 0 & 8 & 16 \\
+\text{C8} & 0 & 0 & 0 & 0 & 14 & 7 & 0 & 0 & 0 & 9 \\
+\text{C9} & 17 & 0 & 0 & 0 & 0 & 15 & 8 & 0 & 0 & 0 \\
+\text{C10} & 0 & 18 & 0 & 0 & 0 & 0 & 16 & 9 & 0 & 0 \\
+\end{array}
+$$
+
+\textbf{Utilizando el algoritmo de Kruskal, determina qué tramos de tubería deben instalarse para conectar todas las ciudades con el menor coste total posible, formando una única red de distribución de gas. Identifica también las aristas que no se seleccionaron y por qué.}
+
+Las aristas que forman parte del arbol generador de peso mínimo y, por lo tanto, la red de tuberías de menor coste, están resaltadas en azul oscuro y son más gruesas. Las aristas en gris y más finas son las que no se eligieron (porque ya se ha obtenido un árbol generador y son de mayor coste que las aristas elegidas).
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[
+        node distance=2cm, % Distancia entre nodos si no se usa layout
+        every node/.style={draw,circle,fill=blue!10,inner sep=2pt, font=\small\sffamily}, % Estilo de los nodos
+        every edge/.style={draw,very thin,gray, opacity=0.7}, % Estilo de aristas no-MST
+        mst edge/.style={draw,line width=1.5pt,blue!70!black}, % Estilo de aristas MST
+        label distance=2mm, % Distancia de las etiquetas de aristas
+        >=Stealth % Tipo de flecha (aunque no se usan flechas en este grafo no dirigido)
+    ]
+
+    % Definición de los nodos en un diseño circular para mejor visualización
+    % Se usan ángulos para posicionar uniformemente los 10 nodos
+    \foreach \n/\angle in {C1/90, C2/54, C3/18, C4/342, C5/306, C6/270, C7/234, C8/198, C9/162, C10/126}
+        \node (\n) at (\angle:3.5cm) {\n};
+
+    % Dibujo de TODAS las aristas con sus pesos
+    % Las aristas del MST están con 'mst edge' (más gruesas y oscuras)
+    % Las aristas no seleccionadas están con 'every edge' (más finas y grises)
+
+    % ARISTAS DEL MST (SELECCIONADAS)
+    \path (C1) edge[mst edge] node[midway,fill=white,inner sep=1pt] {1} (C2);
+    \path (C1) edge[mst edge] node[midway,fill=white,inner sep=1pt] {2} (C3);
+    \path (C2) edge[mst edge] node[midway,fill=white,inner sep=1pt] {3} (C4);
+    \path (C3) edge[mst edge] node[midway,fill=white,inner sep=1pt] {4} (C5);
+    \path (C4) edge[mst edge] node[midway,fill=white,inner sep=1pt] {5} (C6);
+    \path (C5) edge[mst edge] node[midway,fill=white,inner sep=1pt] {6} (C7);
+    \path (C6) edge[mst edge] node[midway,fill=white,inner sep=1pt] {7} (C8);
+    \path (C7) edge[mst edge] node[midway,fill=white,inner sep=1pt] {8} (C9);
+    \path (C8) edge[mst edge] node[midway,fill=white,inner sep=1pt] {9} (C10);
+
+    % OTRAS ARISTAS (DESCARTADAS POR FORMAR CICLOS)
+    \path (C1) edge node[midway,fill=white,inner sep=1pt] {10} (C4);
+    \path (C2) edge node[midway,fill=white,inner sep=1pt] {11} (C5);
+    \path (C3) edge node[midway,fill=white,inner sep=1pt] {12} (C6);
+    \path (C4) edge node[midway,fill=white,inner sep=1pt] {13} (C7);
+    \path (C5) edge node[midway,fill=white,inner sep=1pt] {14} (C8);
+    \path (C6) edge node[midway,fill=white,inner sep=1pt] {15} (C9);
+    \path (C7) edge node[midway,fill=white,inner sep=1pt] {16} (C10);
+    \path (C1) edge node[midway,fill=white,inner sep=1pt] {17} (C9);
+    \path (C2) edge node[midway,fill=white,inner sep=1pt] {18} (C10);
+
+    \end{tikzpicture}
+    \caption{Grafo de la red de gas con 10 ciudades y 18 conexiones. }
+    \label{fig:gas_network_graph}
+\end{figure}
+
+El coste total es de 45.

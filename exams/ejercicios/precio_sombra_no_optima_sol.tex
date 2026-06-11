@@ -1,0 +1,108 @@
+Una empresa fabrica dos productos químicos, $P_1$ y $P_2$, cuyos márgenes unitarios son, respectivamente, 1 y 4 euros. Semanalmente dispone de 40 toneladas de un producto crítico $C$, que es un cuello de botella. Cada tonelada de $P_1$ consume una tonelada de $C$ y cada tonelada de $P_2$ genera una tonelada de $C$.
+
+Además por normativa, no se pueden producir más de 20 toneladas de $P_2$ y entre los dos productos se deben entregar al menos 10 toneladas.
+
+Un experto el optimización, ha formulado el correspondiente problema de probramación lineal, donde $x_i$ representa la producción en toneladas de $P_i$. 
+
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = x_1 + 4x_2\\
+s.a.:\\
+x_1 - x_2 \leq 40\\
+x_1 + x_2 \geq 10\\
+x_2 \leq 20\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+Además, ha identificado que el plan de producción actual de la empresa quedaría descrito por la siguiente tabla, correspondiente a una solución básica:
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$\\ 
+ & $-40$ & $-3$ & $0$ & $0$ & $4$ & $0$ \\ 
+\hline
+$x_2$ & 10  & $1$ & $1$ & $0$ & $-1$ & $0$\\ 
+$h_1$ & 50  & $2$ & $0$ & $1$ & $-1$ & $0$\\ 
+$h_3$ & 10  & $-1$ & $0$ & $0$ & $1$ & $1$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+\begin{enumerate}
+    \item \textbf{A partir de la información de la tabla, justificar que disminuir el compromiso comercial, $b_2$ en una unidad daría lugar a una disminución de la función objetivo.}
+    
+
+    El incremento (disminución) de $z$ cuando $b_2$ aumenta (disminuye) en un unidad viene dado por el precio sombra de la segunda restricción, $\pi^B_2 = V^B_{h_2}=4$ (restricción de tipo menor o igual).
+
+    En efecto si $b_2=9$, $z$ disminuye en 4 unidades (4000 euros).
+
+
+    \item \textbf{Explicar por qué relajar el compromiso comercial (lo cual implica aumentar el tamaño de la región de factibilidad) conduce a una solución con peor función objetivo.}
+
+    La explicación de esta aparente paradoja viene dada por el hecho de que la solución no es óptima. La base a la que se refiere la tabla tiene como variables básicas: $x_2$, $h_1$ y $h_3$, es decir corresponden a la intersección de la restricción 2 con el eje de $Y$, como se aprecia en la siguiente figura.
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = {$x_1$},
+        ylabel = {$x_2$},
+        xmin = 0, xmax = 70,
+        ymin = 0, ymax = 40,
+        width=14cm, height=10cm,
+        legend pos = north west,
+        grid = major,
+    ]
+    % Restriction 1: x1 - x2 <= 40
+    \addplot[name path=A, domain=0:70, thick, blue] {x - 40};
+    \addlegendentry{$x_1 - x_2 \leq 40$}
+
+    % Restriction 2: x1 + x2 >= 10
+    \addplot[name path=B, domain=0:70, thick, red] {10 - x};
+    \addlegendentry{$x_1 + x_2 \geq 10$}
+
+    % Restriction 3: x2 <= 20
+    \addplot[name path=C, domain=0:70, thick, green!70!black] {20};
+    \addlegendentry{$x_2 \leq 20$}
+
+    % Region Factible (shading)
+    \addplot [
+        thick,
+        color=yellow,
+        fill=yellow,
+        fill opacity=0.3
+    ]
+    coordinates {
+        (10,0) (0,10) (0,20) (60, 20) (40,0)
+    };
+
+    % Objective function line (longer)
+    \addplot[dashed, thick, black, domain=-10:80] {0.25*x + 8};
+    \addlegendentry{F. objetivo $z = 1x_1 + 4x_2$}
+
+        % Adding the label for the point
+    \node[circle, draw=black, minimum size=6pt, inner sep=0pt] at (axis cs:0, 10) {};
+    \node at (axis cs:8, 10) [anchor=south] {Solución básica};
+    
+    \end{axis}
+\end{tikzpicture}
+
+    Relajar el compromiso comercial significa desplazar la restricción 2 hacia la izquierda, con lo que la solución básica, intersección de esta restricción 2 con el eje $Y$ haría que disminuyera $z$.
+
+    La interpretación es la siguiente. En esta base:
+    \begin{itemize}
+        \item $x_1$ es variable no básica, con lo que se decide no producir $P_1$
+        \item $h_2$ es variable no básica, con lo se está decidiendo cumplir el compromiso comercial por el mínimo acordado.
+    \end{itemize}
+
+    Si queremos producir solo lo que viene dado por el compromiso comercial ($h_2=0$) y solo se produce $P_2$ ($x_1=0$) el resultado es que se produce solo $P_2$ y en menor cantidad, con lo que la función objetivo disminuye.
+
+
+    Este comportamiento no se observaría si estuviéramos en la solución óptima.
+
+
+
+\end{enumerate}

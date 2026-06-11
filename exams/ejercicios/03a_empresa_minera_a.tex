@@ -1,0 +1,86 @@
+Una empresa minera extrae \textbf{100 toneladas} de mineral rojo y \textbf{80 toneladas} de mineral negro cada semana. Estos pueden ser tratados de diferentes maneras para producir tres diferentes aleaciones, blanda, dura o fuerte. Para producir 1 tonelada de aleación blanda se requiere \textbf{5 toneladas} de mineral rojo y \textbf{1 tonelada} de negro. Para la aleación dura los requisitos son \textbf{3 toneladas} de rojo y \textbf{5 toneladas} de negro, mientras que para la aleación fuerte son \textbf{5 toneladas} de rojo y \textbf{3 toneladas} de negro. La ganancia por tonelada de la venta de las aleaciones (después de considerar los costos de producción, pero no los de extracción, que se consideran fijos) son \textbf{250}, \textbf{300} y \textbf{400 euros} por tonelada de aleación blanda, dura y fuerte, respectivamente.
+
+Además, el mineral rojo se puede vender a \textbf{100} euros la tonelada y el mineral negro se debe emplear al completo.
+
+Existe un compromiso comercial de servir al menos \textbf{20} toneladas conjuntamente entre las aleaciones dura y fuerte.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 250x_1 + 300x_2 + 400x_3 + 100x_4\\
+s.a.:\\
+5x_1 + 3x_2 + 5x_3 + 1x_4 \leq 100\\
+1x_1 + 5x_2 + 3x_3 + 0x_4 = 80\\
+0x_1 + 1x_2 + 1x_3 + 0x_4 \geq 20\\
+x_1,\,\,x_2,\,\,x_3,\,\,x_4\geq 0\\
+\end{split}
+\end{equation}
+
+Donde $x_1$, $x_2$ y $x_3$ representan las producciones de aleación blanda, dura y fuerte (en toneladas), respectivamente y $x_4$ son las toneladas de mineral rojo de venta en el mercado.
+
+Se conoce la tabla de una solución obtenida mediante la resolución del problema mediante el método de las dos fases
+
+% \begin{center}
+% \begin{tabular}{c|c|ccccccc|}
+%  & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+% Phase 1 & 4 & $-1/5$ & 0 & $2/5$ & 0 & -1 & $-6/5$ & 0 \\ 
+% Phase 2 & -10000 & -250 & 0 & -100 & 0 & 0 & 0 & 0 \\ 
+% \hline
+% $h_1$ & 52  & $22/5$ & 0 & $16/5$ & 1 & 0 & $-3/5$ & 0\\ 
+% $x_2$ & 16  & $1/5$ & 1 & $3/5$ & 0 & 0 & $1/5$ & 0\\ 
+% $a_3$ & 4  & $-1/5$ & 0 & $2/5$ & 0 & -1 & $-1/5$ & 1\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+
+\begin{center}
+\begin{tabular}{c|c|cccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+\hline
+Phase 1 & 4 & $-1/5$ & 0 & $2/5$ & 0 & 0 & -1 & $-6/5$ & 0 \\ 
+Phase 2 & -10000 & -250 & 0 & -100 & 0 & -100 & 0 & 0 & 0 \\ 
+\hline
+$x_4$ & 52  & $22/5$ & 0 & $16/5$ & 1 & 1 & 0 & $-3/5$ & 0\\ 
+$x_2$ & 16  & $1/5$ & 1 & $3/5$ & 0 & 0 & 0 & $1/5$ & 0\\ 
+$a_3$ & 4  & $-1/5$ & 0 & $2/5$ & 0 & 0 & -1 & $-1/5$ & 1\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+\begin{enumerate}
+
+
+\item \textbf Obtener la solución óptima del problema e {interpretar} el resultado y explicar el plan de
+extracción y el significado de los valores de las variables de holgura.
+
+
+\item Dado que el mineral negro se debe emplear completo, \textbf{justificar} si la empresa estaría interesada en extraer más o menos cantidad que las 80 toneladas semanales.
+
+\item \textbf{Justificar haciendo uso de los fundamentos del método del simplex} por qué, sin necesidad de resolver el problema, se podría afirmar que en la solución óptima $h_1$ nunca puede tomar un valor diferente de 0.
+
+\item Cuál es el intervalo relativo a la cantidad del compromiso comercial (aleaciones dura y fuerte) dentro del cual se mantiene la gama de producción correspondiente a la solución óptima.
+
+\item La empresa está interesada en saber cuál sería el impacto sobre su plan de producción y sobre su beneficio si, una determinada semana, no pudiera vender (y, por lo tanto, no produciría) más de 8 toneladas de aleación dura.
+
+\begin{comment}
+Podemos preguntar sobre el V^B de la variable artificiales o su signo o su relación con la restricción...
+\end{comment}
+
+\end{enumerate}
+
+
+% \begin{comment}
+% \begin{center}
+% \begin{tabular}{c|c|cccccc|}
+%  & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+% Phase 1 & 0 & 0 & 0 & 0 & 0 & 0 & -1 \\ 
+% Phase 2 & -45 & 0 & -1/4 & 0 & 0 & -3/4 & 0 \\ 
+% \hline
+% $h_1$ & 50  & 0 & 5/2 & 1 & 0 & -1/2 & 0\\ 
+% $h_3$ & 5  & 0 & -1/4 & 0 & 1 & 1/4 & -1\\ 
+% $x_1$ & 15  & 1 & 3/4 & 0 & 0 & 1/4 & 0\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+
+% \end{comment}

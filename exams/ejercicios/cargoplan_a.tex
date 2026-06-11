@@ -1,0 +1,66 @@
+Una empresa de transporte llamada \textbf{CargoPlan} se encarga de distribuir productos en tres zonas diferentes: Zona A, Zona B y Zona C. 
+Cada zona tiene una demanda específica y el transporte requiere recursos limitados en términos de combustible y horas de conducción.
+
+Los límites semanales para estos recursos son \textbf{8000 litros de combustible y 3000 horas de conducción}. El beneficio por tonelada transportada a cada zona es de \textbf{50, 40 y 60 euros} para las zonas A, B y C, respectivamente.
+
+Cada tonelada transportada consume los siguientes recursos. Zona A: \textbf{6} litros de combustible y \textbf{3} horas de conducción. Zona B: \textbf{4} litros de combustible y \textbf{2} horas de conducción. Zona C: \textbf{8} litros de combustible y \textbf{5} horas de conducción.
+
+Además, existe un contrato que obliga a transportar al menos \textbf{500 toneladas en total} a las zonas B y C combinadas.
+
+
+Si $x_1$, $x_2$ y $x_3$ representan las toneladas transportadas semanalmente a las zonas A, B y C, respectivamente, el modelo de programación lineal que permite maximizar el beneficio total es el siguiente:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 50x_1 + 40x_2 + 60x_3\\
+s.a.:\\
+6x_1 + 4x_2 + 8x_3 \leq 8000\\
+3x_1 + 2x_2 + 5x_3 \leq 3000\\
+        x_2 +  x_3 \geq 500\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+Se dispone de la siguiente tabla, correspondiente a una solución obtenida mediante la aplicación del método del simplex.
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $a_3$\\ 
+ & -60000 & -10 & 0 & -40 & 0 & -20 & 0 & 0 \\ 
+\hline
+$h_1$ & 2000  & 0 & 0 & -2 & 1 & -2 & 0 & 0\\ 
+$h_3$ & 1000  & $3/2$ & 0 & $3/2$ & 0 & $1/2$ & 1 & -1\\ 
+$x_2$ & 1500  & $3/2$ & 1 & $5/2$ & 0 & $1/2$ & 0 & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+
+Se pide:
+
+\begin{enumerate}
+    \item Interpretar la solución óptima obtenida, incluyendo el beneficio total, la asignación de toneladas transportadas a cada zona y el uso de los recursos disponibles.
+\end{enumerate}
+
+Cada una de las preguntas siguientes se refieren a la solución óptima del problema.
+
+\begin{enumerate}
+    \setcounter{enumi}{1} % Ajusta el contador para iniciar en 2
+
+    \item Identificar dentro de qué rango podría variar la disponibilidad de combustible (en litros) sin que se modifiquen las variables básicas de la solución óptima y explicar qué cambiaría en la solución el cambio de la disponibilidad de combustible dentro de dicho rango. ¿Cuál sería el plan de transporte fuera de ese rango?
+
+    \item Se ha hecho un análisis del tiempo de conducción en la zona A para reducir el tiempo actual de 3 horas por cada tonelada transportada. ¿Por debajo de qué valor de tiempo de conducción en la zona A sería interesante transportar sus productos a la zona A?
+
+    \item Cuánto estaría dispuesta a pagar la empresa por disponer de una hora adicional de conducción cada semana.
+
+  % \item Cargoplan está renegociando los precios de los clientes de la zona B. Dentro de qué rango de valores del ingreso por tonelada en la zona B se mantendría el plan de distribución.
+
+    \item Evaluar el impacto de relajar o de hacer más restrictivo el contrato que exige transportar al menos 500 toneladas en total a las zonas B y C. En particular, indicar cuánto se podría relajar o cuánto más restrictivo podría ser el acuerdo sin que cambie el plan de distribución óptimo.
+
+    \item Obtener el nuevo plan óptimo de transporte si, por razones logísticas, la empresa decidiera transportar al menos tantas toneladas a la zona A como a la zona C.
+
+    % \item Obtener el nuevo plan óptimo de transporte si, por razones logísticas, la empresa decidiera transportar las mismas cantidades a la zona A que a la zona B.
+\end{enumerate}

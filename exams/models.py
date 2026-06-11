@@ -1,9 +1,15 @@
-"""Domain model for exam problems and exams.
+"""Domain model for generated problems and exam definitions.
 
-A :class:`ProblemSpec` is the linear program itself (the same strings the
-:mod:`linprog` parser accepts). An :class:`ExamProblem` wraps a spec with the
-exam-facing narrative and rendering flags. An :class:`Exam` is an ordered set of
-problems for a given course/year and variant.
+Two ideas:
+
+* An :class:`ExamProblem` is a *generated* linear-programming problem: its
+  narrative, its LP spec and what to show in the answer key. Rendering it writes
+  two LaTeX *fragments* into the ``ejercicios/`` folder -- ``<id>.tex`` (the
+  statement) and ``<id>_sol.tex`` (the worked solution) -- in the same style as
+  the hand-written problems already there.
+* An :class:`Exam` is an ordered list of *fragment names* (generated ids or the
+  base name of a hand-written ``.tex``) plus a course/variant. The exam master
+  document ``\\input``s those fragments.
 """
 
 from __future__ import annotations
@@ -26,19 +32,22 @@ class ProblemSpec:
 
 @dataclass
 class ExamProblem:
-    """A bank problem: its statement, its LP spec and what to show in the key.
+    """A generated problem: narrative, LP spec and answer-key options.
 
-    ``statement`` is the narrative (word-problem) LaTeX shown to students. The
-    ``include_*`` flags control which sections :func:`render_worked_solution`
-    emits in the solution key.
+    ``statement`` is the narrative (word-problem) LaTeX. When
+    ``include_formulation`` is set, the parsed formulation is appended to the
+    statement. ``questions`` becomes an ``enumerate`` of tasks. The ``include_*``
+    flags below control which sections the worked solution renders.
     """
 
     id: str
     title: str
     statement: str
     spec: ProblemSpec
+    questions: list[str] = field(default_factory=list)
     points: float = 10.0
     include_formulation: bool = True
+    statement_label: str | None = None
     include_phase1: bool = True
     include_tableau: bool = True
     include_basis_details: bool = False
@@ -51,11 +60,15 @@ class ExamProblem:
 
 @dataclass
 class Exam:
-    """An ordered collection of problems for a course/year and variant."""
+    """An ordered set of fragment names assembled into one exam.
+
+    ``items`` are fragment base names: a generated problem's ``id`` or the base
+    name of a hand-written ``ejercicios/<name>.tex``.
+    """
 
     id: str
     title: str
     course: str
     year: int
-    problems: list[ExamProblem] = field(default_factory=list)
+    items: list[str] = field(default_factory=list)
     variant: str = "A"

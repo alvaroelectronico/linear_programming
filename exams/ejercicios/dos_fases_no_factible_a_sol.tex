@@ -1,0 +1,73 @@
+Dado el siguiente problema de programación lineal:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 3x_1 + 2x_2 + x_3\\
+s.a.:\\
+2x_1 + 4x_2 + 2x_3 \geq 80\\
+4x_1 + 3x_2 = 60\\
+ x_1 +  x_2 +  x_3 \leq 15\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{enumerate}
+    \item Formular el problema equivalente en formato estándar.
+
+
+    \begin{equation}
+\begin{split}
+\mbox{max. } z = 3x_1 + 2x_2 + x_3\\
+s.a.:\\
+2x_1+4x_2+2x_3-h_1 = 80\\
+4x_1+3x_2 = 60\\
+x_1+x_2+x_3+h_3 = 15\\
+x_1,\,x_2,\,x_3,\,h_1,\,h_3\geq 0
+\end{split}
+\end{equation}
+
+    \item Formular el problema correspondiente a la primera fase mediante del método de resolución de las dos fases.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z' = -a_1-a_2\\
+s.a.:\\
+2x_1+4x_2+2x_3-h_1+a_1 = 80\\
+4x_1+3x_2+a_2 = 60\\
+x_1+x_2+x_3+h_3 = 15\\
+x_1,\,x_2,\,x_3,\,h_1,\,h_3,\,a_1,\,a_2\geq 0
+\end{split}
+\end{equation}
+
+
+\item Obtener la solución óptima del problema.
+
+       \begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_3$ & $a_1$ & $a_2$\\ 
+Fase 1 & 140 & 6 & 7 & 2 & -1 & 0 & 0 & 0 \\ 
+Fase 2 & 0 & 3 & 2 & 1 & 0 & 0 & 0 & 0 \\ 
+\hline
+$a_1$ & 80  & 2 & 4 & 2 & -1 & 0 & 1 & 0\\ 
+$a_2$ & 60  & 4 & 3 & 0 & 0 & 0 & 0 & 1\\ 
+$h_3$ & 15  & 1 & 1 & 1 & 0 & 1 & 0 & 0\\ 
+\hline
+Fase 1 & 35 & -1 & 0 & -5 & -1 & -7 & 0 & 0 \\ 
+Fase 2 & -30 & 1 & 0 & -1 & 0 & -2 & 0 & 0 \\ 
+\hline
+$a_1$ & 20  & -2 & 0 & -2 & -1 & -4 & 1 & 0\\ 
+$a_2$ & 15  & 1 & 0 & -3 & 0 & -3 & 0 & 1\\ 
+$x_2$ & 15  & 1 & 1 & 1 & 0 & 1 & 0 & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+El problema no tiene solución factible y, por lo tanto, no tiene solución óptima.
+
+    
+    \end{enumerate}
+
+
+
+
+

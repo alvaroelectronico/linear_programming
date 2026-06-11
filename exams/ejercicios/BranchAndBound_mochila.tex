@@ -1,0 +1,48 @@
+El problema de la mochila es un problema clásico de optimización combinatoria en el que se busca seleccionar un subconjunto de elementos que maximice el valor total. Cada artículo tiene un peso  y la suma de todos los pesos no puede exceder el peso máximo de la mochila. En la versión más común, las variables de selección son binarias. Este problema su puede formular así.
+
+\vspace{0.5cm}
+Dada una mochila con una capacidad máxima $W$ y un conjunto de $n$ objetos, cada uno con:
+\begin{itemize}
+    \item peso $w_i$
+    \item valor $v_i$ 
+\end{itemize}
+
+El objetivo es seleccionar un conjunto de objetos para maximizar el valor total: 
+\begin{align*}
+\text{max.} \quad & z = \sum_{i=1}^{n} v_i x_i \\
+\text{s.a.} \quad & \sum_{i=1}^{n} w_i x_i \leq W \\
+                 & x_i \in \{0,1\} \quad \forall i \in \{1, \dots, n\}
+\end{align*}
+
+
+Para resolver la relajación lineal de este problema existe un método \textit{greedy}  que consiste en:
+\begin{itemize}
+    \item ordenar los objetos en función del valor de $\frac{v_i}{w_i}$ (más prioridad al objeto con mayor valor de $\frac{v_i}{w_i}$)
+    \item en orden decreciente del ratio $\frac{v_i}{w_i}$, asignar la mayor cantidad de cada objeto (ahora fraccional) siguiendo el criterio anterior hasta que se utilice toda la capacidad posible.
+\end{itemize}
+
+\vspace{1cm}
+
+Resuelve el problema de la mochila con los siguientes datos, utilizando el algoritmo de \textit{Branch\&Bound} y resolviendo los subproblemas mediante el método \textit{greedy} indicado, decidiendo qué nodo elegir según el enfoque \textit{Deep First Node} (o \textit{BackTracking}) resolviendo, en un mismo nivel, primero el subproblema de la izquierda (el subproblema creado con la restricción $\leq$).
+\vspace{0.5cm}
+
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
+\hline
+\textbf{Valor (€)} & 60 & 100 & 240 & 60 \\
+\hline
+\textbf{Peso (kg)} & 10 & 20 & 30 & 15 \\
+\hline
+\end{tabular}
+
+Capacidad de la mochila: $W=50$
+
+---
+
+Nota: la solución óptima de la relajación lineal del problema que se pide resolver es $x^*_{RL}=(1,\frac{1}{2},1,0)$ lo que implica hacer uso al completo de la capacidad. Se ha elegido, por orden:
+\begin{itemize}
+    \item $x_3=1$ que representa un peso de 30kg
+    \item $x_1=1$ que representa un peso de 10kg
+    \item $x_2=\frac{1}{2}$ que representa un peso de 10kg 
+\end{itemize}

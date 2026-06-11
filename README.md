@@ -82,37 +82,59 @@ linprog/
 
 ## Generating exams
 
-The `exams/` package is an application built on top of `linprog` that turns a
-bank of problems into exam and answer-key PDFs. It is installed by the same
-editable install and exposes the `lp-exams` command.
+The `exams/` package is an application built on top of `linprog`. Each problem
+is a LaTeX *fragment* pair in `exams/ejercicios/` — `<name>.tex` (statement) and
+`<name>_sol.tex` (solution) — in the same style as a hand-written corpus. Two
+*master* documents `\input` those fragments: a **collection** (every problem,
+statement + solution) and an **exam** (a chosen subset, with its own header).
+The `lp-exams` command (installed by `pip install -e .`) drives it.
 
 ```bash
-pip install -e .
-
-lp-exams list                                   # bank problems + exam definitions
-lp-exams problem mueblespro --solution --no-pdf # one problem (statement + key) -> .tex
-lp-exams exam mcio1_mad1_2627 --variant A            # blank exam, variant A -> PDF
-lp-exams exam mcio1_mad1_2627 --variant A --solutions # answer key -> PDF
+lp-exams list                       # generated problems, exams, unpaired fragments
+lp-exams render demo_muebles        # write ejercicios/demo_muebles{,_sol}.tex
+lp-exams collection --pdf           # build exams/coleccion.tex (+ PDF)
+lp-exams exam mcio1_mad1_2627 --pdf            # blank exam -> exams/examen .tex (+ PDF)
+lp-exams exam mcio1_mad1_2627 --solutions --pdf  # answer key
 ```
 
-- `--no-pdf` stops at the `.tex` file; otherwise the CLI compiles a PDF with
-  **latexmk**, which requires a system LaTeX distribution (MiKTeX or TeX Live).
-  It is not a Python dependency; if latexmk is missing the `.tex` is still
-  written and a clear message is printed.
-- `--frac` / `--no-frac` choose `\frac{a}{b}` vs `a/b` rendering.
-- Output defaults to `exams/build/` (git-ignored).
+### Two kinds of problems
 
-To add a problem, drop a module in `exams/bank/` defining `build() -> ExamProblem`
-(objective, constraints, narrative). To add an exam, drop a module in
-`exams/exams_def/` defining `build(variant="A") -> Exam`. Both are discovered
-automatically — no registration step.
+- **Generated** (linear programs): a Python module in `exams/bank/` defines
+  `build() -> ExamProblem` with the narrative, the LP spec (objective +
+  constraints) and which solution artifacts to show. `lp-exams render <name>`
+  solves it and writes the two `.tex` fragments into `ejercicios/`. Output is in
+  Spanish (`Fase 1/Fase 2`, …).
+- **Static** (anything else — graphs, branch & bound, …): hand-written `.tex`
+  (plus images) that already live in `ejercicios/`. They need no Python.
+
+Both kinds are just fragments in `ejercicios/`, so the collection and exams can
+mix them freely. Exam definitions live in `exams/exams_def/` as
+`build(variant="A") -> Exam`, listing fragment names in order.
+
+### Master documents and headers
+
+- The **collection** auto-includes every `<name>.tex`/`<name>_sol.tex` pair
+  found in `ejercicios/`, sorted. Its header is `exams/templates/coleccion_preamble.tex`.
+- The **exam** header is `exams/templates/examen_preamble.tex` — a placeholder
+  meant to be replaced by your official exam header. Edit these templates freely.
+- PDF compilation uses **latexmk** (a system LaTeX distribution: MiKTeX or TeX
+  Live), run with the working directory at `exams/` so `ejercicios/...` paths
+  (including `\includegraphics`) resolve. It is not a Python dependency; without
+  `--pdf` (or without latexmk) the `.tex` is still written.
+- Graph problems that rely on custom TikZ styles (e.g. `arn_n`) need those
+  definitions pasted into the preamble — see the marked spot in the templates.
+
+Generated master `.tex`/`.pdf` (at the `exams/` root) are git-ignored; the
+templates and the `ejercicios/` fragments are tracked.
 
 ```
 exams/
 ├── models.py             # ProblemSpec, ExamProblem, Exam
-├── bank/                 # one module per problem -> build() -> ExamProblem
-├── exams_def/            # one module per course/year -> build(variant) -> Exam
-├── render.py             # assemble statements / solutions into LaTeX
+├── bank/                 # generated LP problems -> build() -> ExamProblem
+├── exams_def/            # exam definitions -> build(variant) -> Exam (item list)
+├── ejercicios/           # fragment pairs (<name>.tex, <name>_sol.tex) + images
+├── templates/            # collection / exam preambles (headers)
+├── render.py             # fragments + master assembly
 ├── compile.py            # latexmk PDF compilation
 └── cli.py                # the `lp-exams` command
 ```

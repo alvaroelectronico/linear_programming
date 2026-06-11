@@ -1,0 +1,121 @@
+\begin{enumerate}
+
+
+\item Los valores de las variables y su interpretación son los siguientes:
+\begin{itemize}
+    \item $x_1 = 10$: se producen 10 toneladas de aleación blanda. 
+    \item $x_2 = 0$: no se produce aleación blanda dura.
+    \item $x_3 = 10$: se producen 10 toneladas de aleación fuerte.
+    \item $x_4 = 20$: se venden 20 toneladas de mineral rojo.
+    \item $h_1 = 0$: todo el mineral rojo se emplea en aleaciones o bien se vende.
+    \item $h_3 = 0$: se cumple el compromiso comercial por la cantidad mínima establecida 10 toneladas).
+\end{itemize}
+
+\item El precio sombra de la restricción 2 es $\pi^B_2 = 50$, con lo que por cada tonelada de mineral negro que la empresa pudiera extraer adicionalmente a las 60 que ya extrae el beneficio aumentaría en 50 euros, por lo que la empresa sí estaría interesada en extraer más que esas 60 toneladas, siempre y cuando el coste de extracción no superase un coste de 50 euros/tonelada.
+
+\item Las columnas de las variables $h_1$ y $x_4$ en la matriz $A$ con idénticas: $A_{x_4} = A_{h_1} = (1\; 0\; 0)^T$ y sus respectivos criterios del simplex son:
+
+
+$V^B_{x_4} = c_{x_4} - c^BB^{-1}A_{x_4} = 100 - c^BB^{-1}(1\; 0\; 0)^T$
+
+$V^B_{h_1} = c_{h_1} - c^BB^{-1}A_{x_4} = 0 - c^BB^{-1}(1\; 0\; 0)^T$
+
+Con lo que siempre se cumplirá $V^B_{x_4} > V^B_{h_1}$ y dado que las dos actividades son linealmente dependientes las dos no pueden ser simultáneamente básicas, así que la variable que será básica en la solución óptima será necesariamente $x_4$ y la variable $h_1$ será no básica y, por lo tanto, cero.
+
+El términos de la situación de la empresa, lo anterior se pone de manifiesto en el hecho de que nunca le va a interesar dejar de utilizar mineral rojo ($h_1 > 0 $) porque la venta de ese mineral ($x_4 > 0$) permitirá mejorar el beneficio.
+
+\item Para obtener el intervalo, se admite un valor del compromiso comercial genérico, $b_3$
+
+\begin{equation}
+\begin{split}
+u^B = B^{-1}b = 
+\begin{pmatrix}
+1 & -2 & 6\\
+0 & \frac{1}{2} & -2\\
+0 & 0 & 1\\
+\end{pmatrix}
+\begin{pmatrix}
+80\\
+60\\
+b_3\\
+\end{pmatrix}
+\geq 0 \Rightarrow
+\begin{pmatrix}
+80 - 120 + 6b_3\\
+30-2b_3\\
+b_3\\
+\end{pmatrix}
+\geq 0 \Rightarrow
+0 < \frac{20}{3} \leq b_3 \leq 15 
+\end{split}
+\end{equation}
+
+Mientras exista compromiso comercial por cualquier cantidad  menor o igual a $\frac{20}{3}$ toneladas, las variables básicas de la solución son las misma y, por lo tanto, la gama de productos se mantiene.
+
+\item $x_3 \leq 8 \Rightarrow x_3 + h_4 = 8$
+
+
+% \begin{center}
+% \begin{tabular}{c|c|cccccccc|}
+%  & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+%       & -7000 & 0 & -50 & 0 & 0 & -50 & 0 & -50 & 0 \\ 
+% \hline
+% $x_4$ & 20  & 0 & -1 & 0 & 1 & 1 & -6 & -2 & 6\\ 
+% $x_1$ & 10  & 1 & 0 & 0 & 0 & 0 & 2 & 1/2 & -2\\ 
+% $x_3$ & 10  & 0 & 1 & 1 & 0 & 0 & -1 & 0 & 1\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+
+\begin{center}
+\begin{tabular}{c|c|ccccccccc|}
+      & $z$   & $x_1$   & $x_2$   & $x_3$   & $x_4$ & $h_1$ & $h_3$ & $a_2$ & $a_3$ & $h_4$\\ 
+      & -7000 & 0       & -50     & 0       & 0     & -50   & 0     & -50   & 0     & 0    \\ 
+\hline
+$x_4$ & 20    & 0       & -1      & 0       & 1     & 1     & -6    & -2    & 6     & 0    \\ 
+$x_1$ & 10    & 1       & 0       & 0       & 0     & 0     & 2     & 1/2   & -2    & 0    \\ 
+$x_3$ & 10    & 0       & 1       & 1       & 0     & 0     & -1    & 0     & 1     & 0    \\
+\hline
+      &  8    & 0       & 0       & 1       & 0     & 0     & 0     & 0     & 0     & 1\\
+\hline
+$h_4$ &  -2   & 0       & -1      & 0       & 0     & 0     & 1     & 0     & -1    & 1\\
+\hline      
+\end{tabular}
+\end{center}
+
+Podemos aplicar Lemke:
+
+\begin{center}
+\begin{tabular}{c|c|ccccccccc|}
+      & $z$   & $x_1$   & $x_2$   & $x_3$   & $x_4$ & $h_1$ & $h_3$ & $a_2$ & $a_3$ & $h_4$\\ 
+      & -7000 & 0       & -50     & 0       & 0     & -50   & 0     & -50   & 0     & 0    \\ 
+\hline
+$x_4$ & 20    & 0       & -1      & 0       & 1     & 1     & -6    & -2    & 6     & 0  \\ 
+$x_1$ & 10    & 1       & 0       & 0       & 0     & 0     & 2     & 1/2   & -2    & 0  \\ 
+$x_3$ & 10    & 0       & 1       & 1       & 0     & 0     & -1    & 0     & 1     & 0  \\
+$h_4$ &  -2   & 0       & -1      & 0       & 0     & 0     & 1     & 0     & -1    & 1  \\
+\hline      
+      & -6900 & 0       & 0       & 0       & 0     &       &       &       &       &     \\ 
+\hline
+$x_4$ & 22    &         & 0       &         &       &       & 0     &       &       &     \\ 
+$x_1$ & 10    &         & 0       &         &       &       & 0     &       &       &     \\ 
+$x_3$ & 8     &         & 0       &         &       &       & 0     &       &       &     \\
+$x_2$ & 2     & 0       & 1       & 0       & 0     & 0     & -1    & 0     & 1     &  -1 \\
+\hline      
+\end{tabular}
+\end{center}
+
+Los valores de las variables y su interpretación son los siguientes:
+\begin{itemize}
+    \item $x_1 = 10$: se producen 10 toneladas de aleación blanda. 
+    \item $x_2 = 2$: se producen 2 toneladas de aleación dura.
+    \item $x_3 = 8$: se producen 8 toneladas de aleación fuerte.
+    \item $x_4 = 22$: se venden 22 toneladas de mineral rojo.
+    \item $h_1 = 0$: todo el mineral rojo se emplea en aleaciones o bien se vende.
+    \item $h_3 = 0$: se cumple el compromiso comercial por la cantidad mínima establecida 10 toneladas).
+\end{itemize}
+
+Ahora el beneficio es menor e igual a 6900 euros.
+
+
+\end{enumerate}

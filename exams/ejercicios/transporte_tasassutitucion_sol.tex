@@ -1,0 +1,35 @@
+La siguiente tabla indica el valor de las variables de un problema de transporte con las ofertas de los orígenes $O_i$ y las demandas de los destinos $D_j$. \textbf{Indica cuáles son los vectores de tasas de sustitución de las variables $x_{14}$ y $x_{22}$}.
+
+Nota: la variable $x_{ij}$ (fila $i$, columna $j$) indica la cantidad de producto que se mueve desde el origen $i$ al destino $j$.
+
+\begin{table}[h]
+\begin{center}
+
+\begin{tabular}{ccccccc}
+                      &                         &                        &                        &                        &                         & $O_i$ \\ \cline{2-6}
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{}   & 10    \\ \cline{2-6}
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{5}  & \multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{}   & 15    \\ \cline{2-6}
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{}   & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{10} & 20    \\ \cline{2-6}
+$D_j$                 & 15                      & 5                      & 10                     & 5                      & 10                      &      
+\end{tabular}
+    
+\end{center}
+\end{table}
+
+\textbf{Solución}
+\vspace{0.5cm}
+
+\begin{tabular}{|l|c|c|}
+\hline
+ & $x_{14}$ & $x_{22}$ \\
+\hline
+$x_{11}$ & 1 & 0 \\
+$x_{21}$ & -1 & 0 \\
+$x_{22}$ & 0 & 1 \\
+$x_{23}$ & 1 & 0 \\
+$x_{33}$ & -1 & 0 \\
+$x_{34}$ & 1 & 0 \\
+$x_{35}$ & 0 & 0 \\
+\hline
+\end{tabular}
+

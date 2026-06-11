@@ -1,0 +1,89 @@
+Dado el siguiente problema:
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 10x_1 + 20x_2 + 30x_3\\
+s.a.:\\
+4x_1 + 2x_2 + 8x_3 \leq 1000\\
+1x_2 + 1x_3 = 500\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+Se pide:
+\begin{enumerate}
+    \item \textbf{Explicar si cumple los requisitos para que se pueda aplicar el método de Lemke y, si no es así, obtener un problema equivalente que sí cumpla con dichos requisitos.}
+
+    Podemos reformular el problema como un problema de maximización en forma estándar:
+
+    \begin{equation}
+    \begin{split}
+    \mbox{max. } z = -10x_1 - 20x_2 - 30x_3\\
+    s.a.:\\
+    4x_1 + 2x_2 + 8x_3 + h_1 = 1000\\
+    1x_2 + 1x_3 = 500\\
+    x_1,\,\,x_2,\,\,x_3,\,\,h_1\geq 0\\
+    \end{split}
+    \end{equation}
+
+    Para aplicar el método de Lemke necesitamos una solución básica que cumpla con el criterio de optimalidad, cosa que ocurre cuando tenemos un problema de máximos sin restricciones de tipo igual y si todos los coeficientes de las variables de la función objetivo son negativos. Basta con que las variables básicas sean las variables de holgura.
+
+    Para poder eliminar la restricción de igualdad podemos crear dos restricciones, una mayor o igual y otra menor o igual, equivalentes a la original:
+
+    \begin{equation}
+    \begin{split}
+    \mbox{max. } s = -10x_1 - 20x_2 - 30x_3\\
+    s.a.:\\
+    4x_1 + 2x_2 + 8x_3 + h_1 = 1000\\
+    1x_2 + 1x_3 \leq 500\\
+    1x_2 + 1x_3 \geq 500\\
+    x_1,\,\,x_2,\,\,x_3,\,\,h_1\geq 0\\
+    \end{split}
+    \end{equation}
+
+    Y, finalmente, podemos formular el problema en forma estándar, que sí cumple con los requisitos para poder aplicar el método de Lemke.
+
+    \begin{equation}
+    \begin{split}
+    \mbox{max. } s = -10x_1 - 20x_2 - 30x_3\\
+    s.a.:\\
+    4x_1 + 2x_2 + 8x_3 + h_1 = 1000\\
+    1x_2 + 1x_3 + h_2 = 500\\
+    1x_2 + 1x_3 - h_3 = 500\\
+    x_1,\,\,x_2,\,\,x_3,\,\,h_1,\,\,h_2,\,\,h_3\geq 0\\
+    \end{split}
+    \end{equation}
+
+    
+    \item \textbf{Obtener la solución óptima del problema haciendo uso del método de Lemke.}
+    Podemos resolver el problema equivalente, cuya solución óptima es la misma que la del original.
+
+    \begin{center}
+    \begin{tabular}{c|c|cccccc|}
+     & $s$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$\\
+     & $0$ & $-10$ & $-20$ & $-30$ & $0$ & $0$ & $0$ \\
+    \hline
+    $h_1$ & 1000  & $4$ & $2$ & $8$ & $1$ & $0$ & $0$\\
+    $h_2$ & 500  & $0$ & $1$ & $1$ & $0$ & $1$ & $0$\\
+    $h_3$ & -500  & $0$ & $-1$ & $-1$ & $0$ & $0$ & $1$\\
+    \hline
+          & $10000$ & $-10$ & $0$ & $-10$ & $0$ & $0$ & $-20$ \\
+    \hline
+    $h_1$ & 0  & $4$ & $0$ & $6$ & $1$ & $0$ & $2$\\
+    $h_2$ & 0  & $0$ & $0$ & $0$ & $0$ & $1$ & $1$\\
+    $x_2$ & 500  & $0$ & $1$ & $1$ & $0$ & $0$ & $-1$\\
+    \hline
+    \end{tabular}
+    \end{center}
+
+    En la solución óptima del problema original:
+    \begin{itemize}
+        \item $z=-s=10000$
+        \item $x_2=500$
+        \item $x_1=x_3=0$
+    \end{itemize}
+
+
+
+    
+\end{enumerate}

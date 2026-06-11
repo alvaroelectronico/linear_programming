@@ -1,0 +1,52 @@
+Una empresa química fabrica tres tipos de productos químicos, P1, P2 y P3, cuyos beneficios unitarios son, respectivamente, \textbf{2, 2 y 4} unidades monetarias (u.m.) 
+
+Para su producción, se consumen dos materias primas. En particular, se consumen \textbf{1} tonelada de materia prima M1 y \textbf{2} de materia prima M2 por cada tonelada de P1, \textbf{2} de M1 y \textbf{1} de M2 por cada tonelada de P2 y \textbf{3} de M1 y \textbf{4} de M2 por cada tonelada de P3.
+
+Cada mes, se dispone de \textbf{400} y \textbf{260} toneladas de materias primas M1 y M2, respectivamente. 
+
+Por cada tonelada de P2 se generan \textbf{2} toneladas de un subproducto peligroso. Por cada tonelada de P1 se consume \textbf{1} tonelada del mismo subproducto. A su vez, por cada tonelada de de P3 se consume \textbf{1} tonelada de dicho subproducto. La empresa es autosuficiente con este subproducto y no dispone de ninguna cantidad adicional comprada, de forma que todo lo que necesita para P1 y P3 se genera mediante la producción de P2.
+
+
+Para obtener el programa de producción de máximo beneficio se dispone del siguiente modelo de programación lineal, donde $x_1$, $x_2$ y $x_3$ representan las toneladas mensuales producidas de P1, P2 y P3, respectivamente.
+ 
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 + 2x_2 + 4x_3\\
+s.a.:\\
+1x_1 + 2x_2 + 3x_3 \leq 400\\
+2x_1 + 1x_2 + 4x_3 \leq 260\\
+1x_1 - 2x_2 + 1x_3 = 0\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+Se conoce la tabla correspondiente a la solución óptima.
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$\\ 
+      & -312 & 0 & 0 & $-2/5$ & 0 & $-6/5$ \\ 
+\hline
+$h_1$ & 192  & 0 & 0 & 2/5 & 1 & $-4/5$\\ 
+$x_2$ & 52  & 0 & 1 & $2/5$ & 0 & 1/5\\ 
+$x_1$ & 104  & 1 & 0 & 9/5 & 0 & 2/5\\ 
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+    \item Interpretar la información que proporciona la tabla correspondiente a la solución óptima.
+
+    \item Dentro de qué rango de valores puede variar el beneficio del producto P1 sin que cambie la gama de productos que resulta más beneficioso producir.
+
+    \item Ha surgido la necesidad de producir 1 tonelada de producto P3, ¿cuál sería el nuevo valor del beneficio y el nuevo plan de la producción?
+    
+    \item ¿Qué impacto tendría sobre el beneficio la posibilidad de comprar y disponer de una tonelada de subproducto (diferente de las que se generan con la producción de P2)? Si la empresa dispone de ese producto adicional, dada la naturaleza peligrosa del mismo, debería consumirlo obligatoriamente.
+    
+\end{enumerate}
+
+
+
+
+
+

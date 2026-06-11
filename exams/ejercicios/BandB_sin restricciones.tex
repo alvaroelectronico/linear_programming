@@ -1,0 +1,36 @@
+A continuación se presenta un árbol que se ha obtenido al aplicar el algoritmo de \textit{Branch and Bound} de Dakin a un problema de maximizar con dos variables de decisión: $x_1$ y $x_2$.
+
+Cuando se ha obtenido la solución óptima de la relajación lineal de un nodo se indica el valor de la función objetivo y la de la variables de esa solución.
+
+
+\begin{figure}[h!]
+    \begin{center}
+    \begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+      level distance = 1.5cm}] 
+    \node [arn_n, label=right: \tiny{(3.571, 3.429)}, label=above right: \textbf{\tiny{440}}] {\tiny{$P_{0}$}}
+        child{ node [arn_n, label=right: \tiny{(3, 4)}, label=below left: \textbf{\tiny{}}, label=above left: \textbf{\tiny{420}}, label=below left: \textbf{\tiny{}}] {\tiny{$P_{1}$} }
+            edge from parent node[above left] {$x_1 \leq 3$}
+        	}
+        child{ node [arn_n, label=right: \tiny{(4, 2.4)}, label=below right: \textbf{\tiny{}}, label=above right: \textbf{\tiny{428}}] {\tiny{$P_{2}$}} 
+            child{ node [arn_n, label=above left:\textbf{\tiny{423.3}}, label=right: \tiny{(4.1, 2)}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{3}$}}
+                child{ node [arn_n, label=above right:\textbf{\tiny{410}}, label=right: \tiny{(4, 2)}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{5}$}} edge from parent node[above left] {$x_1 \leq 4$}
+                }
+                child{ node [arn_n, label=above right:\textbf{\tiny{}}, label=right:  , label=below right: \textbf{\tiny{}}] {\tiny{$P_{6}$}} edge from parent node[above right] {$x_1 \geq 5$}
+                }
+            edge from parent node[above left] {$x_2 \leq 2$}
+                }
+            child{ node [arn_n, label= right:\tiny{}, label=above right:\textbf{\tiny{}}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{4}$}} edge from parent node[above right] {$x_2\geq 3$}
+                }
+        edge from parent node[above right] {$x_1 \geq 4$}
+    		}
+    ; 
+    \end{tikzpicture}
+    \end{center}
+\end{figure}
+
+Se pide:
+\begin{enumerate} 
+    \item Indicar la mejor cota superior y la mejor cota inferior tanto del problema propuesto como de cada uno de los subproblemas.
+    \item Explicar qué nodos y por qué se pueden podar, si es que se pueden podar.
+    \item Indicar cuál sería un siguiente paso aplicando el algoritmo de Dakin.
+\end{enumerate}

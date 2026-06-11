@@ -79,25 +79,25 @@ def render_worked_solution(
     parts: list[str] = []
 
     if include_formulation:
-        parts.append(header("Formulation"))
+        parts.append(header("Formulación"))
         parts.append(problem.formulation_tex())
 
     result = problem.result
     if getattr(result, "is_infeasible", False):
-        parts.append(header("Result"))
-        parts.append("\\textbf{The problem is infeasible.}")
+        parts.append(header("Resultado"))
+        parts.append("\\textbf{El problema es infactible.}")
         return "\n\n".join(parts) + "\n"
     if getattr(result, "is_unbounded", False):
-        parts.append(header("Result"))
-        parts.append("\\textbf{The problem is unbounded.}")
+        parts.append(header("Resultado"))
+        parts.append("\\textbf{El problema es no acotado.}")
         return "\n\n".join(parts) + "\n"
 
     if include_phase1 and problem.standard_form.num_artificial_vars > 0:
-        parts.append(header("Phase 1 formulation"))
+        parts.append(header("Formulación de la primera fase"))
         parts.append(problem.formulation_phase1_tex())
 
     if include_tableau:
-        parts.append(header("Simplex tableau"))
+        parts.append(header("Resolución"))
         parts.append(
             problem.compose_tableau(
                 problem.basic_solutions,
@@ -107,9 +107,9 @@ def render_worked_solution(
         )
 
     if include_basis_details:
-        parts.append(header("Basis details"))
+        parts.append(header("Detalles de la base"))
         for i, basic_solution in enumerate(problem.basic_solutions, start=1):
-            parts.append(f"\\subsection*{{Basis {i}}}" if section_headers else "")
+            parts.append(f"\\subsection*{{Base {i}}}" if section_headers else "")
             parts.append(basic_solution.B_tex(frac_command=frac_command))
             parts.append(basic_solution.invB_tex(frac_command=frac_command))
             parts.append(basic_solution.piB_tex(frac_command=frac_command))

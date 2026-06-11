@@ -1,0 +1,42 @@
+Se quiere resolver el siguiente problema de programación lineal mediante el algoritmo de \textit{Branch \& Bound} propuesto por Dakin:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 3x_1 + 5x_2\\
+s.a.:\\
+2x_1 + 4x_2 \leq  25\\
+x_1 \leq 8\\
+2x_2 \leq 10\\
+x_1,\,\,x_2 \in  \mathcal{Z}^+
+\end{split}
+\end{equation}
+
+Se ha generado este árbol.
+
+
+\begin{figure}[h!]
+    \begin{center}
+    \begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+      level distance = 1.5cm}, scale=1.5] 
+    \node [arn_n, label=right: \tiny{$x^*_{RL_0}$=(8, 2.25)}, label=above right: \textbf{\tiny{}}] {\tiny{$P_{0}$}}
+        child{ node [arn_n, label=right: \tiny{}, label=below left: \textbf{\tiny{}}, label=above left: \textbf{\tiny{}}, label=below left: \textbf{\tiny{$\underline{z}_1$=420}}] {\tiny{$P_{1}$} }
+            edge from parent node[above left] {}
+        	}
+        child{ node [arn_n, label=right: \tiny{$x^*_{RL_2}$=(6.5, 3)}, label=below right: \textbf{\tiny{}}, label=above right: \textbf{\tiny{}}] {\tiny{$P_{2}$}} 
+            child{ node [arn_n, label=above left:\textbf{\tiny{$\overline{z}_3$=34.25}}, label=right: \tiny{}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{3}$}}
+                child{ node [arn_n, label=above right:\textbf{\tiny{}}, label=right: \tiny{$x^*_{RL_5}$=(6, 3)}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{5}$}} edge from parent node[above left] {}
+                }
+                child{ node [arn_n, label=above right:\textbf{\tiny{}}, label=right: \tiny{$x^*_{RL_6}$=(4.5, 4)}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{6}$}} edge from parent node[above right] {}
+                }
+            edge from parent node[above left] {}
+                }
+            child{ node [arn_n, label= right:\tiny{}, label=above right:\textbf{\tiny{}}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{4}$}} edge from parent node[above right] {}
+                }
+        edge from parent node[above right] {}
+    		}
+    ; 
+    \end{tikzpicture}
+    \end{center}
+\end{figure}
+
+Se pide actualizar las cotas de cada nodos del árbol e indica, en su caso, si se tiene que estudiar o ramificar.

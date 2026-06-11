@@ -1,0 +1,166 @@
+La organización \textbf{Voluntarios Unidos} coordina actividades de apoyo comunitario en tres áreas: \textbf{educación (E)}, \textbf{salud (S)} y \textbf{medio ambiente (M)}. Los voluntarios tienen un tiempo limitado semanal y la organización desea maximizar el impacto de sus actividades, medido en términos de puntos de beneficio para la comunidad.
+
+Por cada hora dedicada, cada área genera los siguientes beneficios. Educación: \textbf{5 puntos} de beneficio, salud: \textbf{8 puntos} de beneficio y medio ambiente: \textbf{6 puntos} de beneficio.
+
+La organización cuenta con un máximo de \textbf{40 horas de trabajo voluntario semanalmente}. 
+
+Además, por política interna, al menos el \textbf{30\% del tiempo total} debe destinarse a actividades educativas.
+
+Por último, la organización desea un beneficio de al menos 200 puntos entre las actividades de educación y salud.
+
+Si $x_1$, $x_2$, $x_3$ representan el tiempo semanal dedicado (en horas) a educación, salud y medio ambiente, respectivamente, el modelo de programación lineal que permite maximizar el impacto comunitario es:
+
+
+\begin{equation}
+\begin{split}
+\text{max. } z = 5x_1 + 8x_2 + 6x_3 \\
+\text{s.a.:} \\
+x_1 + x_2 + x_3 \leq 40 \quad \text{(Tiempo total disponible)} \\
+0.7x_1 - 0.3x_2 - 0.3x_3 \geq 0 \quad \text{(Política educativa)}\\
+5x_1 + 8x_2 \geq 200 \quad \text{(Límite en salud y medio ambiente)} \\
+\end{split}
+\end{equation}
+
+Que se puede formular de manera equivalente de la siguiente manera:
+
+
+\begin{equation}
+\begin{split}
+\text{max. } z = 5x_1 + 8x_2 + 6x_3 \\
+\text{s.a.:} \\
+x_1 + x_2 + x_3 \leq 40 \quad \text{(Tiempo total disponible)} \\
+7x_1 - 3x_2 - 3x_3 \geq 0 \quad \text{(Política educativa)} \\
+5x_1 + 8x_2 \geq 200 \quad \text{(Límite en salud y medio ambiente)} \\
+x_1, x_2, x_3 \geq 0 \quad \text{(No negatividad)}
+\end{split}
+\end{equation}
+
+Se conoce la tabla correspondiente a la solución óptima del problema:
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$\\ 
+Phase 2 & -284 & 0 & 0 & -2 & $-71/10$ & $-3/10$ & 0 \\ 
+\hline
+$h_3$ & 84  & 0 & 0 & 8 & $71/10$ & $3/10$ & 1\\ 
+$x_1$ & 12  & 1 & 0 & 0 & $3/10$ & $-1/10$ & 0\\ 
+$x_2$ & 28  & 0 & 1 & 1 & $7/10$ & $1/10$ & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+Se pide:
+
+\begin{enumerate}
+    \item \textbf{Interpretar la información que ofrece la tabla de la solución óptima en términos de las actividades que se cumplen, los beneficios generados y el cumplimiento de requisitos.}
+
+    La programación óptima de actividades consiste en:
+    \begin{itemize}
+        \item Dedicar 12 horas a educación, 28 horas a salud y ninguna a medio ambiente.
+        \item El beneficio total obtenido sería de 284 puntos.
+        \item Se haría uso del tiempo total disponible ($h_1=0$).
+        \item La proporción de tiempo dedicada a actividades educativas se cumpliría por el mínimo, 30\% ($h_2=0$).
+        \item Se cumple con el mínimo de beneficio de las actividades de educación y salud superando el mínimo en 84 puntos ($h_3=84$).
+    \end{itemize}
+
+    \item \textbf{Obtener la inversa de la base correspondiente a la solución óptima.}
+
+    Las columna de la inversa de la base de obtienen de la siguiente manera.
+    \begin{itemize}
+        \item Primera columna: columna de las tasas de sustitución correspondiente a $h_1$ (restricción de tipo menor o igual).
+        \item Segunda columna: opuesta de la columna de las tasas de sustitución correspondiente a $h_2$ (restricción de tipo mayor o igual).
+        \item Tercera columna: opuesta de la columna de las tasas de sustitución correspondiente a $h_3$ (restricción de tipo mayor o igual).
+    \end{itemize}
+
+\begin{equation}
+\begin{split}
+B^{-1} =\begin{pmatrix}
+71/10 & -3/10 & -1\\
+3/10 & 1/10 & 0\\
+7/10 & -1/10 & 0\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+    
+    \item \textbf{Evaluar el impacto sobre las horas dedicadas a las diferentes actividades y sobre el beneficio de las actividades realizadas si, en una semana en particular, fuera necesario dedicar una hora a actividades relacionadas con medio ambiente.}
+
+    Este cambio quedaría reflejado en el modelo de programación lineal por el hecho de que $x_3$ tomaría valor 1.  
+
+    \begin{itemize}
+        \item El impacto sobre el beneficio se puede calcular a partir del criterio del simplex de $x_3$. Como $V^B_{x_3} = -2$, realizar una hora de actividades de medio ambiente daría lugar a una reducción del beneficio de 2 unidades (sería igual a 282).
+        \item El impacto sobre las horas a las actividades se podría evaluar estudiando los cambios de los valores de $x_1$ y $x_2$ y estos cambios vienen dados por las tasas de sustitución correspondientes.
+        \begin{itemize}
+            \item $p^B_{23} = 0$ representa la disminución del valor de la segunda variable básica ($x_1$) cuando la tercera variable aumenta su valor una unidad ($x_3$=1). Se dedicaría el mismo tiempo a educación, se decir, 12 horas.
+            \item $p^B_{33} = 1$ representa la disminución del valor de la tercera variable básica ($x_3$) cuando la tercera variable aumenta su valor una unidad ($x_3$=1). Se dedicaría una hora menos a salud, es decir, 27 horas.
+        \end{itemize}
+    \end{itemize}
+
+    Por un lado, al dedicar una hora más a medio ambiente, tendríamos 6 puntos de beneficio adicionales y, por otro, al dedicar una hora menos en salud, tendríamos 8 puntos de beneficio menos: el resultado neto es una reducción de 2 unidades del beneficio, como indica $V^B_{x_3}$.
+
+
+    \item \textbf{Cuantificar el impacto sobre las horas dedicadas a cada actividad y sobre los puntos de beneficio si, como resultado de la celebración de la semana de voluntariado se dispusiera de un número genérico de horas adicionales a las 40 semanales igual a $H$.}
+
+    Si dispusiéramos de $H$ horas adicionales a las 40, cambiaría el término $b$ del problema, que sería:
+
+    \begin{equation}
+    b'=
+    \begin{pmatrix}
+    40 + H \\
+    0\\
+    200
+    \end{pmatrix}    
+    \end{equation}
+
+    Al cambiar b, cambiarían los valores de $u^B$ y $z^B$.
+
+    \begin{equation}
+    \begin{split}
+    u^B=B^{-1}b = \begin{pmatrix}
+    71/10 & -3/10 & -1\\
+    3/10 & 1/10 & 0\\
+    7/10 & -1/10 & 0\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    40 + H\\
+    0\\
+    200\\
+    \end{pmatrix}
+     = \begin{pmatrix}
+    84+H/10\\
+    12+3H/10\\
+    28+7H/10
+    \end{pmatrix}
+    \end{split}
+    \end{equation}
+
+    La solución básica correspondiente nunca dejaría de ser factible y se realizarían $3H/10$ horas más de educación y $7H/10$ de salud.
+
+    El impacto sobre los puntos sería el siguiente:
+
+    \begin{equation}
+    \begin{split}
+    z^B=c^Bu^B = \begin{pmatrix}
+    0 & 5 & 8\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    84\\
+    12+3H/10\\
+    28+7H/10\\
+    \end{pmatrix}
+     = 284 + 71H/10\end{split}
+    \end{equation} 
+
+    Es decir, el beneficio se incrementaria en 71H/10.
+
+    Todo lo anterior se puede observar igualmente, analizando qué ocurriría si hacemos que $h_1 = -H$ que sería análogo a disponer de $H$ horas adicionales de tiempo total disponible.
+
+    Siguiendo un razonamiento análogo al de la pregunta anterior y dado el carácter lineal del problema, se podría realizar el análisis evaluando el impacto de que $\Delta H = -H$, con el mismo resultado.
+    
+
+    
+
+    
+\end{enumerate}
+
+

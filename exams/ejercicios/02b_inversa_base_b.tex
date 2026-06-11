@@ -1,0 +1,42 @@
+Dado el siguiente problema de programación lineal:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 4x_1 + 2x_2\\
+s.a.:\\
+4x_1 + 4x_2  \leq 100\\
+2x_1 + 3x_2  = 50\\
+1x_1 + 2x_2  \geq 10\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+Su solución óptima es la correspondiente a la siguiente tabla:
+
+\begin{center}
+\begin{tabular}{c|c|cccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_3$\\ 
+ & -100 & 0 & 0 & -2 & 0  \\ 
+\hline
+$x_1$ & 25  & 1 & 0 & 3/4 & 0 \\ 
+$h_3$ & 15  & 0 & 0 & -1/4 & 1 \\ 
+$x_2$ & 0  & 0 & 1 & -1/2 & 0 \\ 
+\hline
+\end{tabular}
+\end{center}
+
+% \begin{center}
+% \begin{tabular}{c|c|cccccc|}
+%  & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+%  & -100 & 0 & 0 & -2 & 0 & 2 & 0 \\ 
+% \hline
+% $x_1$ & 25  & 1 & 0 & 3/4 & 0 & -1 & 0\\ 
+% $h_3$ & 15  & 0 & 0 & -1/4 & 1 & 1 & -1\\ 
+% $x_2$ & 0  & 0 & 1 & -1/2 & 0 & 1 & 0\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+
+
+
+Se pide calcular la base y la inversa de la base de la solución óptima.

@@ -1,0 +1,13 @@
+En el contexto de la resolución de un problema de programación  lineal, $P$, mediante el método de las dos fases, explicar justificadamente:
+\begin{enumerate}
+    \item \textbf{¿Cuál es la interpretación de la función objetivo correspondiente al problema de la primera fase, $P'$ en relación con el problema $P$?}
+
+    La función objetivo de $P'$ tiene la forma max. $z' = -\sum_i a_i$ donde $a_i$ es la variable artificial de la restricción $i$, equivalente a min. $-z' = \sum_i a_i$
+
+    Como $a_i$ representa el grado de incumplimiento de la restricción $i$ del problema original, la función objetivo del problema $P'$ representa la suma de los incumplimientos de las restricciones del problema original, $P$.
+    
+    \item \textbf{¿Qué interpretación tiene el hecho de que la solución óptima de $P'$ tenga función objetivo diferente de cero?}
+
+    Si para la solución óptima de $P'$ existe al menos alguna restricción que no se cumple (existe $a_i>0$), quiere decir que no es posible encontrar una solución de $P'$ que cumpla con todas las restricciones de $P$ que, por lo tanto, es un problema que no tiene solución factible.
+    
+\end{enumerate}

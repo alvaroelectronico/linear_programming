@@ -1,0 +1,57 @@
+Toyco produce y vende tres tipos de juguetes: trenes, camiones y coches. 
+Cada juguete requiere un proceso de ensamblaje y uno final de empaquetado. 
+
+Los límites semanales  en los tiempos disponibles para las dos operaciones son \textbf{4300 y 4600}, respectivamente, y los márgenes por tren, camión y coche son de \textbf{1, 2 y 5 }euros, respectivamente. 
+
+Los tiempos que requiere cada tren un cada proceso (ensamble y empaquetado) son \textbf{2, 1} minutos, respectivamente. Los de cada camión son \textbf{2 y 2} y los de cada coche \textbf{1 y 4} minutos.
+
+Además, existe un compromiso comercial con un distribuidor de juguetes de suministrarle al menos \textbf{1000} unidades entre camiones y coches.
+
+Si $x_1$, $x_2$ y $x_3$ representan el número semanal de unidades producidas de trenes, camiones y coches, respectivamente, el modelo de programación lineal que permite establecer la producción con mayor margen es el siguiente.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z =  x_1 + 2x_2 + 5x_3\\
+s.a.:\\
+2x_1 + 2x_2 +  x_3 \leq 4300\\
+ x_1 + 2x_2 + 4x_3 \leq 4600\\
+        x_2 +  x_3 \geq 1000\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$\\ 
+Phase 2 & -5750 & $-1/4$ & $-1/2$ & 0 & 0 & $-5/4$ & 0 \\ 
+\hline
+$h_1$ & 3150  & $7/4$ & $3/2$ & 0 & 1 & $-1/4$ & 0\\ 
+$h_3$ & 150  & $1/4$ & $-1/2$ & 0 & 0 & $1/4$ & 1\\ 
+$x_3$ & 1150  & $1/4$ & $1/2$ & 1 & 0 & $1/4$ & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+
+Se pide:
+
+\begin{enumerate}
+    \item Interpretar la información que ofrece la tabla de la solución óptima (producción, margen total y recusos y compromiso comercial).
+    
+    \item Calcular dentro de qué rango de valores del tiempo disponible de empaquetado la gama de productos del plan óptima de producción no cambiaría.
+    
+    \item Explicar cuál sería el impacto de relajar el compromiso comercial adquirido
+
+    \item Indicar y justificar cómo afectaría esto al plan óptimo de producción si, por política de empresa, hubiera que que fabricar al menos tantos camiones como coches.
+   
+\end{enumerate}
+
+
+
+
+
+
+

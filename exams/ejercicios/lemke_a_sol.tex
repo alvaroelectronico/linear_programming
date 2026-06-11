@@ -1,0 +1,42 @@
+Resolver el siguiente problema mediante el \textbf{método de Lemke}.
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 2x_1 + 3x_2 + x_3\\
+s.a.:\\
+2x_1 + 2x_2 + 4x_3 \geq 430\\
+3x_1 + 4x_2 - x_3 \leq 960\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+\noindent
+
+\textbf{Solución}
+El problema se puede formular como sigue:
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 2x_1 + 3x_2 + x_3\\
+s.a.:\\
+-2x_1 - 2x_2 - 4x_3 + h_1 = -430\\
+3x_1 + 4x_2 - x_3 + h_2 = 960\\
+x_1,\,\,x_2,\,\,x_3,\,h_1,\,h_2\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$\\ 
+ & 0 & -2 & -3 & -1 & 0 & 0 \\ 
+\hline
+$h_1$ & -430  & -2 & -2 & -4 & 1 & 0\\ 
+$h_2$ & 960  & 3 & 4 & -1 & 0 & 1\\ 
+\hline
+ & $215/2$ & $-3/2$ & $-5/2$ & 0 & $-1/4$ & 0 \\ 
+\hline
+$x_3$ & 215/2  & $1/2$ & $1/2$ & 1 & $-1/4$ & 0\\ 
+$h_2$ & 2135/2  & $7/2$ & $9/2$ & 0 & $-1/4$ & 1\\ 
+\hline
+\end{tabular}
+\end{center}

@@ -1,0 +1,38 @@
+\begin{enumerate}
+    \item{\textbf{Calcula} la solución óptima de la relajación lineal de este problema:
+    
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 5x_1 + 8x_2\\
+s.a.:\\
+x_1 + x_2 \leq  6\\
+5x_1 + 9x_2 \leq 45\\
+x_1,\,\,x_2 \in  \mathcal{Z}^+
+\end{split}
+\label{modeloGomory}
+\end{equation}
+
+    A continuación se indica una solución básica y factible de la que se recomienda partir:
+
+
+\begin{center}
+\begin{tabular}{c|c|cccc|}
+ & $z$ & $x_1$ & $x_2$ &  $h_1$ & $h_2$ \\ 
+ & -40 & $5/9$ & 0  & 0 & -3/4 \\ 
+\hline
+$h_1$ & 1  & 4/9 & 0 & 1 & -1/9\\ 
+$x_2$ & 5  & 5/9 & 1 & 0 & 1/9\\ 
+\hline
+\end{tabular}
+\end{center}
+
+    
+    }
+
+    \item{\textbf{Indica} la expresión del corte de Gomory asociado a la variable que tiene parte fraccional de mayor valor en la solución óptima de la relajación lineal obtenida.}
+    \item {Añade el corte propuesto y \textbf{obtén} la solución óptima del problema original, problema \eqref{modeloGomory}}
+    \item{¿Cuál es la \textbf{expresión de este corte} en función de $x_1$ y $x_2$?}
+
+\end{enumerate}
+
+

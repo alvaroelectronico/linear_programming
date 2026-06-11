@@ -1,0 +1,24 @@
+
+
+Una importante corporación energética global está planificando la interconexión de diez núcleos urbanos importantes (C1 a C10) para su nueva red de distribución de gas. El objetivo principal es construir una red de tuberías que garantice que todas las ciudades estén conectadas y puedan recibir suministro de gas, pero minimizando estrictamente el coste total de la infraestructura. Se han realizado estudios detallados para determinar el coste exacto de instalar tuberías entre cada par de ciudades conectables, y estos costes son todos diferentes entre sí.
+
+El grafo no dirigido asociado se ha representado con la siguiente \textbf{matriz de adyacencia}. La matriz presenta las diez ciudades (nodos) y los 18 posibles tramos de tubería entre ellas, con sus costes asociados. Un valor de 0 indica que no hay conexión directa posible o que se refiere a la misma ciudad.
+
+$$
+\begin{array}{c|cccccccccc}
+& \text{C1} & \text{C2} & \text{C3} & \text{C4} & \text{C5} & \text{C6} & \text{C7} & \text{C8} & \text{C9} & \text{C10} \\
+\hline
+\text{C1} & 0 & 1 & 2 & 10 & 0 & 0 & 0 & 0 & 17 & 0 \\
+\text{C2} & 1 & 0 & 0 & 3 & 11 & 0 & 0 & 0 & 0 & 18 \\
+\text{C3} & 2 & 0 & 0 & 0 & 4 & 12 & 0 & 0 & 0 & 0 \\
+\text{C4} & 10 & 3 & 0 & 0 & 0 & 5 & 13 & 0 & 0 & 0 \\
+\text{C5} & 0 & 11 & 4 & 0 & 0 & 0 & 6 & 14 & 0 & 0 \\
+\text{C6} & 0 & 0 & 12 & 5 & 0 & 0 & 0 & 7 & 15 & 0 \\
+\text{C7} & 0 & 0 & 0 & 13 & 6 & 0 & 0 & 0 & 8 & 16 \\
+\text{C8} & 0 & 0 & 0 & 0 & 14 & 7 & 0 & 0 & 0 & 9 \\
+\text{C9} & 17 & 0 & 0 & 0 & 0 & 15 & 8 & 0 & 0 & 0 \\
+\text{C10} & 0 & 18 & 0 & 0 & 0 & 0 & 16 & 9 & 0 & 0 \\
+\end{array}
+$$
+
+Utilizando el algoritmo de Kruskal, determina qué tramos de tubería deben instalarse para conectar todas las ciudades con el menor coste total posible, formando una única red de distribución de gas. Identifica también las aristas que no se seleccionaron y por qué.

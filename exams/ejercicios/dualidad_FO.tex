@@ -1,0 +1,30 @@
+Dado el siguiente problema de programación lineal:
+\begin{align*}
+\text{max.} \quad & z = 4x_1 + x_2 \\
+\text{s.a.} \quad & 3x_1 + 2x_2 \leq 6 \\
+                 & 6x_1 + 3x_2 \leq 10 \\
+                 & x_1, x_2 \geq 0
+\end{align*}
+Se ha obtenido una tabla correspondiente a la matriz completa cuya fila 0 es la siguiente:
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{ccccc}
+$z$                         & $x_1$ & $x_2$ & $h_1$ & $h_2$                   \\
+\multicolumn{1}{|l|}{-20/3} & 0     & -2    & 0     & \multicolumn{1}{l|}{-1} \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+    
+
+Demuestra, \textbf{\textit{sin resolver el problema y utilizando la teoría de la dualidad}}, que tiene que haber algún cálculo erróneo en la fila 0.
+
+
+
+% \textbf{Problema Dual:}
+% \begin{align*}
+% \min \quad & w = 6y_1 + 10y_2 \\
+% \text{s.a.} \quad & 3y_1 + 6y_2 \geq 4 \\
+%                   & 2y_1 + 3y_2 \geq 1 \\
+%                   & y_1, y_2 \geq 0
+% \end{align*}

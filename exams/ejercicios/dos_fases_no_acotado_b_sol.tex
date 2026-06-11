@@ -1,0 +1,69 @@
+Dado el siguiente problema de programación lineal:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 +  x_2 + 2x_3\\
+s.a.:\\
+4x_1 + 4x_2 - 2x_3 \geq 60\\
+x_1 + 2x_2 -  x_3 \leq 100\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+
+\begin{enumerate}
+    \item Formular el problema equivalente en formato estándar.
+
+    \begin{equation}
+    \begin{split}
+    \mbox{max. } z = 2x_1 +  x_2 + 2x_3\\
+    s.a.:\\
+    4x_1 + 4x_2 - 2x_3 - h_1 =  60\\
+    x_1 + 2x_2 -  x_3 + h_2 = 100\\
+    x_1,\,\,x_2,\,\,x_3,\, h_1,\,h_2\geq 0\\
+    \end{split}
+    \end{equation}
+
+
+    \item Formular el problema correspondiente a la primera fase mediante el método de resolución de las dos fases.
+
+    \begin{equation}
+    \begin{split}
+    \mbox{max. } z = -a_1\\
+    s.a.:\\
+    4x_1 + 4x_2 - 2x_3 - h_1 + a_1 =  60\\
+    x_1 + 2x_2 -  x_3 + h_2 = 100\\
+    x_1,\,\,x_2,\,\,x_3,\, h_1,\,h_2,\, a_1 \geq 0\\
+    \end{split}
+    \end{equation}
+
+\item Obtener la solución óptima del problema.
+
+
+    \begin{center}
+    \begin{tabular}{c|c|cccccc|}
+     & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $a_1$\\ 
+    Phase 1 & 60 & 4 & 4 & -2 & -1 & 0 & 0 \\ 
+    Phase 2 & 0 & 2 & 1 & 2 & 0 & 0 & 0 \\ 
+    \hline
+    $a_1$ & 60  & 4 & 4 & -2 & -1 & 0 & 1\\ 
+    $h_2$ & 100  & 1 & 2 & -1 & 0 & 1 & 0\\ 
+    \hline
+    Phase 1 & 0 & 0 & 0 & 0 & 0 & 0 & -1 \\ 
+    Phase 2 & -30 & 0 & -1 & 3 & $1/2$ & 0 & $-1/2$ \\ 
+    \hline
+    $x_1$ & 15  & 1 & 1 & $-1/2$ & $-1/4$ & 0 & $1/4$\\ 
+    $h_2$ & 85  & 0 & 1 & $-1/2$ & $1/4$ & 1 & $-1/4$\\ 
+    \hline
+    \end{tabular}
+    \end{center}
+
+    El problema no está acotado y, por lo tanto, no tiene solución óptima. 
+
+    
+    \end{enumerate}
+
+
+
+
+

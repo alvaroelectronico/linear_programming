@@ -1,0 +1,60 @@
+Dado el siguiente problema de Programación Lineal
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 + 3x_2\\
+s.a.:\\
+2x_1 + 3x_2 \leq 40\\
+2x_1 + 2x_2 \geq 5\\
+2x_2 \geq 5\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+Se conoce una tabla correspondiente a la resolución del mismo mediante el método de las dos fases.
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$ & $a_2$ & $a_3$\\ 
+Fase 1 & $0$ & $-2$ & $0$ & $0$ & $1$ & $-1$ & $-2$ & $0$ \\ 
+Fase 2 & $-15/2$ & $-59/2$ & $0$ & $0$ & $3/2$ & $0$ & $-3/2$ & $0$ \\ 
+\hline
+$h_1$ & 65/2  & $-59/2$ & $0$ & $1$ & $3/2$ & $0$ & $-3/2$ & $0$\\ 
+$x_2$ & 5/2  & $21/2$ & $1$ & $0$ & $-1/2$ & $0$ & $1/2$ & $0$\\ 
+$a_3$ & 0  & $-21$ & $0$ & $0$ & $1$ & $-1$ & $-1$ & $1$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+\noindent \textbf{Obtener la solución óptima del problema original.}
+\vspace{0.5cm}
+
+La solución que se ofrece es una solución correspondiente a la primera fase en la que todas las variables artificiales son 0, pero una, $a_3$ es básica, con lo que es posible hacer que otra variable sea básica y que $a_3$ deje de ser básica y, con ello, obtener una solución básica del problema original. 
+
+En la tabla siguiente, por ejemplo, se la elegido que $h_2$ sea variable básica. A partir de ahí, aplicando el método del simplex se obtiene la solución óptima del problema original.
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$ & $a_2$ & $a_3$\\ 
+Fase 1 & $0$ & $-2$ & $0$ & $0$ & $1$ & $-1$ & $-2$ & $0$ \\
+Fase 2 & $-15/2$ & $-1$ & $0$ & $0$ & $3/2$ & $0$ & $-3/2$ & $0$ \\
+\hline
+$h_1$ & 65/2  & $-1$ & $0$ & $1$ & $3/2$ & $0$ & $-3/2$ & $0$\\
+$x_2$ & 5/2  & $1$ & $1$ & $0$ & $-1/2$ & $0$ & $1/2$ & $0$\\
+$a_3$ & 0  & $-2$ & $0$ & $0$ & $1$ & $-1$ & $-1$ & $1$\\
+\hline
+Fase 1 & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $-1$ & $-1$ \\
+Fase 2 & $-15/2$ & $2$ & $0$ & $0$ & $0$ & $3/2$ & $0$ & $-3/2$ \\
+\hline
+$h_1$ & 65/2  & $2$ & $0$ & $1$ & $0$ & $3/2$ & $0$ & $-3/2$\\
+$x_2$ & 5/2  & $0$ & $1$ & $0$ & $0$ & $-1/2$ & $0$ & $1/2$\\
+$h_2$ & 0  & $-2$ & $0$ & $0$ & $1$ & $-1$ & $-1$ & $1$\\
+\hline
+Fase 2 & $-40$ & $0$ & $0$ & $-1$ & $0$ & $0$ & $0$ & $0$ \\
+\hline
+$x_1$ & 65/4  & $1$ & $0$ & $1/2$ & $0$ & $3/4$ & $0$ & $-3/4$\\
+$x_2$ & 5/2  & $0$ & $1$ & $0$ & $0$ & $-1/2$ & $0$ & $1/2$\\
+$h_2$ & 65/2  & $0$ & $0$ & $1$ & $1$ & $1/2$ & $-1$ & $-1/2$\\
+\hline
+\end{tabular}
+\end{center}

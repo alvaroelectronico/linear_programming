@@ -1,10 +1,15 @@
-"""Command-line interface for generating exams (entry point ``lp-exams``).
+"""Command-line interface for generating problems and exams (``lp-exams``).
 
-Examples::
+Workflow:
 
-    lp-exams list
-    lp-exams problem mueblespro --solution --no-pdf
-    lp-exams exam mcio1_mad1_2627 --variant A --solutions
+    lp-exams list                          # bank problems + exam definitions
+    lp-exams render demo_muebles           # write ejercicios/demo_muebles{,_sol}.tex
+    lp-exams collection --pdf              # build exams/coleccion.tex (+ PDF)
+    lp-exams exam mcio1_mad1_2627 --pdf    # build exams/examen.tex (+ PDF)
+
+Fragments live in ``exams/ejercicios/``; the collection and exam master
+documents live in ``exams/`` and ``\\input`` those fragments, so PDFs are
+compiled with the working directory set to ``exams/``.
 """
 
 from __future__ import annotations
@@ -19,16 +24,11 @@ from exams.bank import list_problems, load_problem
 from exams.compile import LatexNotFoundError, compile_pdf
 from exams.exams_def import list_exams, load_exam
 
-DEFAULT_OUT = Path("exams/build")
+APP_DIR = Path(__file__).parent
+DEFAULT_EJERCICIOS = APP_DIR / "ejercicios"
 
 
-def _write_and_maybe_compile(tex: str, stem: str, out_dir: Path, make_pdf: bool) -> int:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    tex_path = out_dir / f"{stem}.tex"
-    tex_path.write_text(tex, encoding="utf-8")
-    print(f"Wrote {tex_path}")
-    if not make_pdf:
-        return 0
+def _compile(tex_path: Path) -> int:
     try:
         pdf_path = compile_pdf(tex_path)
     except LatexNotFoundError as exc:
@@ -46,74 +46,83 @@ def _write_and_maybe_compile(tex: str, stem: str, out_dir: Path, make_pdf: bool)
 
 
 def _cmd_list(_: argparse.Namespace) -> int:
-    print("Problems:")
+    print("Generated problems (bank):")
     for name in list_problems():
         print(f"  {name}")
-    print("Exams:")
+    print("Exam definitions:")
     for name in list_exams():
         print(f"  {name}")
+    unpaired = render.unpaired_statements(DEFAULT_EJERCICIOS)
+    if unpaired:
+        print("\nStatements with no matching _sol.tex (excluded from the collection):")
+        for name in unpaired:
+            print(f"  {name}")
     return 0
 
 
-def _cmd_problem(args: argparse.Namespace) -> int:
+def _cmd_render(args: argparse.Namespace) -> int:
     problem = load_problem(args.name)
-    tex = render.render_problem_document(
-        problem, solution=args.solution, frac_command=args.frac
+    statement, solution = render.write_problem_fragments(
+        problem, args.ejercicios, frac_command=args.frac
     )
-    suffix = "_solution" if args.solution else ""
-    return _write_and_maybe_compile(tex, f"{problem.id}{suffix}", args.out, not args.no_pdf)
+    print(f"Wrote {statement}")
+    print(f"Wrote {solution}")
+    return 0
+
+
+def _cmd_collection(args: argparse.Namespace) -> int:
+    tex = render.build_collection(args.ejercicios)
+    out_path = args.out / "coleccion.tex"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(tex, encoding="utf-8")
+    print(f"Wrote {out_path}")
+    return _compile(out_path) if args.pdf else 0
 
 
 def _cmd_exam(args: argparse.Namespace) -> int:
     exam = load_exam(args.name, variant=args.variant)
-    tex = render.render_exam_document(exam, solutions=args.solutions, frac_command=args.frac)
-    kind = "solutions" if args.solutions else "exam"
-    stem = f"{exam.id}_{exam.variant}_{kind}"
-    return _write_and_maybe_compile(tex, stem, args.out, not args.no_pdf)
-
-
-def _add_common_output_flags(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--out", type=Path, default=DEFAULT_OUT, help="output directory")
-    parser.add_argument("--no-pdf", action="store_true", help="write .tex only; skip PDF")
-    parser.add_argument(
-        "--frac", dest="frac", action="store_true", default=True,
-        help="render \\frac{a}{b} (default)",
-    )
-    parser.add_argument(
-        "--no-frac", dest="frac", action="store_false", help="render a/b instead of \\frac",
-    )
+    tex = render.build_exam(exam, solutions=args.solutions)
+    kind = "soluciones" if args.solutions else "examen"
+    out_path = args.out / f"{exam.id}_{exam.variant}_{kind}.tex"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(tex, encoding="utf-8")
+    print(f"Wrote {out_path}")
+    return _compile(out_path) if args.pdf else 0
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="lp-exams", description="Generate LP exams.")
+    parser = argparse.ArgumentParser(prog="lp-exams", description="Generate LP problems and exams.")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_list = sub.add_parser("list", help="list bank problems and exam definitions")
     p_list.set_defaults(func=_cmd_list)
 
-    p_problem = sub.add_parser("problem", help="render a single bank problem")
-    p_problem.add_argument("name", help="bank problem name")
-    p_problem.add_argument(
-        "--solution", action="store_true", help="include the worked solution"
-    )
-    _add_common_output_flags(p_problem)
-    p_problem.set_defaults(func=_cmd_problem)
+    p_render = sub.add_parser("render", help="write a problem's statement + solution fragments")
+    p_render.add_argument("name", help="bank problem name")
+    p_render.add_argument("--ejercicios", type=Path, default=DEFAULT_EJERCICIOS)
+    p_render.add_argument("--frac", dest="frac", action="store_true", default=True)
+    p_render.add_argument("--no-frac", dest="frac", action="store_false")
+    p_render.set_defaults(func=_cmd_render)
 
-    p_exam = sub.add_parser("exam", help="render a full exam")
+    p_coll = sub.add_parser("collection", help="build the collection master document")
+    p_coll.add_argument("--out", type=Path, default=APP_DIR, help="where to write coleccion.tex")
+    p_coll.add_argument("--ejercicios", type=Path, default=DEFAULT_EJERCICIOS)
+    p_coll.add_argument("--pdf", action="store_true", help="compile the PDF with latexmk")
+    p_coll.set_defaults(func=_cmd_collection)
+
+    p_exam = sub.add_parser("exam", help="build an exam master document")
     p_exam.add_argument("name", help="exam definition name")
     p_exam.add_argument("--variant", default="A", help="exam variant (default A)")
-    p_exam.add_argument(
-        "--solutions", action="store_true", help="render the answer key instead of the blank exam"
-    )
-    _add_common_output_flags(p_exam)
+    p_exam.add_argument("--solutions", action="store_true", help="append the answer key")
+    p_exam.add_argument("--out", type=Path, default=APP_DIR, help="where to write the .tex")
+    p_exam.add_argument("--pdf", action="store_true", help="compile the PDF with latexmk")
     p_exam.set_defaults(func=_cmd_exam)
 
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = build_parser()
-    args = parser.parse_args(argv)
+    args = build_parser().parse_args(argv)
     return args.func(args)
 
 

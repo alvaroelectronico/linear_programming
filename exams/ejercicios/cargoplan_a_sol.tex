@@ -1,0 +1,270 @@
+Una empresa de transporte llamada \textbf{CargoPlan} se encarga de distribuir productos en tres zonas diferentes: Zona A, Zona B y Zona C. 
+Cada zona tiene una demanda específica y el transporte requiere recursos limitados en términos de combustible y horas de conducción.
+
+Los límites semanales para estos recursos son \textbf{8000 litros de combustible y 3000 horas de conducción}. El beneficio por tonelada transportada a cada zona es de \textbf{50, 40 y 60 euros} para las zonas A, B y C, respectivamente.
+
+Cada tonelada transportada consume los siguientes recursos. Zona A: \textbf{6} litros de combustible y \textbf{3} horas de conducción. Zona B: \textbf{4} litros de combustible y \textbf{2} horas de conducción. Zona C: \textbf{8} litros de combustible y \textbf{5} horas de conducción.
+
+Además, existe un contrato que obliga a transportar al menos \textbf{500 toneladas en total} a las zonas B y C combinadas.
+
+
+Si $x_1$, $x_2$ y $x_3$ representan las toneladas transportadas semanalmente a las zonas A, B y C, respectivamente, el modelo de programación lineal que permite maximizar el beneficio total es el siguiente:
+
+\begin{equation}
+\begin{split}
+\nonumber
+\mbox{max. } z = 50x_1 + 40x_2 + 60x_3\\
+s.a.:\\
+6x_1 + 4x_2 + 8x_3 \leq 8000\\
+3x_1 + 2x_2 + 5x_3 \leq 3000\\
+        x_2 +  x_3 \geq 500\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+Se dispone de la siguiente tabla, correspondiente a una solución obtenida mediante la aplicación del método del simplex.
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $a_3$\\ 
+ & -60000 & -10 & 0 & -40 & 0 & -20 & 0 & 0 \\ 
+\hline
+$h_1$ & 2000  & 0 & 0 & -2 & 1 & -2 & 0 & 0\\ 
+$h_3$ & 1000  & $3/2$ & 0 & $3/2$ & 0 & $1/2$ & 1 & -1\\ 
+$x_2$ & 1500  & $3/2$ & 1 & $5/2$ & 0 & $1/2$ & 0 & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+Se pide:
+
+\begin{enumerate}
+    \item \textbf{Interpretar la solución óptima obtenida, incluyendo el beneficio total, la asignación de toneladas transportadas a cada zona y el uso de los recursos disponibles.}
+
+    \begin{itemize}
+        \item El beneficio es de 60000 euros.
+        \item Se envían 1500 toneladas de producto a la zona B y ninguna a las zonas A y C.
+        \item No se consumen 2000 de los 8000 litros de combustible disponibles.
+        \item Se usan las 3000 horas de conducción al completo.
+        \item Se cumple el contrato entregando 1000 unidades más del mínimo acordado (500).
+    \end{itemize}
+        
+    
+    
+\end{enumerate}
+
+Cada una de las preguntas siguientes se refieren a la solución óptima del problema.
+
+\begin{enumerate}
+    \setcounter{enumi}{1} % Ajusta el contador para iniciar en 2
+
+    \item \textbf{Identificar dentro de qué rango podría variar la disponibilidad de combustible (en litros) sin que se modifiquen las variables básicas de la solución óptima y explicar qué cambiaría en la solución el cambio de la disponibilidad de combustible dentro de dicho rango. ¿Cuál sería el plan de transporte fuera de ese rango?}
+
+    \begin{equation}
+    \begin{split}
+    u^B=B^{-1}b = \begin{pmatrix}
+    1 & -2 & 0\\
+    0 & 1/2 & -1\\
+    0 & 1/2 & 0\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    b_1\\
+    3000\\
+    500\\
+    \end{pmatrix}
+     = \begin{pmatrix}
+    b_1-6000\\
+    1500 - 500\\
+    1500\\
+    \end{pmatrix}
+    \geq 0 \Rightarrow \\
+    \left\{
+    \begin{array}{l}
+    b_1 - 6000 \geq 0 \\
+    1000 \geq 0 \\
+    1500 \geq 0
+    \end{array}
+    \right.
+    \end{split}
+    \end{equation}
+
+    Por lo tanto, $b_1 - 6000 \geq 0 \implies b_1 \geq 6000$ y el intervalo donde se cumplen las tres desigualdades es: $b_1 \in \left[6000, \infty \right)$.
+    
+    Es decir, siempre y cuando la disponibilidad del combustible sea igual o superior a 6000 litros se mantienen las variables básicas de la solución óptima y se transportaría producto solamente a la zona B.
+    
+    La variación de la disponibilidad de combustible dentro del rango mencionado haría que solo cambie la cantidad de combustible disponible no utilizado, porque las variables $h_3$ y $x_2$ mantendrían su valor siempre y cuando la disponibilidad de combustible sea igual o superior a 6000 litros. Es decir, en este caso particular, aunque cambia $u^B$ no cambian los valores correspondientes a $x_1$, $x_2$ y $x_3$ y el plan de transporte óptimo se mantiene (lo único que ocurre es que para cualquier valor superior a 6000 para el valor de la disponibilidad de gasolina, cualquier cantidad por encima de dicho valor no se consume).
+
+    Para un valor inferior a 6000, por ejemplo 5999, la solución dejaría de ser factible y habría que aplicar Lemke.
+
+    \begin{center}
+    \begin{tabular}{c|c|cccccc|}
+     & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$\\ 
+     & $-60000$ & $-10$ & $0$ & $-40$ & $0$ & $-20$ & $0$ \\ 
+    \hline
+    $h_1$ & -1  & $0$ & $0$ & $-2$ & $1$ & $-2$ & $0$\\ 
+    $h_3$ & 1000  & $3/2$ & $0$ & $3/2$ & $0$ & $1/2$ & $1$\\ 
+    $x_2$ & 1500  & $3/2$ & $1$ & $5/2$ & $0$ & $1/2$ & $0$\\ 
+    \hline
+       & $-59990$ & $-10$ & $0$ & $-20$ & $-10$ & $0$ & $0$ \\ 
+    \hline
+    $h_2$ & 1/2  & $0$ & $0$ & $1$ & $-1/2$ & $1$ & $0$\\ 
+    $h_3$ & 3999/4  & $3/2$ & $0$ & $1$ & $1/4$ & $0$ & $1$\\ 
+    $x_2$ & 5999/4  & $3/2$ & $1$ & $2$ & $1/4$ & $0$ & $0$\\ 
+    \hline
+    \end{tabular}
+    \end{center}
+
+    En este caso, se seguiría transportando solo a la zona B ($x_2>0$) y nada a las otras dos ($x_1=x_3=0$)), se agotaría todo el combustible ($h_1=0$), no se haría uso de todas las horas de conducción disponibles ($h_2>0$) y se seguiría cumpliendo el compromiso de entregas por encima del valor mínimo acordado ($h_3>0$).    
+    
+    
+    \item \textbf{Se ha hecho un análisis del tiempo de conducción en la zona A para reducir el tiempo actual de 3 horas por cada tonelada transportada. ¿Por debajo de qué valor de tiempo de conducción en la zona A sería interesante transportar sus productos a la zona A?}
+
+    Reducir el tiempo de conducción de la zona significa reducir el valor de $a_{21}$ (actualmente 3). Si cambia $a_{13}$, cambiarían $p_{x_1}$ y $V^B_{x_1}$. En el caso de que $V^B_{x_1} >0$ interesaría transportar toneladas a la zona A.
+
+    \begin{equation}
+    \begin{split}
+    V^B_{x_1}=c_{x_1}-c^BB^{-1}A_{x_1}=c_{x_1}-\pi^BA_{x_1} = \\
+    50 - \begin{pmatrix}
+        0 & 20 & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        6 \\
+        a_{21} \\
+        0
+    \end{pmatrix} = 50 - 20a_{21} > 0 \implies a_{21} < 2.5
+    \end{split}
+    \end{equation}
+
+    Si el tiempo de conducción de la zona A se redujera por debajo de las 2.5 horas interesaría distribuir en esta zona.   
+
+    \item \textbf{Cuánto estaría dispuesta a pagar la empresa por disponer de una hora adicional de conducción cada semana.}
+
+    El precio sombra de la restricción 2 (conducción) es $\pi_2 = 20$, de forma que cualquier coste inferior a 20 euros por hora adicional de conducción daría lugar a una mejora del beneficio total.
+
+    % \item \textbf{Cargoplan está renegociando los precios de los clientes de la zona B. Dentro de qué rango de valores del ingreso por tonelada en la zona B se mantendría el plan de distribución.}
+
+    % Podemos hacer el análisis de sensibilidad de $c_{x_2}$
+
+    % \begin{equation}
+    % \begin{split}
+    % V^B = c-c^BB^{-1}A = \begin{pmatrix}
+    % 50 & c_{x_2} & 60 & 0 & 0 & 0\\
+    % \end{pmatrix}
+    %  - \begin{pmatrix}
+    % 0 & 0 & c_2\\
+    % \end{pmatrix}
+    % \begin{pmatrix}
+    % 0 & 0 & -2 & 1 & -2 & 0\\
+    % 3/2 & 0 & 3/2 & 0 & 1/2 & 1\\
+    % 3/2 & 1 & 5/2 & 0 & 1/2 & 0\\
+    % \end{pmatrix} = \\
+    %  = \begin{pmatrix}
+    % 50 & c_{x_2} & 60 & 0 & 0 & 0\\
+    % \end{pmatrix} -
+    % \begin{pmatrix}
+    % 3/2c_{x_2} & c_{x_2} & 5/2c_{x_2}& 0 & 1/2c_{x_2} & 0\\
+    % \end{pmatrix} = \\
+    % \begin{pmatrix}
+    % 50- 3/2c_{x_2} & 0 & 60 - 5/2c_{x_2}& 0 & -1/2c_{x_2} & 0\\
+    % \end{pmatrix}
+    % \end{split}
+    % \end{equation}
+
+    % Para que la solución siga siendo óptima se debe cumplir $V^B\leq 0$:
+
+    % \begin{equation}
+    %     \left.
+    %     \begin{matrix}
+    %     50- 3/2c_{x_2} \leq 0 \implies c_{x_2} \geq 100/3\\
+    %     60 - 5/2c_{x_2} \leq 0 \implies c_{x_2} \geq 24\\
+    %     -1/2c_{x_2} \leq 0 \leq 0 \implies c_{x_2} \geq 0\\
+    %     \end{matrix}
+    %     \right\} \implies c_{x_2} \geq 100/3
+    % \end{equation}
+
+    % Siempre y cuando el ingreso por tonelada de la zona B sea igual o superior a $\frac{100}{3}$ el plan de distribución seguirá siendo óptimo.
+
+    \item \textbf{Evaluar el impacto de relajar o de hacer más restrictivo el contrato que exige transportar al menos 500 toneladas en total a las zonas B y C. En particular, indicar cuánto se podría relajar o cuánto más restrictivo podría ser el acuerdo sin que cambie el plan de distribución óptimo.}
+
+    CargoPlan está cumpliendo el compromiso comercial por encima del mínimo acordado, por lo que no tiene incentivo en relajarlo y, por otro lado, hacerlo más restrictivo salvo que hubiera que entregar más de 1500 unidades entre las zonas B y C.
+
+    Los valores de las variables básicas cambian con el cambio de $b_3$:
+
+    \begin{equation}
+    u^B=B^{-1}b = \begin{pmatrix}
+    1 & -2 & 0\\
+    0 & 1/2 & -1\\
+    0 & 1/2 & 0\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    8000\\
+    3000\\
+    b_3\\
+    \end{pmatrix}
+     = \begin{pmatrix}
+    2000\\
+    1500 - b_3\\
+    1500\\
+    \end{pmatrix}
+    \end{equation}
+
+        Si el compromiso comercial no excede 1500 unidades, es decir, $b_3 \in (-\infty, 1500]$, la base de la tabla original sigue conduciendo a la solución óptima.
+
+        La variación del compromiso de comercial dentro del rango mencionado haría que solo cambie la cantidad en la que se excede el compromiso comercial, porque las variables $x_2$ y $h_1$ dentro de dicho intervalo. Es decir, en este caso particular, aunque cambia $u^B$ no cambian los valores correspondientes a $x_1$, $x_2$ y $x_3$ y el plan de transporte óptimo se mantiene (lo único que ocurre es que para cualquier valor inferior a 1500 se excederá el compromiso comercial en diferente cuantía según el valor de aquel).
+
+    \item \textbf{Obtener el nuevo plan óptimo de transporte si, por razones logísticas, la empresa decidiera transportar al menos tantas toneladas a la zona A como a la zona C.}
+
+    El plan de producción cumple con el requisito y sigue siendo factible y también óptimo.
+
+    % \item Obtener el nuevo plan óptimo de transporte si, por razones logísticas, la empresa decidiera transportar las mismas cantidades a la zona A que a la zona B.
+    
+%     El nuevo requisito se traduciría en la aparición de una nueva restricción: $x_1=x_2$, equivalente a $x_1 - x_2 = 0$, a su vez, equivalente a añadir dos restricciones; $x_1 - x_2 \leq 0$ y $x_1 - x_2 \geq 0$, que se pueden formular en términos de igualdad añadiendo las correspondientes variables de holgura: $x_1 - x_2 + h_4 = 0$ y $x_1 - x_2 - h_5 = 0$
+
+%     \begin{center}
+%     \begin{tabular}{c|c|cccccccc|}
+%      & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $h_4$ & $h_5$\\ 
+%      & -60000 & -10 & 0 & -40 & 0 & -20 & 0 & 0 & 0\\ 
+%     \hline
+%     $h_1$ & 2000  & 0 & 0 & -2 & 1 & -2 & 0 & 0 & 0\\ 
+%     $h_3$ & 1000  & $3/2$ & 0 & $3/2$ & 0 & $1/2$ & 1 & 0 & 0\\ 
+%     $x_2$ & 1500  & $3/2$ & 1 & $5/2$ & 0 & $1/2$ & 0 & 0 & 0\\ 
+%     \hline
+%           &    0  &     1 &-1 &     0 & 0 &     0 & 0 & 1 & 0\\ 
+%           &    0  &     1 &-1 &     0 & 0 &     0 & 0 & 0 & -1\\ 
+%     \hline
+%     $h_4$ & 1500  &   5/2 & 0 &   5/2 & 0 &   1/2 & 0 & 1 & 0\\ 
+%     $h_5$ & -1500 &  -5/2 & 0 &  -5/2 & 0 &  -1/2 & 0 & 0 & 1\\ 
+%     \hline
+%      & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $h_4$ & $h_5$\\ 
+%      & -60000 & -10 & 0 & -40 & 0 & -20 & 0 & 0 & 0\\ 
+%     \hline
+%     $h_1$ & 2000  & 0 & 0 & -2 & 1 & -2 & 0 & 0 & 0\\ 
+%     $h_3$ & 1000  & $3/2$ & 0 & $3/2$ & 0 & $1/2$ & 1 & 0 & 0\\ 
+%     $x_2$ & 1500  & $3/2$ & 1 & $5/2$ & 0 & $1/2$ & 0 & 0 & 0\\ 
+%     $h_4$ & 1500  &   5/2 & 0 &   5/2 & 0 &   1/2 & 0 & 1 & 0\\ 
+%     $h_5$ & -1500 &  -5/2 & 0 &  -5/2 & 0 &  -1/2 & 0 & 0 & 1\\ 
+%     \hline
+%  & -54000 & 0 & 0 & -30 & 0 & -18 & 0 & 0 & -4 \\ 
+% \hline
+% $h_1$ & 2000  & 0 & 0 & -2 & 1 & -2 & 0 & 0 & 0\\ 
+% $h_3$ & 100  & 0 & 0 & 0 & 0 & $1/5$ & 1 & 0 & $3/5$\\ 
+% $x_2$ & 600  & 0 & 1 & 1 & 0 & $1/5$ & 0 & 0 & $3/5$\\ 
+% $h_4$ & 0  & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1\\ 
+% $x_1$ & 600  & 1 & 0 & 1 & 0 & $1/5$ & 0 & 0 & $-2/5$\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+
+% De acuerdo con la tabla de la solución óptima tras aplicar el método de Lemke, la nueva solución óptima se caracteriza por lo siguiente.
+%     \begin{itemize}
+%         \item El beneficio es de 54000 euros (6000 menos que antes de imponer el requisito).
+%         \item Se envían 600 toneladas de producto a la zona B y otras tantas a la zona A, y ninguna a la zona C.
+%         \item No se consumen 2000 de los 8000 litros de combustible disponibles.
+%         \item Se usan las 3000 horas de conducción al completo.
+%         \item Se cumple el contrato entregando 100 unidades más del mínimo acordado (500).
+%     \end{itemize}
+        
+
+     
+\end{enumerate}

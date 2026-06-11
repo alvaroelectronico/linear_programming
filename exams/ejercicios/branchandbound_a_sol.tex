@@ -1,0 +1,44 @@
+\textbf{Resuelve} el siguiente problema de programación lineal mediante el algoritmo de \textit{Branch \& Bound} propuesto por Dakin:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 80x_1 + 45x_2\\
+s.a.:\\
+x_1 + x_2 \leq  7\\
+12x_1 + 5x_2 \leq 60\\
+x_1,\,\,x_2 \in  \mathcal{Z}^+
+\end{split}
+\end{equation}
+
+
+La solución óptima es $x^*_{PE}=(3,4)$ con $z^*_{PE}=420$.
+
+A continuación se presenta el árbol que permite llegar a la solución óptima ramificando el nodo inicial por la variable $x_1$ (\textit{lo que ha hecho el 98\% de los alumnos}). Se podía haber hecho ramificando por $x_2$ obteniendo la misma solución óptima. \textit{No se reflejan en éste árbol las cotas actualizadas en ningún nodo}.
+
+
+
+\begin{figure}[h!]
+    \begin{center}
+    \begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+      level distance = 1.5cm}] 
+    \node [arn_n, label=right: \tiny{(3.571, 3.429)}, label=above right: \textbf{\tiny{440}}] {\tiny{$P_{0}$}}
+        child{ node [arn_r, label=right: \tiny{(3, 4)}, label=below left: \textbf{\tiny{}}, label=above left: \textbf{\tiny{420}}, label=below left: \textbf{\tiny{420}}] {\tiny{$P_{1}$} }
+            edge from parent node[above left] {$x_1 \leq 3$}
+        	}
+        child{ node [arn_n, label=right: \tiny{(4, 2.4)}, label=below right: \textbf{\tiny{}}, label=above right: \textbf{\tiny{428}}] {\tiny{$P_{2}$}} 
+            child{ node [arn_n, label=above left:\textbf{\tiny{423.3}}, label=right: \tiny{(4.1, 2)}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{3}$}}
+                child{ node [arn_n, label=above right:\textbf{\tiny{410}}, label=right: \tiny{(4, 2)}, label=below right: \textbf{\tiny{410}}] {\tiny{$P_{5}$}} edge from parent node[above left] {$x_1 \leq 4$}
+                }
+                child{ node [arn_n, label=above right:\textbf{\tiny{400}}, label=right: \tiny{(5, 0)}, label=below right: \textbf{\tiny{400}}] {\tiny{$P_{6}$}} edge from parent node[above right] {$x_1 \geq 5$}
+                }
+            edge from parent node[above left] {$x_2 \leq 2$}
+                }
+            child{ node [arn_n, label= right:\tiny{no factible}, label=above right:\textbf{\tiny{}}, label=below right: \textbf{\tiny{}}] {\tiny{$P_{4}$}} edge from parent node[above right] {$x_2\geq 3$}
+                }
+        edge from parent node[above right] {$x_1 \geq 4$}
+    		}
+    ; 
+    \end{tikzpicture}
+    \end{center}
+\end{figure}
+

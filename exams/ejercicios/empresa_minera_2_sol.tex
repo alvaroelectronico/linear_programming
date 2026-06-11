@@ -1,0 +1,209 @@
+Una empresa minera extrae \textbf{100 toneladas} de mineral rojo y \textbf{80 toneladas} de mineral negro cada semana. Estos pueden ser tratados de diferentes maneras para producir tres diferentes aleaciones, blanda, dura o fuerte. Para producir 1 tonelada de aleación blanda se requiere \textbf{5 toneladas} de mineral rojo y \textbf{1 tonelada} de negro. Para la aleación dura los requisitos son \textbf{3 toneladas} de rojo y \textbf{5 toneladas} de negro, mientras que para la aleación fuerte son \textbf{5 toneladas} de rojo y \textbf{3 toneladas} de negro. La ganancia por tonelada de la venta de las aleaciones (después de considerar los costes de producción, pero no los de extracción, que se consideran fijos) son \textbf{250}, \textbf{300} y \textbf{400 euros} por tonelada de aleación blanda, dura y fuerte, respectivamente.
+
+Además, el mineral rojo se puede vender a \textbf{100} euros la tonelada y el mineral negro se debe emplear al completo.
+
+Existe un compromiso comercial de servir al menos \textbf{20} toneladas conjuntamente entre las aleaciones dura y fuerte.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 250x_1 + 300x_2 + 400x_3 + 100x_4\\
+s.a.:\\
+5x_1 + 3x_2 + 5x_3 + x_4 \leq 100\\
+ x_1 + 5x_2 + 3x_3 +  = 80\\
+        x_2 +  x_3  \geq 20\\
+x_1,\,\,x_2,\,\,x_3,\,\,x_4\geq 0\\
+\end{split}
+\end{equation}
+
+Donde $x_1$, $x_2$ y $x_3$ representan las producciones de aleación blanda, dura y fuerte (en toneladas), respectivamente y $x_4$ son las toneladas de mineral rojo de venta en el mercado.
+
+La siguiente es una tabla correspondiente a una solución correspondiente a la aplicación del método de las dos fases.
+
+\begin{center}
+\begin{tabular}{c|c|cccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+Fase 1 & 4 & $-1/5$ & 0 & $2/5$ & 0 & 0 & -1 & $-6/5$ & 0 \\ 
+Fase 2 & -10000 & -250 & 0 & -100 & 0 & -100 & 0 & 0 & 0 \\ 
+\hline
+$x_4$ & 52  & $22/5$ & 0 & $16/5$ & 1 & 1 & 0 & $-3/5$ & 0\\ 
+$x_2$ & 16  & $1/5$ & 1 & $3/5$ & 0 & 0 & 0 & $1/5$ & 0\\ 
+$a_3$ & 4  & $-1/5$ & 0 & $2/5$ & 0 & 0 & -1 & $-1/5$ & 1\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+\begin{enumerate}
+
+\item Obtener la solución óptima correspondiente al plan de producción óptimo e interpretar la información que proporciona.
+
+\begin{center}
+\begin{tabular}{c|c|cccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $h_3$ & $a_2$ & $a_3$\\ 
+Fase 1 & 4 & $-1/5$ & 0 & $2/5$ & 0 & 0 & -1 & $-6/5$ & 0 \\ 
+Fase 2 & -10000 & -250 & 0 & -100 & 0 & -100 & 0 & 0 & 0 \\ 
+\hline
+$x_4$ & 52  & $22/5$ & 0 & $16/5$ & 1 & 1 & 0 & $-3/5$ & 0\\ 
+$x_2$ & 16  & $1/5$ & 1 & $3/5$ & 0 & 0 & 0 & $1/5$ & 0\\ 
+$a_3$ & 4  & $-1/5$ & 0 & $2/5$ & 0 & 0 & -1 & $-1/5$ & 1\\ 
+\hline
+Fase 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 \\ 
+Fase 2 & -9000 & -300 & 0 & 0 & 0 & -100 & -250 & -50 & 250 \\ 
+\hline
+$x_4$ & 20  & 6 & 0 & 0 & 1 & 1 & 8 & 1 & -8\\ 
+$x_2$ & 10  & $1/2$ & 1 & 0 & 0 & 0 & $3/2$ & $1/2$ & $-3/2$\\ 
+$x_3$ & 10  & $-1/2$ & 0 & 1 & 0 & 0 & $-5/2$ & $-1/2$ & $5/2$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+A partir de la tabla de la solución óptima, en el plan de producción óptimo:
+\begin{itemize}
+    \item El beneficio es de 9000 euros.
+    \item Se producen 10 toneladas de aleación dura y 10 de aleación fuerte (no se produce aleación blanda). 
+    \item Se emplean las 100 toneladas de mineral rojo extraídas, 20 se venden directamente y las 80 restantes se emplean en la producción de las aleaciones. 
+    \item Se emplean las 80 toneladas de mineral rojo negro, como no puede ser de otra manera dada que la restricción corrsondiente es de igualdad. 
+    \item Se cumple estrictamente con el compromiso comercial con el valor mínimo comprometido.
+\end{itemize}
+
+
+\item Dentro de qué rango de valores del margen de la aleación blanda no cambia la gama de producción en el plan óptimo de producción.
+
+Para que se mantenga la gama, la base debe seguir siendo óptima y, para ello, se debe cumplir $V^B \leq 0$. Si cambia el margen de la aleación blanda, cambia $c_1$ y, por lo tanto, cambia $V^B_1$.
+
+$V^B_1=c_1-c^BB^{-1}A_1$. Con $c_1=250$, en la solución óptima, $V^B_1=-300$. Este criterio del simplex se haría cero si $c_1$ aumenta en 300 euros.
+
+Es decir, si el beneficio por tonelada de aleación blanda fuera superior a 550 euros, seria interesante producir y vender la aleación blanda. En el cas extremo de beneficio igual a 550 euros, se obtendría la siguiente solución óptima alternativa.
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $h_3$\\ 
+Fase 2 & -9000 & 0 & 0 & 0 & 0 & -100 & -250 \\ 
+\hline
+$x_1$ & 10/3  & 1 & 0 & 0 & $1/6$ & $1/6$ & $4/3$\\ 
+$x_2$ & 25/3  & 0 & 1 & 0 & $-1/12$ & $-1/12$ & $5/6$\\ 
+$x_3$ & 35/3  & 0 & 0 & 1 & $1/12$ & $1/12$ & $-11/6$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+\item Dentro de qué rango de valores del precio de venta del mineral rojo, no cambia la gama de producción en el plan óptimo de producción.
+
+Para que se mantenga la gama, la base debe seguir siendo óptima y, para ello, se debe cumplir $V^B \leq 0$. Si cambia el precio de venta del mineral rojo, cambia $c_{x_4}$ y, por lo tanto, cambia $V^B$, porque $x_4$ es variable básica.
+
+% $V^B_{x_4}=c_{x_4}-c^BB^{-1}A_{x_4}$. Con $c_{x_4}=100$, en la solución óptima, $V^B_{x_4}=-100$. Este criterio del simplex se haría mayor que cero si $c_{x_4}$ es mayor que 0. Tiene sentido, siempre que la venta de mineral rojo sobrante sea de lugar a un beneficio positivo, siempre va a interesar su venta .
+
+\begin{equation}
+\begin{split}
+V^B = c-c^Bp^B =
+\begin{pmatrix}
+250 & 300 & 400 & c_{x_4} & 0 & 0\\
+\end{pmatrix}
+ - \begin{pmatrix}
+c_{x_4} & 300 & 400\\
+\end{pmatrix}
+\begin{pmatrix}
+6 & 0 & 0 & 1 & 1 & 8\\
+1/2 & 1 & 0 & 0 & 0 & 3/2\\
+-1/2 & 0 & 1 & 0 & 0 & -5/2\\
+\end{pmatrix} =
+\\
+\begin{pmatrix}
+250 & 300 & 400 & c_{x_4} & 0 & 0\\
+\end{pmatrix}
+-
+\begin{pmatrix}
+ 6c_{x_4} -50 &  300 &  400 & c_{x_4} & c_{x_4} & 8c_{x_4} - 550\\
+\end{pmatrix} =
+\\
+=
+\begin{pmatrix}
+ 300 - 6c_{x_4} & 0 &  0 &  0 & 0 & -c_{x_4} & 550 - 8c_{x_4}\\
+\end{pmatrix}
+\leq 0
+\end{split} 
+\end{equation}
+
+Para ello, se debe cumplir que $300 - 6c_{x_4} \leq 0$, $-c_{x_4} \leq 0$ y $650 - 8c_{x_4}$, es decir,  $c_{x_4} \geq 50$, $c_{x_4} \geq 0$ y $c_{x_4} \geq 68.75$
+
+Siempre que se obtenga un de beneficio superior a 68.75 euros con la venta del mineral rojo, será mantendrá la gama de productos del plan de producción.
+
+
+\item Existe la posibilidad de producir una nueva aleación de alta gama, que requiere \textbf{6} toneladas de mineral rojo y \textbf{4} de mineral negro por cada tonelada de aleación. ¿Cuál es el beneficio unitario por tonelada de la nueva aleación que haría rentable su producción y venta? Esta nueva aleación no computaría para alcanzar la cantidad necesaria del acuerdo comercial.
+
+Como resultado de la nueva aleación, habría una nueva variable en el problema de programación lineal, $x_5$, cuya columna en la matriz $A$ sería: $A_{x_5} = (6\;\; 4 \;\; 0)^T$.
+
+Sería interesante producir la nueva aleación si su criterio del simplex es positivo. Es decir:
+
+\begin{equation}
+\begin{split}
+V^B_{x_5} = c_{x_5}-c^BB^{-1}A_{x_5}
+= c_{x_5}-\pi^BA_{x_5} = c_{x_5}
+ - \begin{pmatrix}
+100 & 50 & -250\\
+\end{pmatrix}
+\begin{pmatrix}
+6 \\
+4 \\
+0 \\
+\end{pmatrix}
+ = 
+c_{x_5} - 800 \geq 0
+\end{split}
+\end{equation}
+
+Es decir, si el beneficio supera los 800 euros por tonelada, resultará interesante la producción de esta nueva aleación.
+
+\item Explicar el significado del $V^B_1$ en incluyendo explícitamente el significado de las tasas de sustitución de las variables $x_1$ con respecto a las variables básicas de la solución óptima.
+
+\begin{equation}
+\begin{split}
+V^B_{x_1} = c_{x_1}-c^BB^{-1}A_{x_1} =
+c_{x_1}-c^Bp^B_{x_1} = 
+250 
+ - \begin{pmatrix}
+100 & 300 & 400\\
+\end{pmatrix}
+\begin{pmatrix}
+6   \\
+1/2 \\
+-1/2 \\
+\end{pmatrix}
+= 250 - 550 = -300
+\end{split}
+\end{equation}
+
+El criterio del simplex es -300 que es la diferencia entre dos términos.
+\begin{itemize}
+    \item 300, que es el ingreso por tonelada vendida y fabricada de aleación blanda (por hacer que $x_1 = 1$)
+    \item 550 euros, que es el ingreso al que se renunciaría por los cambios de la producción de las aleaciones del plan de producción óptima (los cambios de las variables básicas), en particular:
+    \begin{itemize}
+        \item Se venderían 6 toneladas menos de mineral negro (se dejarían de ingresar 600 euros).
+        \item Se produciría media tonelada menos de aleación dura (se dejarían de ingresar 150 euros).
+        \item Se produciría media tonelada más de aleación fuerte (se ingresarían 200 euros adicionales).
+    \end{itemize}
+\end{itemize}
+
+El resultado neto de todo lo anterior es un incremento negativo de la función objetivo, -300, lo cual no convierte en atractiva la producción y venta de la aleación blanda.
+
+
+\end{enumerate}
+
+
+% PREGUNTAS ANTIGUAS
+
+% \item \textbf Obtener la solución óptima del problema e {interpretar} el resultado y explicar el plan de
+% extracción y el significado de los valores de las variables de holgura.
+
+
+% \item Dado que el mineral negro se debe emplear completo, \textbf{justificar} si la empresa estaría interesada en extraer más o menos cantidad que las 80 toneladas semanales.
+
+% \item \textbf{Justificar haciendo uso de los fundamentos del método del simplex} por qué, sin necesidad de resolver el problema, se podría afirmar que en la solución óptima $h_1$ nunca puede tomar un valor diferente de 0.
+
+% \item Cuál es el intervalo relativo a la cantidad del compromiso comercial (aleaciones dura y fuerte) dentro del cual se mantiene la gama de producción correspondiente a la solución óptima.
+
+% \item La empresa está interesada en saber cuál sería el impacto sobre su plan de producción y sobre su beneficio si, una determinada semana, no pudiera vender (y, por lo tanto, no produciría) más de 8 toneladas de aleación dura.

@@ -1,0 +1,68 @@
+
+La solución óptima del problema dual de programación lineal es:
+\[
+y^* = \begin{pmatrix} 1.2 \\ 0.2 \end{pmatrix}
+\]
+
+Y el problema primal asociado es:
+
+\[
+\begin{aligned}
+\text{Maximizar} \quad & x_1 + 2x_2 + 3x_3 + 4x_4 \\
+\text{sujeto a:} \quad & x_1 + 2x_2 + 2x_3 + 3x_4 \leq 20 \\
+& 2x_1 + x_2 + 3x_3 + 2x_4 \leq 20 \\
+& x_1 \geq 0,\quad x_2 \geq 0,\quad x_3 \geq 0,\quad x_4 \geq 0
+\end{aligned}
+\]
+
+\textbf{¿Cuál es la solución óptima del problema primal \( x^* \)?
+}
+
+\textbf{Solución}
+
+El problema dual es:
+
+\[
+\begin{aligned}
+\text{Minimizar} \quad & 20y_1 + 20y_2 \\
+\text{sujeto a:} \quad
+& y_1 + 2y_2 \geq 1 \\
+& 2y_1 + y_2 \geq 2 \\
+& 2y_1 + 3y_2 \geq 3 \\
+& 3y_1 + 2y_2 \geq 4 \\
+& y_1 \geq 0, \quad y_2 \geq 0
+\end{aligned}
+\]
+
+
+
+Para cada variable del primal $x_j$, por el teorema de las holguras complementarias, se sabe que :
+$$\sum_{i=1} a_{ij}y_i = c_j \quad \text{si } x_j > 0$$
+% $$\sum_{i=1} a_{ij}y_i < c_j \quad \text{si } x_j = 0$$
+
+Se puede comprobar si las restricciones del dual se cumplen como igualdad (la variable asociada del primal es no nula) o como desigualdad (la variable asociada del primal es nula):
+
+\[
+\begin{aligned}
+x_1: &\quad 1.2 \times 1 + 0.2 \times 2 = 1.6 > 1 \Rightarrow x_1 = 0 \\
+x_2: &\quad 1.2 \times 2 + 0.2 \times 1 = 2.6 > 2 \Rightarrow x_2 = 0 \\
+x_3: &\quad 1.2 \times 2 + 0.2 \times 3 = 3.0 = 3 \\ % \Rightarrow x_3 \geq 0 \\
+x_4: &\quad 1.2 \times 3 + 0.2 \times 2 = 4.0 = 4 \\ % \Rightarrow x_4 \geq 0
+\end{aligned}
+\]
+
+Además, los precios sombra de las dos restricciones del primal son 1.2 y 0.2, respectivamente, por lo que los criterios del simplex de las correspondiente variables de holgura tienen criterio del simplex diferentes de cero y, por lo tanto, son no básicas ($h_1=h_2=0$).
+
+Sabiendo que $ x_1 = x_2 = h_1 = h_2 = 0 $ se puede calcular la solución óptima del primal resolviendo el sistema de ecuaciones resultante:
+
+\[
+\begin{aligned}
+2x_3 + 3x_4 &= 20 \\
+3x_3 + 2x_4 &= 20
+\end{aligned}
+\]
+
+La solución óptima del problema primal es: 
+\[
+x^* = \begin{pmatrix} 0 \\ 0 \\ 4 \\ 4 \end{pmatrix}
+\]

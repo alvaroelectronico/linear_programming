@@ -1,0 +1,69 @@
+Dado el siguiente problema de programación lineal:
+
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 + 4x_2 + 1x_3\\
+s.a.:\\
+2x_1 + 4x_2 + 2x_3 \geq 100\\
+ x_1 +  x_2 +  x_3 \leq 20\\
+4x_1 + 3x_2         = 80\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{enumerate}
+    \item Formular el problema equivalente en formato estándar.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 + 4x_2 + 1x_3\\
+s.a.:\\
+2x_1 + 4x_2 + 2x_3 -h_1 = 100\\
+ x_1 +  x_2 +  x_3 + h_2 = 20\\
+4x_1 + 3x_2         = 80\\
+x_1,\,\,x_2,\,\,x_3,\,h_!,\,h_2\geq 0\\
+\end{split}
+\end{equation}
+
+
+
+
+    \item Formular el problema correspondiente a la primera fase mediante del método de resolución de las dos fases.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z' = -a_1-a_3\\
+s.a.:\\
+2x_1+4x_2+2x_3-h_1+a_1 = 100\\
+x_1+x_2+x_3+h_2 = 20\\
+4x_1+3x_2+a_3 = 80\\
+x_1,\,x_2,\,x_3,\,h_1,\,h_2,\,a_1,\,a_3\geq 0\end{split}
+\end{equation}
+
+\item Obtener la solución óptima del problema
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $a_1$ & $a_3$\\ 
+Fase 1 & 180 & 6 & 7 & 2 & -1 & 0 & 0 & 0 \\ 
+Fase 2 & 0 & 2 & 4 & 1 & 0 & 0 & 0 & 0 \\ 
+\hline
+$a_1$ & 100  & 2 & 4 & 2 & -1 & 0 & 1 & 0\\ 
+$h_2$ & 20  & 1 & 1 & 1 & 0 & 1 & 0 & 0\\ 
+$a_3$ & 80  & 4 & 3 & 0 & 0 & 0 & 0 & 1\\ 
+\hline
+Fase 1 & 40 & -1 & 0 & -5 & -1 & -7 & 0 & 0 \\ 
+Fase 2 & -80 & -2 & 0 & -3 & 0 & -4 & 0 & 0 \\ 
+\hline
+$a_1$ & 20  & -2 & 0 & -2 & -1 & -4 & 1 & 0\\ 
+$x_2$ & 20  & 1 & 1 & 1 & 0 & 1 & 0 & 0\\ 
+$a_3$ & 20  & 1 & 0 & -3 & 0 & -3 & 0 & 1\\ 
+\hline
+\end{tabular}
+\end{center}
+
+El problema no tiene solución factible y, por lo tanto, no tiene solución óptima.
+
+\end{enumerate}
+

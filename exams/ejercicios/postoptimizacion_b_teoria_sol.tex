@@ -1,0 +1,25 @@
+Dado un problema de programación lineal de la forma 
+
+\begin{align}
+    \mbox{max. } z = & cx \\
+    \mbox{sujeto a: }
+    & Ax = b \\
+    & x \geq 0
+\end{align}
+
+\noindent se conoce la solución óptima no degenerada, $x^*$, que es básica con base $B$, \textbf{indicar razonadamente} si la siguiente afirmación es cierta:
+
+\noindent "\textit{Si cambia el vector de disponibilidad de los recursos, y toma valor $b'\neq b$, la solución óptima será la misma siempre y cuando se cumpla que $B^{-1}b'\geq 0$, es decir, si la solución sigue siendo factible}".
+
+\vspace{1cm}
+
+La afirmación es \textbf{incorrecta}. 
+
+Si con el cambio de $b$ a $b'$ se sigue cumpliendo que $B^{-1}b'\geq 0$ y dado que $V^B$ no cambia, la base seguirá siendo óptima. Es decir, la selección de las variables básicas correspondientes a la base $B$ dará lugar a una solución factible y, además, óptima; se trataría de una solución factible y que cumple el criterio de optimalidad.
+
+Sin embargo, sería una base óptima conducente a \textbf{un valor diferente de $u^B$} y de las componentes de $x$ porque los niveles de realización de las variables básicas serán diferentes, porque vienen dados por la expresión $B^{-1}b'$, que son necesariamente diferentes al ser $b'$ diferente y la solución no degenerada. Por lo tanto, la solución óptima sería diferente de la original.
+
+
+
+
+

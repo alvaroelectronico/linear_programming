@@ -1,0 +1,43 @@
+Resolver el siguiente problema mediante el \textbf{método de Lemke}.
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 2x_1 + x_2 + 2x_3\\
+s.a.:\\
+2x_1 + 2x_2 + 2x_3 \geq 400\\
+3x_1 + 4x_2 - x_3 \leq 900\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+\noindent
+\textbf{Solución}
+
+El problema se puede formular como sigue:
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 2x_1 + x_2 + 2x_3\\
+s.a.:\\
+-2x_1 - 2x_2 - 2x_3 +h_1 = -400\\
+3x_1 + 4x_2 - x_3 + h_2 =  900\\
+x_1,\,\,x_2,\,\,x_3,\,h_1,\,h_2\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$\\ 
+ & 0 & -2 & -1 & -2 & 0 & 0 \\ 
+\hline
+$h_1$ & -400  & -2 & -2 & -2 & 1 & 0\\ 
+$h_2$ & 900  & 3 & 4 & -1 & 0 & 1\\ 
+\hline
+ & 200 & -1 & 0 & -1 & $-1/2$ & 0 \\ 
+\hline
+$x_2$ & 200  & 1 & 1 & 1 & $-1/2$ & 0\\ 
+$h_2$ & 100  & -1 & 0 & -5 & 2 & 1\\ 
+\hline
+\end{tabular}
+\end{center}
+

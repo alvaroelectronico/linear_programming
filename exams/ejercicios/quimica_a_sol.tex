@@ -1,0 +1,169 @@
+Una empresa química fabrica tres tipos de productos químicos, P1, P2 y P3, cuyos beneficios unitarios son, respectivamente, \textbf{2, 2 y 4} unidades monetarias (u.m.) 
+
+Para su producción, se consumen dos materias primas. En particular, se consumen \textbf{1} tonelada de materia prima M1 y \textbf{2} de materia prima M2 por cada tonelada de P1, \textbf{2} de M1 y \textbf{1} de M2 por cada tonelada de P2 y \textbf{3} de M1 y \textbf{4} de M2 por cada tonelada de P3.
+
+Cada mes, se dispone de \textbf{400} y \textbf{260} toneladas de materias primas P1 y P2, respectivamente. 
+
+Por cada tonelada de P2 se generan \textbf{2} toneladas de un subproducto peligroso. Por cada tonelada de P1 se genera \textbf{1} tonelada del mismo subproducto. A su vez, por cada tonelada de de P3 se consume \textbf{1} toneladas de dicho subproducto. La empresa es autosuficiente con este subproducto y no dispone de ninguna cantidad adicional comprada, de forma que todo lo que necesita para P2 se genera mediante la producción de P1 y P3.
+
+
+Para obtener el programa de producción de máximo beneficio se dispone del siguiente modelo de programación lineal, donde $x_1$, $x_2$ y $x_3$ representan las toneladas mensuales producidas de P1, P2 y P3, respectivamente.
+ 
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 + 2x_2 + 4x_3\\
+s.a.:\\
+1x_1 + 2x_2 + 3x_3 \leq 400\\
+2x_1 + 1x_2 + 4x_3 \leq 260\\
+1x_1 - 2x_2 + 1x_3 = 0\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+Se conoce la tabla correspondiente a la solución óptima.
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$\\ 
+Phase 2 & -312 & 0 & 0 & $\frac{-2}{5}$ & 0 & $\frac{-6}{5}$ \\ 
+\hline
+$h_1$ & 192  & 0 & 0 & $\frac{2}{5}$ & 1 & $\frac{-4}{5}$\\ 
+$x_2$ & 52  & 0 & 1 & $\frac{2}{5}$ & 0 & $\frac{1}{5}$\\ 
+$x_1$ & 104  & 1 & 0 & $\frac{9}{5}$ & 0 & $\frac{2}{5}$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+    \item Interpretar la información que proporciona la tabla correspondiente a la solución óptima.
+
+    El plan de producción que ofrece el mayor beneficio:
+    \begin{itemize}
+        \item Proporciona un beneficio total de 312 u.m.
+        \item Se producen 104 toneladas de P1.
+        \item Se producen 52 toneladas de P2.
+        \item No se emplean 192 de las 400 toneladas disponibles de M1.
+        \item Se emplean por completo las 250 toneladas disponibles de M2.
+    \end{itemize}
+
+    \item Dentro de qué rango de valores puede variar el beneficio del producto P1 sin que cambie la gama de productos que resulta más beneficioso producir.
+
+    Es necesario realizar el análisis de sensibilidad de $c_1$.
+
+    Para que la gama siga siendo la misma, la base óptima debe seguir siéndolo y eso pasa porque $V^B \leq 0$
+
+    \begin{equation}
+    \begin{split}
+    V^B = c-c^BB^{-1}A = c-c^Bp^B = \\
+    = \begin{pmatrix}
+    c_1 & 2 & 4 & 0 & 0\\
+    \end{pmatrix}
+     - \begin{pmatrix}
+    0 & 2 & c_1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    1 & \frac{-4}{5} & \frac{3}{5}\\
+    0 & \frac{1}{5} & \frac{-2}{5}\\
+    0 & \frac{2}{5} & \frac{1}{5}\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    1 & 2 & 3 & 1 & 0\\
+    2 & 1 & 4 & 0 & 1\\
+    1 & -2 & 1 & 0 & 0\\
+    \end{pmatrix}
+     = \\
+     \begin{pmatrix}
+    c_1 & 2 & 4 & 0 & 0\\
+    \end{pmatrix}
+     - \begin{pmatrix}
+    0 & 2 & c_1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    0 & 0 & 2/5 & 1 & -4/5\\
+    0 & 1 & 2/5 & 0 & 1/5\\
+    1 & 0 & 9/5 & 0 & 2/5\\
+    \end{pmatrix} 
+    = \\
+     \begin{pmatrix}
+    c_1 & 2 & 4 & 0 & 0\\
+    \end{pmatrix}
+    -
+     \begin{pmatrix}
+     c_1 &  2 & \frac{4+9c_1}{5} & 0 & \frac{2+2c_1}{5}  \\
+    \end{pmatrix} = \\
+     \begin{pmatrix}
+     0 &  0 & \frac{16-9c_1}{5} & 0 & -\frac{2+2c_1}{5} \\
+    \end{pmatrix}
+     \leq 0
+    \end{split}
+    \end{equation}
+
+    Por lo tanto, se debe cumplir $\frac{16-9c_1}{5} \leq 0$ y $-\frac{2+2c_1}{5} \leq 0$, es decir, $\frac{16}{9} \leq c_1$ y $-1 \leq c_1$.
+
+    Mientras el margen del producto P1 sea igual o superior a $\frac{16}{9} = 1.78$ (y lo es), la gama de productos es la que se indica en el apartado anterior.
+
+
+
+    \item Ha surgido la necesidad de producir 1 tonelada de producto P3, ¿qué impacto tendría sobre el beneficio y sobre el resto de la producción?
+
+    Producir una tonelada de P3 implicaría que $x_3 = 1$. En la solución óptima $x_3$ es una variable no básica y, por lo tanto, su valor es nulo. El impacto de aumentar una unidad $x_3$ queda reflejado en:
+
+    \begin{itemize}
+        \item El criterio del simplex, $V^B_3 = -2/5$. Por lo que al producir una tonelada adicional, el beneficio disminuiría en 2/5 u.m.
+        \item Las tasas de sustitución dan cuenta de la modificación de los valores de las variables básicas. En este caso:
+        \begin{itemize}
+            \item $p^B_{13} = 2/5$, $h_1$ disminuiría una 2/5, es decir, se haría uso de 400 kg más de M1.
+            \item $p^B_{23} = 2/5$, $x_2$ disminuiría en 2/5, es decir, se producirían 400 kg menos de producto P2.
+            \item $p^B_{33} = 9/5$, $x_1$ disminuiría en 9/5, es decir, se producirían 1.8 toneladas menos de producto $P_1$.
+        \end{itemize}
+    \end{itemize}
+
+     
+    
+    \item ¿Qué impacto tendría sobre el beneficio la posibilidad de comprar y disponer de una tonelada de subproducto (diferente de las que se generan con la producción de P1 y P3)? Si la empresa dispone de ese producto adicional, dada la naturaleza peligrosa del mismo, debería consumirlo obligatoriamente.
+
+    El hecho de que se disponga de una unidad más de subproducto sería equivalente a que la tercer restricción tuviera la forma:
+    
+    $$1x_1 - 2x_2 + 1x_3 = 1$$
+
+    Es decir, el términos $b_3$ aumentaría una unidad. El precio sombra de la restricción 3 es igual al incremento de la función objetivo cuando se aumenta una unidad la disponibilidad del recurso correspondiente a esa restricción (parta derecha de la ecuación). Es decir, $\pi^B_3 = \Delta z|_{\Delta h_3 = 1}$
+
+    Para calcular el precio sombra es necesario disponer de la inversa de la base:
+
+    \begin{equation}
+    \begin{split}
+    B^{-1} =\begin{pmatrix}
+    1 & -4/5 & 3/5\\
+    0 & 1/5 & -2/5\\
+    0 & 2/5 & 1/5\\
+    \end{pmatrix}
+    \end{split}
+    \end{equation}
+    
+    El precio sombra se calcula como:
+
+    \begin{equation}
+    \begin{split}
+    \pi^B = c^BB^{-1} = \begin{pmatrix}
+    0 & 2 & 2\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    1 & -4/5 & 3/5\\
+    0 & 1/5 & -2/5\\
+    0 & 2/5 & 1/5\\
+    \end{pmatrix}
+     = \begin{pmatrix}
+    0 & 6/5 & -2/5\\
+    \end{pmatrix}
+    \end{split}
+    \end{equation}
+    
+    El precio sombra de la restricción 3 es -2/5, lo cual quiere decir que si se dispusiera de 1 tonelada del subproducto peligroso, la función objetivo disminuiría en 2/5 u.m.
+    
+\end{enumerate}
+
+
+
+
+
+

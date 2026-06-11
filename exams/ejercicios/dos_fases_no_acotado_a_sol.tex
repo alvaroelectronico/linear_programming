@@ -1,0 +1,69 @@
+Dado el siguiente problema de programación lineal:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 3x_1 + 2x_2 + 4x_3\\
+s.a.:\\
+2x_1 + 4x_2 - 2x_3 \geq 20\\
+ x_1 +  x_2 -  x_3 \leq 80\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+
+\begin{enumerate}
+    \item Formular el problema equivalente en formato estándar.
+
+    \begin{equation}
+    \begin{split}
+    \mbox{max. } z = 3x_1 + 2x_2 + 4x_3\\
+    s.a.:\\
+    2x_1 + 4x_2 - 2x_3 - h_1 = 20\\
+     x_1 +  x_2 -  x_3 + h_2 = 80\\
+    x_1,\,\,x_2,\,\,x_3,\,h_1,\,h_2\geq 0\\
+    \end{split}
+    \end{equation}
+
+
+    \item Formular el problema correspondiente a la primera fase mediante el método de resolución de las dos fases.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z' = -a_1\\
+s.a.:\\
+2x_1+4x_2-2x_3-1h_1+1a_1 = 20\\
+1x_1+1x_2-1x_3+1h_2 = 80\\
+x_1,\,x_2,\,x_3,\,h_1,\,h_2,\,a_1\geq 0\end{split}
+\end{equation}
+
+\item Obtener la solución óptima del problema.
+
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $a_1$\\ 
+Fase 1 & 20 & 2 & 4 & -2 & -1 & 0 & 0 \\ 
+Fase 2 & 0 & 3 & 2 & 4 & 0 & 0 & 0 \\ 
+\hline
+$a_1$ & 20  & 2 & 4 & -2 & -1 & 0 & 1\\ 
+$h_2$ & 80  & 1 & 1 & -1 & 0 & 1 & 0\\ 
+\hline
+Fase 1 & 0 & 0 & 0 & 0 & 0 & 0 & -1 \\ 
+Fase 2 & -10 & 2 & 0 & 5 & $\frac{1}{2}$ & 0 & $\frac{-1}{2}$ \\ 
+\hline
+$x_2$ & 5  & $\frac{1}{2}$ & 1 & $\frac{-1}{2}$ & $\frac{-1}{4}$ & 0 & $\frac{1}{4}$\\ 
+$h_2$ & 75  & $\frac{1}{2}$ & 0 & $\frac{-1}{2}$ & $\frac{1}{4}$ & 1 & $\frac{-1}{4}$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+El problema no está acotado y, por lo tanto, no tiene solución óptima. 
+
+    
+    \end{enumerate}
+
+
+
+
+

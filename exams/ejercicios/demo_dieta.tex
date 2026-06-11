@@ -1,0 +1,19 @@
+Una dieta debe aportar al menos 80 unidades de proteína usando dos alimentos
+$x_1$ y $x_2$, sin superar 60 unidades de grasa. Cada unidad de $x_1$ aporta 2 de
+proteína y 4 de grasa; cada unidad de $x_2$, 4 de proteína y 3 de grasa. Los
+costes unitarios son 3 y 2. El modelo que minimiza el coste es:
+
+\begin{equation}
+\begin{split}
+\label{eq:demo_dieta}
+\mbox{min. } z = 3x_1 + 2x_2\\
+s.a.:\\
+2x_1 + 4x_2 \geq 80\\
+4x_1 + 3x_2 \leq 60\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{enumerate}
+    \item Resolver el problema mediante el método de Lemke.
+\end{enumerate}

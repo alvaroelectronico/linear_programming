@@ -1,0 +1,26 @@
+\textbf{}{Comprobar}, sin resolver, si el vector $y=[1,1,0,0]^T$ es la solución óptima de este problema:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2y_1 + 2y_2\\
+s.a.:\\
+y_1 + y_3 + y_4 \leq  1\\
+y_2+y_3-y_4\leq 1\\
+y_1+y_2+2y_3 \leq 3 \\
+y_1,\,\,y_2,\,\,y_3,\,\,y_4\geq 0\\
+\end{split}
+\end{equation}
+
+
+
+El vector solución completo del problema indicado es $y^0=[1,1,0,0,0,0,1]^T$, cuya $z^0=4$.
+
+El problema dual tiene tres variables de decisión ($x_1$, $x_2$, $x_3$) y cuatro holguras asociadas a las cuatro restricciones ($h^\prime_1$,$h^\prime_2$,$h^\prime_3$,$h^\prime_4$).
+
+Por el teorema de las holguras complementarias: $x_3=0$, $h^\prime_1=0$ y $h^\prime_2=0$.
+
+Se pueden calcular el resto de valores de las variables básicas del problema dual: $x_1=2$ y $x_2=2$.
+
+Sustituyendo los valores de $x_1$, $x_2$ y $x_3$ en la función objetivo del dual: $s^0=1*2+1*2+3*0=4$.
+
+Como las dos soluciones son factibles y $z^0=s^0$, las soluciones $y^0$ y $x^0$ son las soluciones óptimas de ambos problemas, respectivamente ($z^*=s^*$).

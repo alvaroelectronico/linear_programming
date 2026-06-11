@@ -1,0 +1,26 @@
+La empresa \textbf{MueblesPro} produce y comercializa tres tipos de productos: \textbf{mesas (M)}, \textbf{sillas (S)} y \textbf{estanterías (E)}, que son transportadas en lotes, y estos pueden estar completos o fraccionados (se puede enviar un lote completo, medio lote, un cuarto de lote, etc.). Por cada lote de estos productos, la empresa obtiene unos ingresos netos de \textbf{20, 15 y 25 unidades monetarias}, respectivamente.
+
+La fábrica dispone de una planta con \textbf{80 horas de producción semanales}. Producir un lote de mesas lleva \textbf{15 horas}, un lote de sillas lleva \textbf{10 horas} y montar un lote de estanterías lleva \textbf{20 horas}.
+
+Además, por contrato con sus distribuidores, la empresa debe suministrar al menos el contenido equivalente a \textbf{6 lotes completos en total}, entre mesas, sillas y estanterías.
+
+El modelo de programación lineal que permite determinar el plan de producción óptimo es el siguiente:
+
+\begin{equation}
+\begin{split}
+\text{max. } z = 20x_1 + 15x_2 + 25x_3 \\
+\text{s.a.:} \\
+15x_1 + 10x_2 + 20x_3 \leq 80 \quad \text{(tiempo de montaje disponible)} \\
+x_1 + x_2 + x_3 \geq 6 \quad \text{(compromiso de producción total)} \\
+x_1, x_2, x_3 \geq 0 \quad \text{(No negatividad)}
+\end{split}
+\end{equation}
+
+Se pide:
+
+\begin{enumerate}
+    \item Obtener el plan de programación de la producción óptimo e indicar los niveles de producción, el beneficio y el cumplimiento de los requisitos descritos. Se puede hacer uso de la información de que, en la solución óptima, se cumple que $x_1=x_3=x_4=h_1=0$.
+    \item Describir cuál sería el nuevo plan de producción si fuera necesario entregar al menos 9 lotes en lugar de 6.
+    \item Calcular el rango de valores de la contribución unitaria al beneficio de las sillas dentro del cual resulta interesante mantener la base de la solución óptima.
+    \item Explicar el significado del criterio del simplex de la variable $x_1$ interpretando explícitamente el significado de las tasas de sustitución de esta variable. La explicación debe referirse al problema de MueblesPro (y no solo a los aspectos matemáticos del modelo de programación lineal planteado).
+\end{enumerate}

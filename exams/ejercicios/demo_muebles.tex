@@ -1,0 +1,23 @@
+Un taller fabrica \textbf{mesas} ($x_1$) y \textbf{sillas} ($x_2$). Cada mesa deja
+un beneficio de 5 u.m. y cada silla de 4 u.m. La carpintería dispone de 18 horas
+y el acabado de 12 horas; una mesa consume 3 horas de carpintería y 1 de acabado,
+y una silla 2 y 2 respectivamente. Por contrato deben fabricarse al menos 2 mesas.
+El modelo que maximiza el beneficio es el siguiente:
+
+\begin{equation}
+\begin{split}
+\label{eq:demo_muebles}
+\mbox{max. } z = 5x_1 + 4x_2\\
+s.a.:\\
+3x_1 + 2x_2 \leq 18\\
+1x_1 + 2x_2 \leq 12\\
+1x_1 \geq 2\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{enumerate}
+    \item Formular el problema de la primera fase del método de las dos fases.
+    \item Resolver el problema mediante el método de la matriz completa.
+    \item Indicar el plan de producción óptimo y el beneficio alcanzado.
+\end{enumerate}

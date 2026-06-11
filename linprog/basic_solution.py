@@ -80,7 +80,7 @@ class BasicSolution:
 
         # Phase-1 reduced-cost row (only when relevant).
         if has_artificial_basic or is_first_feasible_phase2:
-            tex += "Phase 1 & {} ".format(
+            tex += "Fase 1 & {} ".format(
                 fraction_to_tex(-self.z_f1[0][0], use_dollar=True, frac_command=frac_command)
             )
             for i, value in enumerate(self.vB_f1[0]):
@@ -92,7 +92,7 @@ class BasicSolution:
             tex += "\\\\ \n"
 
         # Phase-2 reduced-cost row.
-        tex += "Phase 2 & {} ".format(
+        tex += "Fase 2 & {} ".format(
             fraction_to_tex(-self.z[0][0], use_dollar=True, frac_command=frac_command)
         )
         for i, value in enumerate(self.vB[0]):

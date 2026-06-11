@@ -1,0 +1,135 @@
+
+El objetivo es seleccionar objetos para maximizar el valor total: 
+\begin{align*}
+\text{max.} \quad & z = \sum_{i=1}^{n} v_i x_i \\
+\text{s.a.} \quad & \sum_{i=1}^{n} w_i x_i \leq W \\
+                 & x_i \in \{0,1\} \quad \forall i \in \{1, \dots, n\}
+\end{align*}
+
+
+Para resolver la relajación lineal de este problema existe un método \textit{greedy}  que consiste en:
+\begin{itemize}
+    \item priorizar los objetos en función del valor de $\frac{v_i}{w_i}$ (más prioridad al objeto con mayor valor de $\frac{v_i}{w_i}$)
+    \item asignando la mayor cantidad (ahora fraccional) de cada objeto siguiendo el criterio anterior hasta que se utilice toda la capacidad posible.
+\end{itemize}
+
+\vspace{1cm}
+
+\textbf{Resuelve el problema de la mochila con los siguientes datos, utilizando el algoritmo de \textit{Branch\&Bound} y resolviendo los subproblemas mediante el método \textit{greedy} indicado, decidiendo qué nodo elegir según el enfoque \textit{Deep First Node} ( o \textit{BackTracking}) resolviendo, en un mismo nivel, primero el subproblema de la izquierda.
+\vspace{0.5cm}}
+
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
+\hline
+\textbf{Valor (€)} & 60 & 100 & 240 & 60 \\
+\hline
+\textbf{Peso (kg)} & 10 & 20 & 30 & 15 \\
+\hline
+\end{tabular}
+
+Capacidad de la mochila: $W=50$
+
+---
+
+Nota: La solución óptima de la relajación lineal del problema que se quiere resolver es $z^*_{RL}=(1,\frac{1}{2},1,0)$ utilizando el 100\% de la capacidad disponible. Se ha elegido, por orden:
+\begin{itemize}
+    \item $x_3=1$ dejando 20 unidades de capacidad disponibles
+    \item $x_1=1$ dejando 10 unidades de capacidad disponibles
+    \item $x_2=\frac{1}{2}$ dejando 0 unidades de capacidad disponibles
+
+\end{itemize}
+
+\vspace{1cm}
+Si para la elección de qué nodo resolver se utiliza el enfoque \textit{Deep First Node} ( o \textit{BackTracking}) y se resuelven, en un mismo nivel, primero el subproblema de la izquierda; el orden de estudio de los subproblemas es: 0, 1, 3, 4, 5, 6, 7, 8 y 2.
+
+El árbol asociado es el siguiente:
+
+\begin{figure}[h!]
+    \begin{center}
+    \begin{tikzpicture}[
+    % Estilo general para los nodos (con círculo y borde)
+    node_style/.style={
+        draw, % Dibuja el borde del nodo
+        circle, % Nodos circulares
+        inner sep=2pt, % Espacio interno del nodo
+        font=\small % Tamaño de fuente pequeño para el número del nodo
+    },
+    % Estilo para las etiquetas de las soluciones/vectores en los nodos
+    solution_label/.style={
+        font=\small, % Fuente pequeña
+        align=left, % Alineación a la izquierda
+        anchor=west, % Ancla a la izquierda
+        inner sep=0pt, % Sin espacio interno adicional
+        text width=2.5cm % Ancho del texto para que no se superponga
+    },
+    % Estilo para las etiquetas de las aristas (variables de decisión)
+    edge_label/.style={
+        font=\tiny, % Fuente muy pequeña
+        auto=right % Posiciona la etiqueta automáticamente a la derecha de la arista
+    }
+    % El estilo 'pruned_line' no está definido ya que se quitaron las líneas rojas
+]
+
+    % Nodo 0 (Raíz)
+    \node[node_style] (N0) at (0,0) {0};
+    \node[solution_label] at ([xshift=0.3cm]N0.east) {$(1, \frac{1}{2}, 1, 0)$};
+    \node[above=0pt of N0, font=\tiny] {350};
+
+    % Rama izquierda desde N0: x2=0
+    \node[node_style, below left=2.5cm and 2.5cm of N0] (N1) {1};
+    \node[solution_label] at ([xshift=0.3cm]N1.east) {$(1, 0, 1, \frac{2}{3})$};
+    \node[above=0pt of N1, font=\tiny] {340};
+    \draw[-Stealth] (N0) -- node[edge_label, near start, above] {$x_2=0$} (N1);
+
+    % Rama derecha desde N0: x2=1
+    \node[node_style, below right=2.5cm and 2.5cm of N0] (N2) {2};
+    \node[solution_label] at ([xshift=0.3cm]N2.east) {$(0, 1, 1, 0)$};
+    \node[above=0pt of N2, font=\tiny] {340};
+    \node[below=0pt of N2, font=\tiny] {340}; % El 340 de abajo
+    \draw[-Stealth] (N0) -- node[edge_label, near start, above] {$x_2=1$} (N2);
+
+    % Rama izquierda desde N1: x4=0
+    \node[node_style, below left=2.5cm and 2cm of N1] (N3) {3};
+    \node[solution_label] at ([xshift=0.3cm]N3.east) {$(1, 0, 1, 0)$};
+    \node[above=0pt of N3, font=\tiny] {300};
+    \node[below=0pt of N3, font=\tiny] {300}; % El 300 de abajo
+    \draw[-Stealth] (N1) -- node[edge_label, near start, above] {$x_4=0$} (N3);
+
+    % Rama derecha desde N1: x4=1
+    \node[node_style, below right=2.5cm and 2cm of N1] (N4) {4};
+    \node[solution_label] at ([xshift=0.3cm]N4.east) {$(\frac{1}{2}, 0, 1, 1)$};
+    \node[above=0pt of N4, font=\tiny] {330};
+    \draw[-Stealth] (N1) -- node[edge_label, near start, above] {$x_4=1$} (N4);
+
+    % Rama izquierda desde N4: x1=0
+    \node[node_style, below left=2.5cm and 2cm of N4] (N5) {5};
+    \node[solution_label] at ([xshift=0.3cm]N5.east) {$(0, 0, 1, 1)$};
+    \node[above=0pt of N5, font=\tiny] {300};
+    \node[below=0pt of N5, font=\tiny] {300}; % El 300 de abajo
+    \draw[-Stealth] (N4) -- node[edge_label, near start, above] {$x_1=0$} (N5);
+
+    % Rama derecha desde N4: x1=1
+    \node[node_style, below right=2.5cm and 2cm of N4] (N6) {6};
+    \node[solution_label] at ([xshift=0.3cm]N6.east) {$(1, 0, \frac{5}{6}, 1)$};
+    \draw[-Stealth] (N4) -- node[edge_label, near start, above] {$x_1=1$} (N6);
+
+    % Rama izquierda desde N6: x3=0
+    \node[node_style, below left=2.5cm and 1.5cm of N6] (N7) {7};
+    \node[solution_label] at ([xshift=0.3cm]N7.east) {$(1, 0, 0, 1)$};
+    \node[above=0pt of N7, font=\tiny] {120};
+    \node[below=0pt of N7, font=\tiny] {120}; % El 120 de abajo
+    \draw[-Stealth] (N6) -- node[edge_label, near start, above] {$x_3=0$} (N7);
+
+    % Rama derecha desde N6: x3=1
+    \node[node_style, below right=2.5cm and 1.5cm of N6] (N8) {8};
+    \node[solution_label] at ([xshift=0.3cm]N8.east) {no factible};
+    \draw[-Stealth] (N6) -- node[edge_label, near start, above] {$x_3=1$} (N8);
+
+\end{tikzpicture}
+    \end{center}
+\end{figure}
+
+
+La solución óptima del problema entero es $x^*_{PE}=(0,1,1,0)$ con $z^*_{PE}=340$
+

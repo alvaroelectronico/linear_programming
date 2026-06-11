@@ -1,0 +1,29 @@
+Dado el siguiente problema de Programación Lineal
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 2x_1 + 3x_2\\
+s.a.:\\
+2x_1 + 3x_2 \leq 40\\
+2x_1 + 2x_2 \geq 5\\
+2x_2 \geq 5\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+Se conoce una tabla correspondiente a la resolución del mismo mediante el método de las dos fases.
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$ & $a_2$ & $a_3$\\ 
+Fase 1 & $0$ & $-2$ & $0$ & $0$ & $1$ & $-1$ & $-2$ & $0$ \\
+Fase 2 & $-15/2$ & $-1$ & $0$ & $0$ & $3/2$ & $0$ & $-3/2$ & $0$ \\
+\hline
+$h_1$ & 65/2  & $-1$ & $0$ & $1$ & $3/2$ & $0$ & $-3/2$ & $0$\\
+$x_2$ & 5/2  & $1$ & $1$ & $0$ & $-1/2$ & $0$ & $1/2$ & $0$\\
+$a_3$ & 0  & $-2$ & $0$ & $0$ & $1$ & $-1$ & $-1$ & $1$\\
+\hline
+\end{tabular}
+\end{center}
+
+Obtener la solución óptima del problema original

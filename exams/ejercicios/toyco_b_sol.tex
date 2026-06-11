@@ -1,0 +1,130 @@
+TOYCO produce y vende tres tipos de juguetes: trenes, camiones y coches. 
+Cada juguete requiere un proceso de ensamblaje y uno final de empaquetado. 
+
+Los límites semanales  en los tiempos disponibles para las dos operaciones son \textbf{4300 y 4600}, respectivamente, y los márgenes por tren, camión y coche son de \textbf{1, 2 y 5 }euros, respectivamente. Los tiempos de montaje
+
+Los tiempos que requiere cada tren un cada proceso son \textbf{2, 1} minutos, respectivamente. Los de cada camión son \textbf{2 y 2} y los de cada coche \textbf{1 y 4} minutos.
+
+Además, existe un compromiso comercial con un distribuidor de juguetes de suministrarle al menos \textbf{1000} unidades entre camiones y coches.
+
+Si $x_1$, $x_2$ y $x_3$ representan el número semanal de unidades producidas de trenes, camiones y coches, respectivamente, el modelo de programación lineal que permite establecer la producción con mayor margen es el siguiente.
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z =  x_1 + 2x_2 + 5x_3\\
+s.a.:\\
+2x_1 + 2x_2 +  x_3 \leq 4300\\
+ x_1 + 2x_2 + 4x_3 \leq 4600\\
+        x_2 +  x_3 \geq 1000\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\end{split}
+\end{equation}
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$\\ 
+Fase 2 & -5750 & $-1/4$ & $-1/2$ & 0 & 0 & $-5/4$ & 0 \\ 
+\hline
+$h_1$ & 3150  & $7/4$ & $3/2$ & 0 & 1 & $-1/4$ & 0\\ 
+$h_3$ & 150  & $1/4$ & $-1/2$ & 0 & 0 & $1/4$ & 1\\ 
+$x_3$ & 1150  & $1/4$ & $1/2$ & 1 & 0 & $1/4$ & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+
+Se pide:
+
+\begin{enumerate}
+    \item Interpretar la información que ofrece a Toyco la tabla de la solución óptima.
+
+    De acuerdo con los valores de las variables en la solución óptima:
+    \begin{itemize}
+        \item No se produce ningún tren.
+        \item No se produce ningún camión.
+        \item Se producen 1150 coches.
+        \item No se hace uso de 3150 minutos de los 4300 disponibles para el montaje.
+        \item Se hacen uso de todos los minutos de empaquetado.
+        \item Se sirven 150 unidades por encima del mínimo del compromiso comercial adquirido.
+        \item el margen total semanal es de 5750 euros.
+    \end{itemize}
+    
+
+    \item Dentro de qué rango de valores del tiempo disponible de empaquetado la gama de productos del plan óptima de producción no cambiaría.
+
+    \begin{equation}
+    \begin{split}
+    u^B=B^{-1}b =
+    \begin{pmatrix}
+    1 & -1/4 & 0\\
+    0 & 1/4 & -1\\
+    0 & 1/4 & 0\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    4300\\
+    b_2\\
+    1000\\
+    \end{pmatrix}
+     = \begin{pmatrix}
+    4300 - \frac{b_2}{4}\\
+    \frac{b_2}{4} - 1000\\
+    \frac{b_2}{4}\\
+    \end{pmatrix}
+    \geq 0 \Rightarrow \\
+    4000 \leq b_2 \leq 17200
+    \end{split}
+    \end{equation}
+
+    Siempre y cuando se disponga de una cantidad de minutos de montaje igual o superior a 4000 y menor o igual que 17200 la gama de productos sería la misma.
+
+    \item ¿Cuál sería el impacto de relajar el compromiso comercial adquirido?
+
+    El precio sombra de la tercera restricción es 0 ($\pi_3=V^B_{h_3}$, por ser restricción de tipo mayor o igual), con lo que aumentar o reducir entorno al compromiso actual de entregar 1000 unidades no cambiaría el plan de producción. De hecho, Toyco está entregando 150 unidades por encima de la cantidad acordada.
+
+    \item Por política de empresa, hay que fabricar al menos tantos camiones como coches, ¿como afectaría esto al plan óptimo de producción?
+
+    Este nuevo requisito daría lugar a una nueva restricción: $x_2 \geq x_3$, equivalente a $x_2 - x_3 \geq 0$ o, como restricción de igualdad, $x_2 - x_3 - h_4 = 0$.
+
+    \begin{center}
+    \begin{tabular}{c|c|ccccccc|}
+     & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $h_4$\\ 
+           & -5750 & $-1/4$ & $-1/2$ & 0 & 0 & $-5/4$ & 0 & 0\\ 
+    \hline
+    $h_1$ & 3150  & $7/4$ & $3/2$ & 0 & 1 & $-1/4$ & 0 & 0\\ 
+    $h_3$ & 150  & $1/4$ & $-1/2$ & 0 & 0 & $1/4$ & 1 & 0\\ 
+    $x_3$ & 1150  & $1/4$ & $1/2$ & 1 & 0 & $1/4$ & 0 & 0\\ 
+    \hline
+          & 0     & 0     & 1     &   -1 & 0 & 0 & 0 & -1\\           
+    \hline
+    $h_4$ & -1150  & -1/4 & -3/2  & 0 & 0 & -1/4  & 0 & 1\\ 
+    \hline
+          & -5750 & $-1/4$ & $-1/2$ & 0 & 0 & $-5/4$ & 0 & 0\\ 
+    \hline
+    $h_1$ & 3150  & $7/4$ & $3/2$ & 0 & 1 & $-1/4$ & 0 & 0\\ 
+    $h_3$ & 150  & $1/4$ & $-1/2$ & 0 & 0 & $1/4$ & 1 & 0\\ 
+    $x_3$ & 1150  & $1/4$ & $1/2$ & 1 & 0 & $1/4$ & 0 & 0\\ 
+    $h_4$ & -1150  & -1/4 & -3/2  & 0 & 0 & -1/4  & 0 & 1\\ 
+    \hline
+          & $-16100/3$ & $-1/6$ & 0 & 0 & 0 & $-7/6$ & 0 & $-1/3$ \\ 
+    \hline
+    $h_1$ & 2000  & $3/2$ & 0 & 0 & 1 & $-1/2$ & 0 & 1\\ 
+    $h_3$ & 1600/3  & $1/3$ & 0 & 0 & 0 & $1/3$ & 1 & $-1/3$\\ 
+    $x_3$ & 2300/3  & $1/6$ & 0 & 1 & 0 & $1/6$ & 0 & $1/3$\\ 
+    $x_2$ & 2300/3  & $1/6$ & 1 & 0 & 0 & $1/6$ & 0 & $-2/3$\\ 
+    \hline
+    \end{tabular}
+    \end{center}
+
+    La solución óptima no cumple con la nueva restricción, lo cual hace que la solución básica correspondiente no sea factible ($h_4 = -1150 \leq 0$). Aplicando Lemke se llega a la solución óptima, con un beneficio de 16100/3 euros. Además, se fabrican 2300/3 camiones, 2300/3 coches y no se fabrican trenes.
+   
+\end{enumerate}
+
+
+
+
+
+
+

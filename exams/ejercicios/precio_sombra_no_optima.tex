@@ -1,0 +1,44 @@
+Una empresa fabrica dos productos químicos, $P_1$ y $P_2$, cuyos márgenes unitarios son, respectivamente, 1 y 4 euros. Semanalmente dispone de 40 toneladas de un producto crítico $C$, que es un cuello de botella. Cada tonelada de $P_1$ consume una tonelada de $C$ y cada tonelada de $P_2$ genera una tonelada de $C$.
+
+Además por normativa, no se pueden producir más de 20 toneladas de $P_2$ y entre los dos productos se deben entregar al menos 10 toneladas.
+
+Un experto el optimización, ha formulado el correspondiente problema de probramación lineal, donde $x_i$ representa la producción en toneladas de $P_i$. 
+
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = x_1 + 4x_2\\
+s.a.:\\
+x_1 - x_2 \leq 40\\
+x_1 + x_2 \geq 10\\
+x_2 \leq 20\\
+x_1,\,\,x_2\geq 0\\
+\end{split}
+\end{equation}
+
+Además, ha identificado que el plan de producción actual de la empresa quedaría descrito por la siguiente tabla, correspondiente a una solución básica:
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$\\ 
+ & $-40$ & $-3$ & $0$ & $0$ & $4$ & $0$ \\ 
+\hline
+$x_2$ & 10  & $1$ & $1$ & $0$ & $-1$ & $0$\\ 
+$h_1$ & 50  & $2$ & $0$ & $1$ & $-1$ & $0$\\ 
+$h_3$ & 10  & $-1$ & $0$ & $0$ & $1$ & $1$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+% % \begin{enumerate}
+%     A partir de la información de la tabla, justificar por qué relajar el compromiso comercial en una unidad, es decir, reducir $b_2$ en una unidad, daría lugar a una disminución de la función objetivo.
+%     % \item Explicar por qué relajar el compromiso comercial (lo cual implica aumentar el tamaño de la región de factibilidad) conduce a una solución con peor función objetivo.
+% % \end{enumerate}
+
+\begin{enumerate}
+\item A partir de la información de la tabla, justificar que disminuir el compromiso comercial, $b_2$, en una unidad daría lugar a una disminución de la función objetivo.
+
+\item Explicar por qué relajar el compromiso comercial (lo cual implica aumentar el tamaño de la región de factibilidad) conduce a una solución con peor función objetivo.
+\end{enumerate}

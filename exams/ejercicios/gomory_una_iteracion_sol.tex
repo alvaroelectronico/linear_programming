@@ -1,0 +1,60 @@
+
+Dado el siguiente problema de programación lineal, se ha resuelto y se ha obtenido la tabla correspondiente a la matriz completa de la solución óptima:
+
+\begin{align*}
+    \text{max.} z &= 10x_1 + 8x_2 + 7x_3 + 6x_4 \\
+    \text{s.a. }& \\
+    &4x_1 + 3x_2 + 2x_3 + x_4 \le 20 \\
+    &2x_1 + 2x_2 + 3x_3 + 2x_4 \le 15 \\
+    &x_1, x_2, x_3, x_4 \in  \mathcal{Z^+}
+\end{align*}
+
+ \begin{center}
+    \begin{tabular}{c|c|cccccc|}
+     & $s$ & $x_1$ & $x_2$ & $x_3$ & $h_4$ &$h_1$ & $h_2$ \\
+     & $-185/3$ & $0$ & $-2/3$ & $-8/3$ & $0$ &$-4/3$ & $-7/3$  \\
+    \hline
+    $x_1$ & $25/6$  & $1$ & $2/3$ & $1/6$ & $0$ & $1/3$ & $-1/6$\\
+    $x_4$ & $10/3$  & $0$ & $1/3$ & $4/3$ & $1$ &  $-1/3$ &$2/3$ \\
+    \hline
+    \end{tabular}
+\end{center}
+
+Se pide:
+\begin{enumerate}
+    \item Plantear el corte de Gomory correspondiente a la fila de $x_4$.
+    \item Expresar el corte en función de las variables de decisión del problema
+    \item Aplicar el corte en la tabla indicada hasta llegar al óptimo.
+\end{enumerate}
+
+El plano de corte de Gomory correspondientes es $1/3x_2+1/3x_3+2/3h_1+2/3h_2\geq1/3$.
+
+La expresión del corte anterior en función de las variables de decisión es: $4x_1+3x_2+3x_3+2x_4\leq 23$.
+
+Al añadir el plano de corte a la tabla correspondiente a la matriz completa de la solución óptima se llega a:
+ \begin{center}
+    \begin{tabular}{c|c|ccccccc|}
+     & $s$ & $x_1$ & $x_2$ & $x_3$ & $h_4$ &$h_1$ & $h_2$ & $h^c_1$ \\
+     & $-185/3$ & $0$ & $-2/3$ & $-8/3$ & $0$ &$-4/3$ & $-7/3$ &0 \\
+    \hline
+    $x_1$ & $25/6$  & $1$ & $2/3$ & $1/6$ & $0$ & $1/3$ & $-1/6$&0\\
+    $x_4$ & $10/3$  & $0$ & $1/3$ & $4/3$ & $1$ &  $-1/3$ &$2/3$ &0\\
+    $h_1^c$ & $-1/3$  & $0$ & $-1/3$ & $-1/3$ & $0$ &  $-2/3$ &$-2/3$ & $1$\\
+    \hline
+    \end{tabular}
+\end{center}
+
+Pivotando mediante el método de Lemke se llega a la nueva solución óptima:
+ \begin{center}
+    \begin{tabular}{c|c|ccccccc|}
+     & $s$ & $x_1$ & $x_2$ & $x_3$ & $h_4$ &$h_1$ & $h_2$ & $h^c_1$ \\
+     & $-61$ & $0$ & $0$ & $-2$ & $0$ &$0$ & $-1$ &-2 \\
+    \hline
+    $x_1$ & $7/2$  & $1$ & $0$ & $-1/2$ & $0$ & $-1$ & $-3/2$&2\\
+    $x_4$ & $3$  & $0$ & $0$ & $1$ & $1$ &  $-1$ &$0$ &1\\
+    $x_2$ & $1$  & $0$ & $1$ & $1$ & $0$ &  $2$ &$2$ & $-3$\\
+    \hline
+    \end{tabular}
+\end{center}
+
+Esta solución es una solución óptima múltiple. Podría entrar en la base $h_1$ en lugar de $x_2$. 

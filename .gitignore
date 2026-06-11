@@ -13,8 +13,14 @@ dist/
 .venv/
 venv/
 
-# Generated exams + LaTeX build artifacts
+# Generated exam master documents (regenerate with `lp-exams collection|exam`).
+# Templates (exams/templates/) and fragments (exams/ejercicios/) ARE tracked.
 exams/build/
+exams/*.tex
+exams/*.pdf
+exams/*.log
+
+# LaTeX build artifacts
 *.aux
 *.fdb_latexmk
 *.fls

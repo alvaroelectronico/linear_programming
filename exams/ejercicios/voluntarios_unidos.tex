@@ -1,0 +1,68 @@
+La organización \textbf{Voluntarios Unidos} coordina actividades de apoyo comunitario en tres áreas: \textbf{educación (E)}, \textbf{salud (S)} y \textbf{medio ambiente (M)}. Los voluntarios tienen un tiempo limitado semanal y la organización desea maximizar el impacto de sus actividades, medido en términos de puntos de beneficio para la comunidad.
+
+Por cada hora dedicada, cada área genera los siguientes beneficios. Educación: \textbf{5 puntos} de beneficio, salud: \textbf{8 puntos} de beneficio y medio ambiente: \textbf{6 puntos} de beneficio.
+
+La organización cuenta con un máximo de \textbf{40 horas de trabajo voluntario semanalmente}. 
+
+Además, por política interna, al menos el \textbf{30\% del tiempo total} debe destinarse a actividades educativas.
+
+Por último, la organización desea un beneficio de al menos 200 puntos entre las actividades de educación y salud.
+
+Si $x_1$, $x_2$, $x_3$ representan el tiempo semanal dedicado (en horas) a educación, salud y medio ambiente, respectivamente, el modelo de programación lineal que permite maximizar el impacto comunitario es:
+
+
+\begin{equation}
+\begin{split}
+\text{max. } z \quad = 5x_1 + 8x_2 + 6x_3 \\
+\text{s.a.:} \\
+\quad x_1 + x_2 + x_3 \leq 40 \quad \text{(Tiempo total disponible)} \\
+\quad 0.7x_1 - 0.3x_2 - 0.3x_3 \geq 0 \quad \text{(Política educativa)}\\
+\quad 5x_1 + 8x_2 \geq 200 \quad \text{(Límite en salud y medio ambiente)} \\
+\end{split}
+\end{equation}
+
+
+Que se puede formular de manera equivalente de la siguiente manera:
+
+
+\begin{equation}
+\begin{split}
+\text{max. } z = 5x_1 + 8x_2 + 6x_3 \\
+\text{s.a.:} \\
+x_1 + x_2 + x_3 \leq 40 \quad \text{(Tiempo total disponible)} \\
+7x_1 - 3x_2 - 3x_3 \geq 0 \quad \text{(Política educativa)} \\
+5x_1 + 8x_2 \geq 200 \quad \text{(Límite en salud y medio ambiente)} \\
+x_1, x_2, x_3 \geq 0 \quad \text{(No negatividad)}
+\end{split}
+\end{equation}
+
+Se conoce la tabla correspondiente a la solución óptima del problema:
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$\\ 
+      & -284 & 0 & 0 & -2 & $-71/10$ & $-3/10$ & 0 \\ 
+\hline
+$h_3$ & 84  & 0 & 0 & 8 & $71/10$ & $3/10$ & 1\\ 
+$x_1$ & 12  & 1 & 0 & 0 & $3/10$ & $-1/10$ & 0\\ 
+$x_2$ & 28  & 0 & 1 & 1 & $7/10$ & $1/10$ & 0\\ 
+\hline
+\end{tabular}
+\end{center}
+
+Se pide:
+
+\begin{enumerate}
+    \item Interpretar la información que ofrece la tabla de la solución óptima en términos de las actividades que se cumplen, los beneficios generados y el cumplimiento de requisitos.
+
+    \item Obtener la inversa de la base correspondiente a la solución óptima.
+
+    \item Evaluar el impacto sobre las horas dedicadas a las diferentes actividades y sobre el beneficio de las actividades realizadas si, en una semana en particular, fuera necesario dedicar una hora a actividades relacionadas con medio ambiente.
+
+    \item Cuantificar el impacto sobre las horas dedicadas a cada actividad y sobre los puntos de beneficio si, como resultado de la celebración de la semana de voluntariado se dispusiera de un número genérico de horas adicionales a las 40 semanales igual a $H$.
+    
+\end{enumerate}
+
+
+
+

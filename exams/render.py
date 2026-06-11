@@ -1,69 +1,136 @@
-"""Assemble exam problems and exams into LaTeX documents.
+"""Render problem fragments and assemble collection/exam master documents.
 
-Statement (student) and solution (key) rendering are kept separate so the same
-exam definition produces both the blank exam and its answer key. Document
-wrapping is delegated to :func:`linprog.reporting.latex_document`; the
-worked-solution body to :func:`linprog.reporting.render_worked_solution`.
+A *fragment* is a piece of LaTeX without a preamble (the same shape as the
+hand-written problems in ``ejercicios/``). A *master* is a full document that
+``\\input``s those fragments under a preamble (header). Generated problems write
+``<id>.tex`` (statement) and ``<id>_sol.tex`` (solution) into ``ejercicios/``;
+the masters then include any fragment by base name.
 """
 
 from __future__ import annotations
 
-from linprog.reporting import latex_document, render_worked_solution
+from pathlib import Path
+
+from linprog.reporting import render_worked_solution
 
 from exams.models import Exam, ExamProblem
 
-PAGE_BREAK = "\n\\clearpage\n"
+PAGE_BREAK = "\\clearpage"
+TEMPLATES_DIR = Path(__file__).parent / "templates"
 
 
-def render_problem_statement(problem: ExamProblem) -> str:
-    """The narrative statement fragment for a single problem."""
-    points = f" ({problem.points:g} pts)" if problem.points else ""
-    return f"\\section*{{{problem.title}{points}}}\n{problem.statement}\n"
+# --- fragments ------------------------------------------------------------
 
 
-def render_problem_solution(problem: ExamProblem, *, frac_command: bool = True) -> str:
-    """The worked-solution fragment for a single problem."""
+def statement_fragment(problem: ExamProblem) -> str:
+    """Statement fragment: narrative, optional formulation, optional questions."""
+    parts = [problem.statement.strip()]
+
+    if problem.include_formulation:
+        formulation = problem.build_program().formulation_tex()
+        if problem.statement_label:
+            formulation = formulation.replace(
+                "\\begin{split}\n",
+                f"\\begin{{split}}\n\\label{{{problem.statement_label}}}\n",
+                1,
+            )
+        parts.append(formulation)
+
+    if problem.questions:
+        items = "\n".join(f"    \\item {q}" for q in problem.questions)
+        parts.append("\\begin{enumerate}\n" + items + "\n\\end{enumerate}")
+
+    return "\n\n".join(parts) + "\n"
+
+
+def solution_fragment(problem: ExamProblem, *, frac_command: bool = True) -> str:
+    """Worked-solution fragment (no preamble, no repeated formulation)."""
     program = problem.build_program()
-    heading = f"\\section*{{{problem.title} -- solution}}\n"
-    body = render_worked_solution(
+    return render_worked_solution(
         program,
-        include_formulation=problem.include_formulation,
+        include_formulation=False,
         include_phase1=problem.include_phase1,
         include_tableau=problem.include_tableau,
         include_basis_details=problem.include_basis_details,
         frac_command=frac_command,
         section_headers=False,
     )
-    return heading + body
 
 
-def render_exam_statements(exam: Exam) -> str:
-    return PAGE_BREAK.join(render_problem_statement(p) for p in exam.problems)
-
-
-def render_exam_solutions(exam: Exam, *, frac_command: bool = True) -> str:
-    return PAGE_BREAK.join(
-        render_problem_solution(p, frac_command=frac_command) for p in exam.problems
+def write_problem_fragments(
+    problem: ExamProblem, ejercicios_dir: Path, *, frac_command: bool = True
+) -> tuple[Path, Path]:
+    """Write ``<id>.tex`` and ``<id>_sol.tex`` into ``ejercicios_dir``."""
+    ejercicios_dir.mkdir(parents=True, exist_ok=True)
+    statement_path = ejercicios_dir / f"{problem.id}.tex"
+    solution_path = ejercicios_dir / f"{problem.id}_sol.tex"
+    statement_path.write_text(statement_fragment(problem), encoding="utf-8")
+    solution_path.write_text(
+        solution_fragment(problem, frac_command=frac_command), encoding="utf-8"
     )
+    return statement_path, solution_path
 
 
-def render_exam_document(exam: Exam, *, solutions: bool, frac_command: bool = True) -> str:
-    """Wrap a full exam (statements, or the solution key) into a document."""
-    kind = "Solutions" if solutions else "Exam"
-    title = f"{exam.title} -- variant {exam.variant} ({kind})"
+# --- discovery ------------------------------------------------------------
+
+
+def discover_pairs(ejercicios_dir: Path) -> list[str]:
+    """Base names that have both ``<name>.tex`` and ``<name>_sol.tex``, sorted."""
+    pairs = []
+    for sol in ejercicios_dir.glob("*_sol.tex"):
+        base = sol.name[: -len("_sol.tex")]
+        if (ejercicios_dir / f"{base}.tex").exists():
+            pairs.append(base)
+    return sorted(pairs)
+
+
+def unpaired_statements(ejercicios_dir: Path) -> list[str]:
+    """Statement files with no matching ``_sol.tex`` (reported, not included)."""
+    bases = {p.stem for p in ejercicios_dir.glob("*.tex") if not p.name.endswith("_sol.tex")}
+    paired = set(discover_pairs(ejercicios_dir))
+    return sorted(bases - paired)
+
+
+def _humanize(name: str) -> str:
+    return name.replace("_", " ").strip()
+
+
+# --- masters --------------------------------------------------------------
+
+
+def _read_template(name: str) -> str:
+    return (TEMPLATES_DIR / name).read_text(encoding="utf-8").rstrip()
+
+
+def _master(preamble: str, body_lines: list[str]) -> str:
+    return preamble + "\n\n" + "\n".join(body_lines) + "\n\n\\end{document}\n"
+
+
+def build_collection(
+    ejercicios_dir: Path, *, ejercicios_prefix: str = "ejercicios", names: list[str] | None = None
+) -> str:
+    """A compendium document: every (or the given) problem, statement + solution."""
+    if names is None:
+        names = discover_pairs(ejercicios_dir)
+    body: list[str] = []
+    for name in names:
+        body.append(f"\\section{{{_humanize(name)}}}")
+        body.append(f"\\input{{{ejercicios_prefix}/{name}}}")
+        body.append("\\subsection*{Solución}")
+        body.append(f"\\input{{{ejercicios_prefix}/{name}_sol}}")
+        body.append(PAGE_BREAK)
+    return _master(_read_template("coleccion_preamble.tex"), body)
+
+
+def build_exam(exam: Exam, *, solutions: bool = False, ejercicios_prefix: str = "ejercicios") -> str:
+    """An exam document: the listed statements, optionally followed by the key."""
+    body: list[str] = []
+    for name in exam.items:
+        body.append(f"\\input{{{ejercicios_prefix}/{name}}}")
+        body.append(PAGE_BREAK)
     if solutions:
-        body = render_exam_solutions(exam, frac_command=frac_command)
-    else:
-        body = render_exam_statements(exam)
-    return latex_document(body, title=title)
-
-
-def render_problem_document(problem: ExamProblem, *, solution: bool, frac_command: bool = True) -> str:
-    """Wrap a single problem (statement, or statement+solution) into a document."""
-    if solution:
-        body = render_problem_statement(problem) + PAGE_BREAK + render_problem_solution(
-            problem, frac_command=frac_command
-        )
-    else:
-        body = render_problem_statement(problem)
-    return latex_document(body, title=problem.title)
+        body.append("\\section*{Soluciones}")
+        for name in exam.items:
+            body.append(f"\\input{{{ejercicios_prefix}/{name}_sol}}")
+            body.append(PAGE_BREAK)
+    return _master(_read_template("examen_preamble.tex"), body)

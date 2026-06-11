@@ -1,0 +1,41 @@
+\begin{enumerate}
+    \item{\textbf{Calcula} la solución óptima de la relajación lineal de este problema:
+    
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 5x_1 + 8x_2\\
+s.a.:\\
+x_1 + x_2 \leq  6\\
+5x_1 + 9x_2 \leq 45\\
+x_1,\,\,x_2 \in  \mathcal{Z}^+
+\end{split}
+\label{modeloGomory}
+\end{equation}
+
+ La solución óptima de la relación lineal de \eqref{modeloGomory} es:
+
+\begin{center}
+\begin{tabular}{c|c|cccc|}
+ & $z$ & $x_1$ & $x_2$ &  $h_1$ & $h_2$ \\ 
+ & -165/4 & 0 & 0  & -5/4 & -3/4\\ 
+\hline
+$x_1$ & 9/4  & 1 & 0 & 9/4 & -1/4\\ 
+$x_2$ & 15/4  & 0 & 1 & -5/4 & 1/4\\ 
+\hline
+\end{tabular}
+\end{center}
+
+    \item{\textbf{}{Indica} la expresión del corte de Gomory asociado a la variable que tiene parte fraccional de mayor valor en la solución óptima de la relajación lineal obtenida.}
+
+   $\frac{3}{4} h_1 + \frac{1}{4} h_2 \geq \frac{3}{4}$
+
+    
+    \item {Añade el corte propuesto y \textbf{obtén} la solución óptima del problema original, problema \eqref{modeloGomory}}.
+
+    La solución óptima es $x^*_{PE}=(0,5)$ con $z^*_{PE}=40$
+    \item ¿Cuál es la \textbf{expresión del corte introducido} en función de $x_1$ y $x_2$?
+    
+    $2x_1+3x_2 \leq 15$
+    
+
+\end{enumerate}

@@ -1,0 +1,5 @@
+Una vez elegida una variable básica (la que ocupa la posición $i$-ésima) y que cumple que $u^B_i<0$, la regla de Lemke se aplica mal si se da alguno de los dos siguientes casos:
+\begin{itemize}
+    \item Se selecciona una variable de entrada $x_j$ cuya tasa de sustitución con respecto a la variable que entra es positiva ($p^B_{ij}$). En este caso, la variable que entra lo hace con valor negativo, de forma que no será posible disponer de una componente negativa menos (que nos acerque a que la solución cumpla con el criterio de optimalidad).
+    \item Se selecciona una variable de entrada $x_j$ cuya tasa de sustitución con respecto a la variable que entra es negativa ($p^B_{ij}$) pero no aquella que cumple $\frac{V^B_{ij}}{p^B_{ij}} = \mbox{min}_{p^B_{ik} < 0}\left\{\frac{V^B_{ik}}{p^P_{ik}}\right\}$. En este caso, la nueva solución básica no cumplirá el criterio de optimalidad; al menos una componente del criterio del simplex será positiva.
+\end{itemize}
