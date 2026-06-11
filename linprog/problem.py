@@ -54,6 +54,16 @@ class LinearProgram:
     def solution(self):
         return self.result.solution
 
+    @property
+    def optimal_basic_solution(self):
+        """The :class:`BasicSolution` for the optimal basis (the last one visited).
+
+        Returns None if there is no optimal basis (infeasible/unbounded).
+        """
+        if not self.basic_solutions:
+            return None
+        return self.basic_solutions[-1]
+
     # --- Gurobi backend (optional, lazily constructed) -------------------
 
     @property

@@ -15,10 +15,16 @@ Two ideas:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Callable, Optional
 
 if TYPE_CHECKING:
     from linprog.problem import LinearProgram
+
+# A custom solution builder: receives the *solved* LinearProgram (and the
+# frac_command flag) and returns the solution-body LaTeX. Lets a problem compose
+# its answer key freely from the problem's elements (tableaux, basis, reduced
+# costs, duals, ...) instead of the default fixed layout.
+SolutionBuilder = Callable[["LinearProgram", bool], str]
 
 
 @dataclass(frozen=True)
@@ -32,22 +38,30 @@ class ProblemSpec:
 
 @dataclass
 class ExamProblem:
-    """A generated problem: narrative, LP spec and answer-key options.
+    """A generated problem: narrative, LP spec, questions and answer key.
 
-    ``statement`` is the narrative (word-problem) LaTeX. When
-    ``include_formulation`` is set, the parsed formulation is appended to the
-    statement. ``questions`` becomes an ``enumerate`` of tasks. The ``include_*``
-    flags below control which sections the worked solution renders.
+    Statement (``<id>.tex``): the ``statement`` narrative LaTeX, optionally
+    followed by the parsed formulation (``include_formulation``) and an
+    ``enumerate`` of ``questions``.
+
+    Solution (``<id>_sol.tex``): either
+      * **custom** -- set ``solution_builder`` to a function that composes the
+        answer key from the solved :class:`~linprog.problem.LinearProgram`
+        (its tableaux, basis, reduced costs, duals, ... interleaved with prose), or
+      * **default** -- leave it ``None`` and the ``include_*`` flags drive the
+        standard worked-solution layout.
     """
 
     id: str
     title: str
-    statement: str
     spec: ProblemSpec
+    statement: str = ""
     questions: list[str] = field(default_factory=list)
     points: float = 10.0
     include_formulation: bool = True
     statement_label: str | None = None
+    # Custom answer-key builder; when None the default layout (below) is used.
+    solution_builder: Optional[SolutionBuilder] = None
     include_phase1: bool = True
     include_tableau: bool = True
     include_basis_details: bool = False

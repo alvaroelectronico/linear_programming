@@ -102,6 +102,15 @@ def test_solution_fragment_is_a_fragment_with_tableau():
     assert "\\begin{tabular}" in fragment
 
 
+def test_custom_solution_builder_composes_problem_elements():
+    # dos_fases_a uses a custom solution_builder that pulls specific elements.
+    fragment = render.solution_fragment(load_problem("dos_fases_a"))
+    assert "\\begin{tabular}" in fragment          # the tableau
+    assert "B^{-1}" in fragment                    # the basis inverse
+    assert "\\pi^B" in fragment                    # the simplex multipliers
+    assert "Solución óptima" in fragment
+
+
 def test_write_problem_fragments(tmp_path):
     statement, solution = render.write_problem_fragments(load_problem("demo_dieta"), tmp_path)
     assert statement.name == "demo_dieta.tex" and statement.exists()

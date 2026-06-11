@@ -101,9 +101,15 @@ lp-exams exam mcio1_mad1_2627 --solutions --pdf  # answer key
 
 - **Generated** (linear programs): a Python module in `exams/bank/` defines
   `build() -> ExamProblem` with the narrative, the LP spec (objective +
-  constraints) and which solution artifacts to show. `lp-exams render <name>`
-  solves it and writes the two `.tex` fragments into `ejercicios/`. Output is in
-  Spanish (`Fase 1/Fase 2`, …).
+  constraints) and the questions. `lp-exams render <name>` solves it once and
+  writes the two `.tex` fragments into `ejercicios/`. Output is in Spanish
+  (`Fase 1/Fase 2`, …). The answer key is either the default layout (flags
+  `include_phase1/include_tableau/include_basis_details`) or a custom
+  `solution_builder(prob, frac_command)` that composes it from the solved
+  problem's elements — tableaux (`prob.compose_tableau`), basis and inverse
+  (`prob.optimal_basic_solution.B_tex/invB_tex`), reduced costs/duals
+  (`vB_tex/piB_tex`), objective (`zB_uB_tex`), etc. See `exams/bank/dos_fases_a.py`
+  for a fully-commented template.
 - **Static** (anything else — graphs, branch & bound, …): hand-written `.tex`
   (plus images) that already live in `ejercicios/`. They need no Python.
 

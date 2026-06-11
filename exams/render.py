@@ -22,12 +22,17 @@ TEMPLATES_DIR = Path(__file__).parent / "templates"
 # --- fragments ------------------------------------------------------------
 
 
-def statement_fragment(problem: ExamProblem) -> str:
-    """Statement fragment: narrative, optional formulation, optional questions."""
+def statement_fragment(problem: ExamProblem, program=None) -> str:
+    """Statement fragment: narrative, optional formulation, optional questions.
+
+    ``program`` is the already-built LinearProgram (built on demand if omitted),
+    so the statement and solution can reuse the same solved problem.
+    """
     parts = [problem.statement.strip()]
 
     if problem.include_formulation:
-        formulation = problem.build_program().formulation_tex()
+        program = program or problem.build_program()
+        formulation = program.formulation_tex()
         if problem.statement_label:
             formulation = formulation.replace(
                 "\\begin{split}\n",
@@ -40,12 +45,18 @@ def statement_fragment(problem: ExamProblem) -> str:
         items = "\n".join(f"    \\item {q}" for q in problem.questions)
         parts.append("\\begin{enumerate}\n" + items + "\n\\end{enumerate}")
 
-    return "\n\n".join(parts) + "\n"
+    return "\n\n".join(part for part in parts if part) + "\n"
 
 
-def solution_fragment(problem: ExamProblem, *, frac_command: bool = True) -> str:
-    """Worked-solution fragment (no preamble, no repeated formulation)."""
-    program = problem.build_program()
+def solution_fragment(problem: ExamProblem, program=None, *, frac_command: bool = True) -> str:
+    """Worked-solution fragment.
+
+    Uses the problem's custom ``solution_builder`` when set; otherwise falls back
+    to the default worked-solution layout driven by the ``include_*`` flags.
+    """
+    program = program or problem.build_program()
+    if problem.solution_builder is not None:
+        return problem.solution_builder(program, frac_command)
     return render_worked_solution(
         program,
         include_formulation=False,
@@ -60,13 +71,14 @@ def solution_fragment(problem: ExamProblem, *, frac_command: bool = True) -> str
 def write_problem_fragments(
     problem: ExamProblem, ejercicios_dir: Path, *, frac_command: bool = True
 ) -> tuple[Path, Path]:
-    """Write ``<id>.tex`` and ``<id>_sol.tex`` into ``ejercicios_dir``."""
+    """Write ``<id>.tex`` and ``<id>_sol.tex``, reusing one solved program."""
     ejercicios_dir.mkdir(parents=True, exist_ok=True)
+    program = problem.build_program()  # solved once, used by both fragments
     statement_path = ejercicios_dir / f"{problem.id}.tex"
     solution_path = ejercicios_dir / f"{problem.id}_sol.tex"
-    statement_path.write_text(statement_fragment(problem), encoding="utf-8")
+    statement_path.write_text(statement_fragment(problem, program), encoding="utf-8")
     solution_path.write_text(
-        solution_fragment(problem, frac_command=frac_command), encoding="utf-8"
+        solution_fragment(problem, program, frac_command=frac_command), encoding="utf-8"
     )
     return statement_path, solution_path
 

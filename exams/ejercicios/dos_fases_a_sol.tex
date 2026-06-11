@@ -1,6 +1,5 @@
 \textbf{Formulación de la primera fase}
 
-
 \begin{equation}
 \begin{split}
 \mbox{max. } z' = -1a_1\\
@@ -10,8 +9,7 @@ s.a.:\\
 x_1,\,x_2,\,h_2,\,a_1\geq 0\end{split}
 \end{equation}
 
-\textbf{Resolución}
-
+\textbf{Resolución mediante el método de las dos fases}
 
 \begin{center}
 \begin{tabular}{c|c|cccc|}
@@ -36,3 +34,78 @@ $x_2$ & $10$  & $0$ & $1$ & $\frac{1}{2}$ & $\frac{-1}{4}$\\
 \end{tabular}
 \end{center}
 
+
+\textbf{Base óptima y su inversa}
+
+\begin{equation}
+\begin{split}
+B =\begin{pmatrix}
+4 & 2\\
+2 & 3\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+B^{-1} =\begin{pmatrix}
+\frac{3}{8} & \frac{-1}{4}\\
+\frac{-1}{4} & \frac{1}{2}\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+\textbf{Multiplicadores del símplex y costes reducidos}
+
+\begin{equation}
+\begin{split}
+\pi^B = c^BB^{-1} = \begin{pmatrix}
+1 & 4\\
+\end{pmatrix}
+\begin{pmatrix}
+\frac{3}{8} & \frac{-1}{4}\\
+\frac{-1}{4} & \frac{1}{2}\\
+\end{pmatrix}
+ = \begin{pmatrix}
+\frac{-5}{8} & \frac{7}{4}\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+V^B = c-c^BB^{-1}A = \begin{pmatrix}
+1 & 4 & 0\\
+\end{pmatrix}
+ - \begin{pmatrix}
+1 & 4\\
+\end{pmatrix}
+\begin{pmatrix}
+\frac{3}{8} & \frac{-1}{4}\\
+\frac{-1}{4} & \frac{1}{2}\\
+\end{pmatrix}
+\begin{pmatrix}
+4 & 2 & 0\\
+2 & 3 & 1\\
+\end{pmatrix}
+ = \begin{pmatrix}
+0 & 0 & \frac{-7}{4}\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+\textbf{Valor de la función objetivo}
+
+\begin{equation}
+\begin{split}
+z^B=c^Bu^B = \begin{pmatrix}
+1 & 4\\
+\end{pmatrix}
+\begin{pmatrix}
+15\\
+10\\
+\end{pmatrix}
+ = 55\end{split}
+\end{equation}
+
+\textbf{Solución óptima:} $x_{1} = 15$, $x_{2} = 10$.
