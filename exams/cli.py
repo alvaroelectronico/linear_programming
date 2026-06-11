@@ -28,9 +28,9 @@ APP_DIR = Path(__file__).parent
 DEFAULT_EJERCICIOS = APP_DIR / "ejercicios"
 
 
-def _compile(tex_path: Path) -> int:
+def _compile(tex_path: Path, *, keep_going: bool = False) -> int:
     try:
-        pdf_path = compile_pdf(tex_path)
+        pdf_path = compile_pdf(tex_path, keep_going=keep_going)
     except LatexNotFoundError as exc:
         print(f"PDF not generated: {exc}", file=sys.stderr)
         return 2
@@ -76,7 +76,9 @@ def _cmd_collection(args: argparse.Namespace) -> int:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(tex, encoding="utf-8")
     print(f"Wrote {out_path}")
-    return _compile(out_path) if args.pdf else 0
+    # The whole-corpus collection is heterogeneous: compile best-effort unless
+    # the user asks for a strict build.
+    return _compile(out_path, keep_going=not args.strict) if args.pdf else 0
 
 
 def _cmd_exam(args: argparse.Namespace) -> int:
@@ -108,6 +110,9 @@ def build_parser() -> argparse.ArgumentParser:
     p_coll.add_argument("--out", type=Path, default=APP_DIR, help="where to write coleccion.tex")
     p_coll.add_argument("--ejercicios", type=Path, default=DEFAULT_EJERCICIOS)
     p_coll.add_argument("--pdf", action="store_true", help="compile the PDF with latexmk")
+    p_coll.add_argument(
+        "--strict", action="store_true", help="halt on the first LaTeX error (default: best-effort)"
+    )
     p_coll.set_defaults(func=_cmd_collection)
 
     p_exam = sub.add_parser("exam", help="build an exam master document")

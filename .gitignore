@@ -13,10 +13,8 @@ dist/
 .venv/
 venv/
 
-# Generated exam master documents (regenerate with `lp-exams collection|exam`).
-# Templates (exams/templates/) and fragments (exams/ejercicios/) ARE tracked.
+# Generated exam masters: the .tex are tracked; PDFs/logs/aux are not.
 exams/build/
-exams/*.tex
 exams/*.pdf
 exams/*.log
 

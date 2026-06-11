@@ -16,10 +16,13 @@
 \usepackage{float}
 \usepackage{tikz}
 \usetikzlibrary{arrows, arrows.meta, positioning, calc, automata, graphs, shapes.geometric}
-% --- Estilos TikZ personalizados ---------------------------------------
-% Algunos problemas de grafos usan estilos propios (p. ej. arn_n). Pega aquí
-% las definiciones de tu preámbulo original para que se rendericen bien:
-% \tikzstyle{arn_n}=[circle, fill=black!90, text=white, minimum size=22pt]
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% --- Estilos TikZ personalizados (problemas de grafos) -----------------
+% Ajusta estas definiciones a las de tu preámbulo original si difieren.
+\tikzstyle{arn_n}=[fill=black, text=white, draw=black, circle, minimum size=22pt, inner sep=0pt]
+\tikzstyle{arn_r}=[fill=red,   text=white, draw=black, circle, minimum size=22pt, inner sep=0pt]
+\tikzstyle{arn_x}=[fill=white, text=black, draw=black, circle, minimum size=22pt, inner sep=0pt]
 % -----------------------------------------------------------------------
 \usepackage[margin=2.5cm]{geometry}
 

@@ -124,8 +124,9 @@ mix them freely. Exam definitions live in `exams/exams_def/` as
 - Graph problems that rely on custom TikZ styles (e.g. `arn_n`) need those
   definitions pasted into the preamble — see the marked spot in the templates.
 
-Generated master `.tex`/`.pdf` (at the `exams/` root) are git-ignored; the
-templates and the `ejercicios/` fragments are tracked.
+The generated master `.tex` (at the `exams/` root) are tracked; their PDFs and
+LaTeX aux/log files are git-ignored. Templates and `ejercicios/` fragments are
+tracked too.
 
 ```
 exams/
