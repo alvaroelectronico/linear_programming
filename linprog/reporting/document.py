@@ -74,7 +74,9 @@ def render_worked_solution(
     """
 
     def header(text: str) -> str:
-        return f"\\section*{{{text}}}\n" if section_headers else ""
+        # \section* for standalone documents; a plain bold label for fragments
+        # that will be embedded under an outer section (collection / exam).
+        return f"\\section*{{{text}}}\n" if section_headers else f"\\textbf{{{text}}}\n"
 
     parts: list[str] = []
 
@@ -109,7 +111,7 @@ def render_worked_solution(
     if include_basis_details:
         parts.append(header("Detalles de la base"))
         for i, basic_solution in enumerate(problem.basic_solutions, start=1):
-            parts.append(f"\\subsection*{{Base {i}}}" if section_headers else "")
+            parts.append(f"\\subsection*{{Base {i}}}" if section_headers else f"\\textbf{{Base {i}}}")
             parts.append(basic_solution.B_tex(frac_command=frac_command))
             parts.append(basic_solution.invB_tex(frac_command=frac_command))
             parts.append(basic_solution.piB_tex(frac_command=frac_command))

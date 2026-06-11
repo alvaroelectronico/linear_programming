@@ -11,8 +11,8 @@ from __future__ import annotations
 from exams.models import Exam
 
 _VARIANT_ORDER = {
-    "A": ["demo_muebles", "01a_dos_fases_a", "demo_dieta"],
-    "B": ["demo_dieta", "01b_dos_fases_b", "demo_muebles"],
+    "A": ["demo_muebles", "dos_fases_a", "demo_dieta"],
+    "B": ["demo_dieta", "dos_fases_b", "demo_muebles"],
 }
 
 
