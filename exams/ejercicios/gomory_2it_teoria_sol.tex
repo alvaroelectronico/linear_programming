@@ -1,0 +1,123 @@
+
+
+
+
+
+
+\textbf{1) Solución óptima de la relajación lineal }
+
+La solución óptima de la relajación lineal es:
+
+\begin{center}
+\begin{tabular}{c|c|cccc|}
+ & $z$ & $x_1$ & $x_2$ &  $h_1$ & $h_2$ \\ 
+ & -187/3 & $0$ & 0  & -5/3 & -4/3 \\ 
+\hline
+$x_1$ & 11/3  & 1 & 0 & 7/3 & -1/3\\ 
+$x_2$ & 10/3  & 0 & 1 & -4/3 & 1/3\\ 
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{2) Obtención del corte de Gomory}
+
+La variable con la mayor parte fraccionaria es \textbf{$x_1$} (ya que $\frac{2}{3} > \frac{1}{3}$). 
+
+\[
+x_1 + \frac{7}{3}h_1 - \frac{1}{3}h_2 = \frac{11}{3}
+\]
+
+Descomponiendo cada coeficiente en su parte entera inferior y su parte fraccionaria positiva ($a = \lfloor a \rfloor + f$):
+\begin{itemize}
+    \item $\dfrac{11}{3} = 3 + \dfrac{2}{3}$
+    \item $\dfrac{7}{3} = 2 + \dfrac{1}{3}$
+    \item $-\dfrac{1}{3} = -1 + \dfrac{2}{3}$
+\end{itemize}
+
+Aplicando la fórmula general del corte de Gomory ($\sum f_j x_j \ge f_0$), se obtiene:
+\[
+\frac{1}{3}h_1 + \frac{2}{3}h_2 \ge \frac{2}{3}
+\]
+
+Introduciendo la variable de holgura del corte ($h^c_1 \ge 0$) en forma estándar:
+\[
+-\frac{1}{3}h_1 - \frac{2}{3}h_2 + h^c_1 = -\frac{2}{3}
+\]
+
+\textbf{3) Resolución mediante Lemke}
+
+Añadimos la fila del corte obtenido a nuestra matriz óptima de la relajación lineal:
+
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ &  $h_1$ & $h_2$ &$h^c_1$\\ 
+ & -187/3 & $0$ & 0  & -5/3 & -4/3 &0\\ 
+\hline
+$x_1$ & 11/3  & 1 & 0 & 7/3 & -1/3&0\\ 
+$x_2$ & 10/3  & 0 & 1 & -4/3 & 1/3 &0 \\ 
+$h^c_1$ & -2/3  & 0 & 0 & -1/3 & -2/3 & 1\\ 
+
+\hline
+\end{tabular}
+\end{center}
+
+
+
+Aplicando el método Simplex Dual o método de Lemke se llega a la siguiente solución óptima que es entera:
+
+\[
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ &  $h_1$ & $h_2$ &$h^c_1$\\ 
+ & -61 & 0 & 0 & -1 & 0 & -2 \\ \hline
+$x_1$ & 4 & 1 & 0 & 5/2 & 0 & -1/2 \\
+$x_2$ & 3 & 0 & 1 & -3/2 & 0 & 1/2 \\
+$h_2$ & 1 & 0 & 0 & 1/2 & 1 & -3/2 \\
+\end{tabular}
+\]
+
+
+
+\textbf{4) Expresión del corte en función de las variables originales}
+
+El corte obtenido de forma simplificada es:
+\[
+h_1 + 2h_2 \ge 2
+\]
+
+Despejamos las variables de holgura originales a partir de las restricciones del problema original:
+\begin{itemize}
+    \item $h_1 = 7 - x_1 - x_2$
+    \item $h_2 = 38 - 4x_1 - 7x_2$
+\end{itemize}
+
+Sustituimos estas expresiones en la inecuación del corte:
+\[
+(7 - x_1 - x_2) + 2(38 - 4x_1 - 7x_2) \ge 2
+\]
+\[
+7 - x_1 - x_2 + 76 - 8x_1 - 14x_2 \ge 2
+\]
+\[
+83 - 9x_1 - 15x_2 \ge 2 \implies -9x_1 - 15x_2 \ge -81
+\]
+
+\[
+{3x_1 + 5x_2 \le 27}
+\]
+
+\textbf{Cuestiones}
+\begin{enumerate}
+    \item[\textbf{a)}] ¿Por qué elimina la solución óptima de la relajación lineal?\\
+    Porque la solución continua óptima ($x_1 = \frac{11}{3}, x_2 = \frac{10}{3}$) viola explícitamente esta nueva restricción. Al evaluar sus valores en el corte obtenemos:
+    \[
+    3\left(\frac{11}{3}\right) + 5\left(\frac{10}{3}\right) = 11 + \frac{50}{3} = \frac{83}{3} \approx 27.67
+    \]
+    Como $27.67 > 27$, dicha solución queda fuera de la nueva región factible modificada por el hiperplano.
+
+   \item[\textbf{b)}] Relación entre los conjuntos $X_{LP}$, $X_I$ y $X_C$: \\
+    La relación de inclusión formal que vincula a las tres regiones viene dada por:
+    \[
+    X_I \subseteq X_C \subset X_{LP}
+    \]
+\end{enumerate}

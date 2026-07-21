@@ -1,0 +1,182 @@
+La oferta total disponible es:
+
+\[
+50+40+30=120
+\]
+
+y la demanda total es:
+
+\[
+45+35+50+40=170.
+\]
+
+Por tanto, existe un exceso de demanda de:
+
+\[
+170-120=50.
+\]
+
+Para equilibrar el problema se introduce un origen ficticio, $\mathcal{O}_4$, con una oferta de 50 lotes. Este origen ficticio representa la demanda no satisfecha. Los costes desde este origen ficticio hasta cada hospital son las penalizaciones por lote no entregado.
+
+\[
+\begin{array}{c|cccc|c}
+ & \mathcal{D}_1 & \mathcal{D}_2 & \mathcal{D}_3 & \mathcal{D}_4 & O_i \\
+\hline
+\mathcal{O}_1 & 12 & 18 & 25 & 16 & 50 \\
+\mathcal{O}_2 & 20 & 14 & 17 & 22 & 40 \\
+\mathcal{O}_3 & 24 & 21 & 13 & 19 & 30 \\
+\mathcal{O}_4 & 90 & 75 & 110 & 60 & 50 \\
+\hline
+D_j & 45 & 35 & 50 & 40 & \\
+\end{array}
+\]
+
+donde $\mathcal{O}_4$ representa la demanda no atendida y, por tanto, los valores de la fila $\mathcal{O}_4$ no son costes de transporte, sino penalizaciones.
+
+\subsubsection*{Solución inicial por el método de Vogel}
+
+Aplicando el método de Vogel se obtiene la siguiente secuencia de asignaciones:
+
+\[
+\begin{array}{c|c|c|c}
+\text{Paso} & \text{Fila/columna elegida} & \text{Variable asignada} & \text{Asignación} \\
+\hline
+1 & \mathcal{O}_4 & x_{44} & 40 \\
+2 & \mathcal{O}_4 & x_{42} & 10 \\
+3 & \mathcal{D}_1 & x_{11} & 45 \\
+4 & \mathcal{O}_3 & x_{33} & 30 \\
+5 & \mathcal{D}_3 & x_{23} & 20 \\
+6 & \mathcal{D}_2 & x_{22} & 20 \\
+7 & \mathcal{D}_2 & x_{12} & 5 \\
+\end{array}
+\]
+
+Por tanto, la solución inicial obtenida mediante Vogel es la siguiente:
+
+\begin{center}
+\begin{tabular}{c|rrr|rrr|rrr|rrr|c}
+& \multicolumn{3}{c|}{$\mathcal{D}_1$} 
+& \multicolumn{3}{c|}{$\mathcal{D}_2$} 
+& \multicolumn{3}{c|}{$\mathcal{D}_3$} 
+& \multicolumn{3}{c|}{$\mathcal{D}_4$} 
+& $O_i$ \\
+
+\hline
+& \footnotesize{12} &&& \footnotesize{18} &&& \footnotesize{25} &&& \footnotesize{16} &&& \\
+&& \textbf{45} &&& \textbf{5} &&& &&& && 50 \tiny{(=45+5)} \\
+\multirow{-3}{*}{$\mathcal{O}_1$} &&&&&&&&&&&&& \\
+
+\hline
+& \footnotesize{20} &&& \footnotesize{14} &&& \footnotesize{17} &&& \footnotesize{22} &&& \\
+&& &&& \textbf{20} &&& \textbf{20} &&& && 40 \tiny{(=20+20)} \\
+\multirow{-3}{*}{$\mathcal{O}_2$} &&&&&&&&&&&&& \\
+
+\hline
+& \footnotesize{24} &&& \footnotesize{21} &&& \footnotesize{13} &&& \footnotesize{19} &&& \\
+&& &&& &&& \textbf{30} &&& && 30 \tiny{(=30)} \\
+\multirow{-3}{*}{$\mathcal{O}_3$} &&&&&&&&&&&&& \\
+
+\hline
+& \footnotesize{90} &&& \footnotesize{75} &&& \footnotesize{110} &&& \footnotesize{60} &&& \\
+&& &&& \textbf{10} &&& &&& \textbf{40} && 50 \tiny{(=10+40)} \\
+\multirow{-3}{*}{$\mathcal{O}_4$} &&&&&&&&&&&&& \\
+
+\hline
+$D_j$ 
+&& 45 \tiny{(=45)} &&
+& 35 \tiny{(=5+20+10)} &&
+& 50 \tiny{(=20+30)} &&
+& 40 \tiny{(=40)} && \\
+\end{tabular}
+\end{center}
+
+La solución tiene $4+4-1=7$ variables básicas, por lo que es una solución básica factible no degenerada.
+
+\subsubsection*{Comprobación de optimalidad mediante stepping stone}
+
+Las variables básicas son:
+
+\[
+x_{11}, x_{12}, x_{22}, x_{23}, x_{33}, x_{42}, x_{44}.
+\]
+
+Para comprobar si la solución es óptima, se calcula la variación del coste total asociada a introducir cada variable no básica. En un problema de minimización, si todas estas variaciones son no negativas, la solución es óptima.
+
+\[
+\begin{array}{c|c}
+\text{Variable no básica} & \Delta z \\
+\hline
+x_{13} & 25-18+14-17 = 4 \\
+x_{14} & 16-18+75-60 = 13 \\
+x_{21} & 20-12+18-14 = 12 \\
+x_{24} & 22-14+75-60 = 23 \\
+x_{31} & 24-13+17-14+18-12 = 20 \\
+x_{32} & 21-13+17-14 = 11 \\
+x_{34} & 19-13+17-14+75-60 = 24 \\
+x_{41} & 90-75+18-12 = 21 \\
+x_{43} & 110-75+14-17 = 32 \\
+\end{array}
+\]
+
+Como todas las variaciones son positivas, no existe ninguna variable no básica cuya entrada reduzca el coste total. Por tanto, la solución obtenida mediante Vogel es ya la solución óptima.
+
+\subsubsection*{Solución óptima}
+
+La solución óptima es:
+
+\[
+x_{11}=45, \quad x_{12}=5, \quad x_{22}=20, \quad x_{23}=20, \quad x_{33}=30,
+\quad x_{42}=10, \quad x_{44}=40.
+\]
+
+Todas las demás variables toman valor cero.
+
+En términos del problema real:
+
+\begin{itemize}
+    \item Desde el almacén $\mathcal{O}_1$ se envían 45 lotes al hospital $\mathcal{D}_1$ y 5 lotes al hospital $\mathcal{D}_2$.
+    \item Desde el almacén $\mathcal{O}_2$ se envían 20 lotes al hospital $\mathcal{D}_2$ y 20 lotes al hospital $\mathcal{D}_3$.
+    \item Desde el almacén $\mathcal{O}_3$ se envían 30 lotes al hospital $\mathcal{D}_3$.
+    \item Quedan sin entregar 10 lotes del hospital $\mathcal{D}_2$ y 40 lotes del hospital $\mathcal{D}_4$.
+\end{itemize}
+
+La demanda no satisfecha queda recogida en las variables del origen ficticio:
+
+\[
+x_{41}=0, \qquad x_{42}=10, \qquad x_{43}=0, \qquad x_{44}=40.
+\]
+
+Por tanto:
+
+\[
+\begin{array}{c|cccc}
+ & \mathcal{D}_1 & \mathcal{D}_2 & \mathcal{D}_3 & \mathcal{D}_4 \\
+\hline
+\text{Demanda no satisfecha} & 0 & 10 & 0 & 40 \\
+\end{array}
+\]
+
+\subsubsection*{Coste total}
+
+El coste total de transporte y penalización es:
+
+\[
+\begin{aligned}
+Z ={}& 12\cdot 45 + 18\cdot 5 + 14\cdot 20 + 17\cdot 20 + 13\cdot 30 \\
+&+ 75\cdot 10 + 60\cdot 40.
+\end{aligned}
+\]
+
+Por tanto:
+
+\[
+Z = 540+90+280+340+390+750+2400 = 4790.
+\]
+
+La solución óptima tiene un coste total de:
+
+\[
+{z^*=4790}
+\]
+
+Este valor incluye tanto los costes reales de transporte como las penalizaciones por demanda no satisfecha.

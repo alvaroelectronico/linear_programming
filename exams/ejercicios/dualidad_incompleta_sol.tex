@@ -1,0 +1,121 @@
+Dado el siguiente problema de programación lineal:
+
+\[
+\begin{aligned}
+\mbox{max.} \quad & z = 8x_1 + 6x_2 + 5x_3  + 4x_4 \\
+\text{s.a.} \quad & \\
+& 2x_1 + 3x_2 + 1x_3 + 2x_4 \le 40 & \text{(tiempo de máquina)} \\
+& 1x_1 + 1x_2 + 2x_3 + 1x_4 \le 30 & \text{(material disponible)} \\
+& 3x_1 + 2x_2 + 2x_3 + 4x_4 \le 60 & \text{(mano de obra)} \\
+& x_1, x_2, x_3, x_4 \ge 0 &
+\end{aligned}
+\]
+
+Se pide:
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Formular el problema dual asociado.}
+
+    El problema dual asociado es:
+
+    \[
+    \begin{aligned}
+    \mbox{min.}\quad & s = 40y_1 + 30y_2 + 60y_3 \\
+    \text{s.a.} \quad & \\
+    & 2y_1 + y_2 + 3y_3 \ge 8 \\
+    & 3y_1 + y_2 + 2y_3 \ge 6 \\
+    & y_1 + 2y_2 + 2y_3 \ge 5 \\
+    & 2y_1 + y_2 + 4y_3 \ge 4 \\
+    & y_1, y_2, y_3 \ge 0
+    \end{aligned}
+    \]
+
+    \item \textbf{Se conocen las tablas siguientes tablas, correspondientes a soluciones óptimas del problema primal y del dual (formulado como problema de maximización antes de resolver) con información parcial y \textit{haciendo uso de las propiedades de las relaciones entre los dos problemas}, se pide recuperar la solución óptima del primal.}
+
+    \[
+    \begin{array}{c|c|ccccccc|}
+          &        & x_1    & x_2 & x_3    & x_4 & x^h_1 & x^h_2  & x^h_3\\ 
+          & \ldots & \ldots & -1  & \ldots & -6  & -1    & \ldots & -2 \\ 
+    \hline
+          & \ldots & 1      & 4   & 0      & 0   & 2     & 0      & -1\\ 
+          & 10     & 0      & 7   & 0      & -3  & 4     & 1      & -3\\ 
+          & \ldots & 0      & -5  & 1      & 2   & -3    & 0      & 2\\ 
+    \hline
+    \end{array}
+    \]
+    
+    \[
+    \begin{array}{c|c|ccccccc|}
+           & z      & y_1    & y_2 & y_3    & y^h_1 & y^h_2 & y^h_3  & y^h_4\\ 
+           & \ldots & \ldots & -10 & \ldots & -20   & 0     & \ldots & \ldots \\ 
+    \hline
+           & 1/5       & 0   & -7/5   & 0      & -4/5  & 1/5   & 1      & 0\\ 
+           & \ldots    & 1   & 1/5    & 0      & 2/5   & -3/5  & 0      & 0\\ 
+           & 32/5      & 0   & 1/5    & 0      & -8/5  & 2/5   & 0      & 1\\ 
+        & \ldots    & 0   & 1/5    & 1      & -3/5  & 2/5   & 0      & 0\\ 
+    \hline
+    \end{array}
+    \]
+
+    A partir de los valores de las tasas de sustitución de ambas tablas sabemos que las variables básicas de la solución óptima de cada problema son las siguientes:
+    \begin{itemize}
+        \item Problema primal: $x_1$, $x_3$ y $x^h_2$.
+        \item Problema dual: $y_1$, $y_3$, $y^h_3$ e $y^h_4$.
+    \end{itemize}
+
+    Podemos completar la información de las tablas, e indicar las variables básicas:
+    
+        \[
+    \begin{array}{c|c|ccccccc|}
+          &        & x_1    & x_2 & x_3    & x_4 & x^h_1 & x^h_2  & x^h_3\\ 
+          & \ldots & \ldots & -1  & \ldots & -6  & -1    & \ldots & -2 \\ 
+    \hline
+    x_1   & \ldots & 1      & 4   & 0      & 0   & 2     & 0      & -1\\ 
+    x^h_2 & 10     & 0      & 7   & 0      & -3  & 4     & 1      & -3\\ 
+    x_3   & \ldots & 0      & -5  & 1      & 2   & -3    & 0      & 2\\ 
+    \hline
+    \end{array}
+    \]
+    
+    \[
+    \begin{array}{c|c|ccccccc|}
+           & z      & y_1    & y_2 & y_3    & y^h_1 & y^h_2 & y^h_3  & y^h_4\\ 
+           & \ldots & \ldots & -10 & \ldots & -20   & 0     & \ldots & \ldots \\ 
+    \hline
+    y^h_3  & 1/5       & 0   & -7/5   & 0      & -4/5  & 1/5   & 1      & 0\\ 
+    y_1    & \ldots    & 1   & 1/5    & 0      & 2/5   & -3/5  & 0      & 0\\ 
+    y^h_4  & 32/5      & 0   & 1/5    & 0      & -8/5  & 2/5   & 0      & 1\\ 
+    y_3    & \ldots    & 0   & 1/5    & 1      & -3/5  & 2/5   & 0      & 0\\ 
+    \hline
+    \end{array}
+    \]
+
+    De la tabla de la solución óptima del dual:
+    \begin{itemize}
+        \item $\pi^B_{1\,dual} = V^B_{y^h_1} = 20$, por lo que $x_1=20$
+        \item Como $y^h_3$ es variable básica $V^B_{y^h_3} = \pi^B_{3\,dual} = 0$, por lo que $x_3=0$ (a pesar de ser básica), lo cual corresponde a una solución degenerada del primal y un óptimo múltiple del primal. 
+    \end{itemize}
+
+    Las soluciones degeneradas del primal se obtendrán siempre con los valores:
+    \begin{itemize}
+        \item $x_1 = 20$.
+        \item $x_2^h = 10$.
+        \item Una tercera variable con valor nulo.
+    \end{itemize}
+    El resto de variables son nulas.
+    
+    Por lo tanto: $x_1=20$,  $x_2=0$, $x_3=0$, y $x_4=0$.
+
+    \item \textbf{¿Cuál es el valor de la función objetivo de la solución óptima?}
+    
+    Sustituyendo en la expresión de $z$:
+
+    \[
+    z = 8x_1 + 6x_2 + 5x_3  + 4x_4 = 8 \times 20 + 6 \times 0 + 5 \times 0  + 4\times 0 = 160
+    \]
+
+  
+
+    
+\end{enumerate}
+
+

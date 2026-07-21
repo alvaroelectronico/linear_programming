@@ -1,0 +1,39 @@
+Si un problema se resuelve mediante el método de las dos fases y en la solución óptima (no múltiple) de la primera fase ninguna variable artificial es básica:
+\begin{enumerate}[label=\alph*)]
+
+    \item \textbf{¿Cómo es el criterio del simplex de una variable artificial no básica?}
+
+    El criterio del simplex es: 
+
+    \[
+    V^B_{x_a} = c_{x_a} - c^BB^{-1}A_{x_a}
+    \]
+
+    Como no hay variables artificiales que sean básicas y la contribución unitaria al beneficio de cualquier variable básica es 0, entonces $c^B=0$ por lo tanto:
+
+    \[
+    V^B_{x_a} = c_{x_a} - 0B^{-1}A_{x_a} = c_{x_a} 
+    \]
+
+    Y como la contribución unitaria al beneficio de cualquier variable básica es 1, $c_{x_a} = -1$:
+
+    \[
+    V^B_{x_a} = -1
+    \]
+
+    
+    \item \textbf{¿Cuál es la interpretación de ese valor?}
+
+    El valor de la función objetivo del problema de la primera fase representa el opuesto del grado de incumplimiento de las restricciones de tipo igual y mayor o igual.
+    
+    Si en la solución óptima no hay variables artificiales que sean básicas, el valor de la función objetivo es 0, lo cual significa que la solución encontrada no incumple ninguna de las restricciones del problema original (el de la segunda fase). 
+
+    \[
+    V^B_{x_a} = -1  = \Delta x|_{\Delta x_a = 1}
+    \]
+
+    Por lo tanto, en esta solución, si una variable artificial aumenta una unidad, la función objetivo disminuye una unidad, lo cual representa una unidad del incumplimiento de la restricción a la que pertenece la variable artificial y, por lo tanto, la solución dejaría de ser factible para la segunda fase. 
+    
+\end{enumerate}
+
+

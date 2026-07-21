@@ -1,0 +1,71 @@
+Una empresa cuenta con 4 plantas de producción (Orígenes: $O_1, O_2, O_3, O_4$) y debe abastecer a 4 centros de distribución (Destinos: $D_1, D_2, D_3, D_4$). En la Tabla \ref{tab:enunciado} se presentan los costes unitarios de transporte, las capacidades de oferta de cada origen y los requerimientos de demanda de cada destino.
+
+\begin{table}[htbp]
+\centering
+\caption{Matriz inicial de costos, oferta y demanda.}
+\label{tab:enunciado}
+\begin{tabular}{cccccc}
+\toprule
+& $D_1$ & $D_2$ & $D_3$ & $D_4$ & \textbf{Oferta} \\
+\midrule
+$O_1$ & 10 & 20 & 5  & 7  & \textbf{15} \\
+$O_2$ & 13 & 9  & 12 & 8  & \textbf{25} \\
+$O_3$ & 4  & 15 & 7  & 9  & \textbf{20} \\
+$O_4$ & 14 & 7  & 1  & 0  & \textbf{40} \\
+\midrule
+\textbf{Demanda} & \textbf{30} & \textbf{20} & \textbf{35} & \textbf{15} &  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Resuelve hasta el óptimo este problema utilizando: 1) el método de Vogel para obtener una solución inicial y, 2) el método de MODI para calcular los costes reducidos.
+
+--
+
+Dado que $\sum \text{Oferta} = \sum \text{Demanda} = 100$, el problema se encuentra perfectamente equilibrado. 
+
+Aplicando el Método de Aproximación de Vogel (MAV), se calculan las penalizaciones por fila y columna para realizar las asignaciones de manera iterativa. Las asignaciones resultantes ($x_{ij}$) se muestran entre paréntesis en la Tabla \ref{tab:solucion}.
+
+\begin{table}[htbp]
+\centering
+\caption{Matriz de asignación óptima encontrada.}
+\label{tab:solucion}
+\begin{tabular}{cccccc}
+\toprule
+& $D_1$ & $D_2$ & $D_3$ & $D_4$ & \textbf{Oferta} \\
+\midrule
+$O_1$ & 5  &       & 10  &        & \textbf{15} \\
+$O_2$ & 5  & 20  &       &       & \textbf{25} \\
+$O_3$ & 20  &       &        &        & \textbf{20} \\
+$O_4$ &       &        & 25  & 15  & \textbf{40} \\
+\midrule
+\textbf{Demanda} & \textbf{30} & \textbf{20} & \textbf{35} & \textbf{15} & \textbf{100} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El coste total inicial es $z=450$.
+
+
+Para verificar si la solución es óptima, calculamos  ($u_i$) y  ($v_j$) utilizando las celdas básicas mediante la ecuación $u_i + v_j = c_{ij}$. Definiendo arbitrariamente $u_1 = 0$, se obtiene:
+
+\begin{itemize}
+    \item Filas: $u_1 = 0$, $u_2 = 3$, $u_3 = -6$, $u_4 = -4$
+    \item Columnas: $v_1 = 10$, $v_2 = 6$, $v_3 = 5$, $v_4 = 4$
+\end{itemize}
+
+A partir de estos multiplicadores, se calculan los costos reducidos ($\bar{c}_{ij}$) para las celdas no básicas mediante la fórmula $\bar{c}_{ij} = c_{ij} - u_i - v_j$:
+
+\begin{itemize}
+    \item $\bar{c}_{12} = 20 - 0 - 6= 14$
+    \item $\bar{c}_{14} = 7 - 0 - 4 = 3$
+    \item $\bar{c}_{23} = 12 - 3 - 5 = 4$
+    \item $\bar{c}_{24} = 8 - 3 - 4 = 1$
+    \item $\bar{c}_{32} = 15 - (-6) - 6 = 15$
+    \item $\bar{c}_{33} = 7 - (-6) - 5 = 8$
+    \item $\bar{c}_{34} = 9 - (-6) -  4 = 11$
+    \item $\bar{c}_{41} = 14 - (-4) - 10 = 8$
+    \item $\bar{c}_{42} = 7 - (-4) -  6 = 5$
+\end{itemize}
+
+Dado que todos los costes reducidos son estrictamente mayores que cero ($\bar{c}_{ij} > 0$), se demuestra que la solución obtenida por el método de Vogel es la solución óptima del problema. 

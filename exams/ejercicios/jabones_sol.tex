@@ -1,0 +1,145 @@
+Una pequeña empresa artesanal fabrica dos tipos de jabones ecológicos: de \textbf{lavanda}  y de \textbf{romero}  Ambos se elaboran a partir de aceites esenciales y glicerina vegetal, y el objetivo de la empresa es \textbf{maximizar el beneficio semanal}.
+
+Cada kilogramo de jabón requiere determinadas cantidades de \textbf{aceite esencial (ml)} y \textbf{glicerina (ml)}, y genera un beneficio unitario según la siguiente tabla:
+
+\[
+\begin{array}{lccc}
+\text{Producto} & \text{Aceite esencial (ml/kg)} & \text{Glicerina (ml/kg)} & \text{Beneficio (€ / kg)} \\
+\hline
+\text{Jabón de lavanda } & 40 & 100 & 5 \\
+\text{Jabón de romero }  & 60 & 80  & 4 \\
+\hline
+\end{array}
+\]
+
+La empresa dispone semanalmente de \textbf{8\,000 ml de aceite esencial} y \textbf{12\,000 ml de glicerina}. 
+
+Además, por cuestiones de marketing, se deben fabricar al menos \textbf{60 kg en total} de jabón.
+
+Por último, al como máximo el 50\% de la glicerina consumida debe destinarse al jabón de romero.
+
+El siguiente modelo de programación permite obtener el plan de producción óptimo, donde ($x_1$ y $x_2$ representan los kg de jabón de lavanda y de romero, respectivamente):
+
+\[
+\begin{aligned}
+\mbox{max.} \quad & z = 5x_1 + 4x_2 \\
+\text{s.a.} \quad 
+& 40x_1 + 60x_2 \le 8\,000 & & \text{(disponibilidad de aceite esencial)} \\
+& 100x_1 + 80x_2 \le 12\,000 & & \text{(disponibilidad de glicerina)} \\
+& x_1 + x_2 \ge 60 & & \text{(demanda mínima total)} \\
+& 5x_1 - 4x_2 \ge 0 & & \text{(glicerina del romero)} \\
+& x_1, x_2 \ge 0
+\end{aligned}
+\]
+
+Se conoce la tabla correspondiente a la solución óptima del problema:
+
+% \begin{center}
+% \begin{tabular}{c|c|cccccc|}
+%  & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$ & $h_4$\\ 
+%        & $-600$ & $0$ & $0$ & $0$ & $-1/20$ & $0$ & $0$ \\ 
+% \hline
+% $h_1$ & 1520  & $0$ & $0$ & $1$ & $-27/50$ & $0$ & $-14/5$\\ 
+% $h_3$ & 72  & $0$ & $0$ & $0$ & $11/1000$ & $1$ & $1/50$\\ 
+% $x_2$ & 60  & $0$ & $1$ & $0$ & $1/200$ & $0$ & $1/10$\\ 
+% $x_1$ & 72  & $1$ & $0$ & $0$ & $3/500$ & $0$ & $-2/25$\\ 
+% \hline
+% \end{tabular}
+% \end{center}
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ & $h_3$ & $h_4$\\ 
+Phase 2 & $-600$ & $0$ & $0$ & $0$ & $-1/20$ & $0$ & $0$ \\ 
+\hline
+$h_1$ & 1100  & $0$ & $0$ & $1$ & $-23/40$ & $0$ & $-7/2$\\ 
+$h_3$ & 75  & $0$ & $0$ & $0$ & $9/800$ & $1$ & $1/40$\\ 
+$x_2$ & 75  & $0$ & $1$ & $0$ & $1/160$ & $0$ & $1/8$\\ 
+$x_1$ & 60  & $1$ & $0$ & $0$ & $1/200$ & $0$ & $-1/10$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+Se pide:
+\begin{enumerate}[label=\alph*)]
+    \item Explicar por qué el requisito ``como máximo el 50\% de la glicerina consumida debe destinarse al jabón de romero'' se formula como $5x_1 - 6x_2 = 0$.
+
+    Si cada kilogramo de lavanda y de romero requiere 100 y 80 ml de glicerina, respectivamente, se cumple:
+    
+    \[
+    80x_2 \le 0.5(100x_1 + 80x_2)
+    \;\Longleftrightarrow\;
+    5x_1 - 4x_2 \ge 0.
+    \]
+    
+
+    \item Interpretar la solución óptima en términos del beneficio, el plan de producción y el cumplimiento de los requisitos.
+
+        El plan de producción óptimo consiste en:
+
+    \begin{itemize}
+        \item Producir 60 kg de aceite de lavanda y 75 kg de aceite de romero. 
+        \item Emplear $7\,900$ ml de aceite esencial de los $8\,000$ disponibles.
+        \item Agotar los $12\,000$ ml de glicerina.
+        \item Dedicar estrictamente el 50\% de la glicerina a jabón de romero.
+    \end{itemize}
+
+    Esto reporta un beneficio semanal de 600€.
+    
+    \item Identificar la base y la inversa de la base de la solución óptima.
+
+    La base se obtiene a partir de las columnas en la matriz $A$ de las cuatro variables básicas ($h_1$, $h_3$, $x_2$, $x_1$): 
+
+    \begin{equation}
+    \begin{split}
+    B =\begin{pmatrix}
+    1 & 0 & 60 & 40\\
+    0 & 0 & 80 & 100\\
+    0 & -1 & 1 & 1\\
+    0 & 0 & -4 & 5\\
+    \end{pmatrix}
+    \end{split}
+    \end{equation}
+
+    La inversa de la base se obtiene a partir de la tabla correpsondiente a la solución, tomando las columnas donde originalmente estaban las columnas de la matriz identidad o las opuestas de dichas columnas (cambiando su signo):
+
+    \begin{equation}
+    \begin{split}
+    B^{-1} =\begin{pmatrix}
+    1 & -23/40 & 0 & 7/2\\
+    0 & 9/800 & -1 & -1/40\\
+    0 & 1/160 & 0 & -1/8\\
+    0 & 1/200 & 0 & 1/10\\
+    \end{pmatrix}
+    \end{split}
+    \end{equation}
+
+    \item ¿Cuál sería el precio que debería estar dispuesta a aceptar la empresa para renunciar a 1 litro de glicerina en una semana dada?¿Cuántos litros estaría dispuesta a pagar por ese precio?
+
+     El precio sombra la restricción 2 (disponibilidad de glicerina) es $\pi^B_2 = 1/20$, con lo que por cada ml adicional de de glicerina de la que disponga el beneficio aumentará en $0.05$ €.  Como el problema es lineal, si se dispusiera de un litro adicional, el beneficio podría ser de 50€. 
+     
+     Sin embargo, hay que comprobar el rango de $b_2$ dentro del cual la base de la tabla sigue siendo una base óptima.
+     
+    \begin{equation}
+    \begin{split}
+    u^B=B^{-1}b =\begin{pmatrix}
+    1 & -23/40 & 0 & 7/2\\
+    0 & 9/800 & -1 & -1/40\\
+    0 & 1/160 & 0 & -1/8\\
+    0 & 1/200 & 0 & 1/10\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        8000\\
+        b_2\\
+        60\\
+        0
+    \end{pmatrix}   
+    \geq 0 \Rightarrow \cdots \Rightarrow 6000 \leq b_2 \leq 20000
+    \end{split}
+    \end{equation}
+
+    Es decir, la empresa estaría dispuesta a comprar hasta 8 litros de glicerina por un coste máximo de 50€ por litro.
+
+\end{enumerate}

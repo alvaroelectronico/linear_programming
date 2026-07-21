@@ -1,0 +1,26 @@
+Dado el siguiente problema de programación lineal entera:
+
+\begin{align*}
+\max \; z &= 3x_1 + 4x_2 \\
+\text{s.a:     } & \quad\\
+2x_1 + x_2 &\le 6 \\
+2x_1 + 3x_2 &\le 9 \\
+x_1, x_2 &\in \mathcal{Z^+}
+\end{align*}
+
+\begin{enumerate}[label=\alph*)]
+
+\item Resolver mediante el método de Branch and Bound de Dakin,  resolviendo gráficamente la relajación continua de cada subproblema generado en el árbol de enumeración.
+
+Ramificar sobre la variable fraccionaria cuyo valor fraccional esté más cercano a $\tfrac{1}{2}$.
+Entre los nodos activos, seleccionar siempre aquel con la cota más prometedora.
+
+\item Indica qué ocurriría si en cada nodo se ramificara  o si se seleccionaran los nodos activos con un criterio distinto.
+\begin{center}
+\begin{tikzpicture}
+\draw[step=10mm, gray!50]
+  (0,0) grid (\textwidth,12);
+\end{tikzpicture}
+\end{center}
+
+\end{enumerate}

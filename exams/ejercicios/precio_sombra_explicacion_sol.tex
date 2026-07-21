@@ -1,0 +1,52 @@
+Se pide lo siguiente en relación con el precio sombra de la restricción $i$-ésima de un problema de programación lineal:
+
+\begin{enumerate}[label=\alph*)]
+\item \textbf{Indicar cuál es su expresión matemática.}
+
+El precio sombra se define como $\pi^B=c^BB^{-1}$ y la componente $i$-ésima es $\pi^B_i$.
+
+\item \textbf{Enunciar cuál es su interpretación y qué información aporta.}
+
+El precio sombra de la restricción $i$ es igual al incremento de la función objetivo cuando la disponibilidad del recurso correspondiente a la restricción $i$ aumenta una unidad, es decir:
+
+\[
+\pi^B_i = \Delta z|_{\Delta b_i=1}
+\]
+
+\item \textbf{Demostrar razonadamente qué información aporta.}
+La expresión del valor de la función objetivo de un problema es:
+
+\[
+z = cx=c^Bu^B=c^BB^{-1}b=\pi^Bb
+\]
+
+Explicitando la componente $i$-ésima de $\pi^B$:
+
+\[
+z = \begin{pmatrix}
+   \pi^B_1 &  \pi^B_2  & \cdots & \pi^B_i & \cdots & \pi^B_m
+   \end{pmatrix}
+   \begin{pmatrix}
+   b_1 \\
+   b_1 \\
+   \cdots \\
+   b_i \\
+   \cdots \\
+   b_m \\
+   \end{pmatrix}
+   = \pi^B_1b_1 + \pi^B_2b_2 + \cdots + \pi^B_ib_i + \cdots +\pi^B_mb_m
+\]
+
+Si aumenta una unidad $b_i$, la expresión anterior sería:
+
+\begin{align}
+z\big|_{\Delta b_i = 1} &= \pi^B_1 b_1 + \pi^B_2 b_2 + \cdots + \pi^B_i (b_i + \mathbf{1}) + \cdots + \pi^B_m b_m  \notag \\ 
+&= \pi^B_1 b_1 + \pi^B_2 b_2 + \cdots + \pi^B_i b_i + \cdots + \pi^B_m b_m + \mathbf{\pi^B_i} \notag \\
+&= z + \pi^B_i \notag
+\end{align}
+
+De modo que se aprecia que la función objetivo ha aumentado en un valor igual a $\pi^B_i$
+
+
+
+\end{enumerate}

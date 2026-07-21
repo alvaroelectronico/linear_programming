@@ -1,0 +1,71 @@
+Una pequeña empresa elabora cuatro tipos de zumo: manzana, piña, frutos rojos y naranja a granel.  
+Cada tipo de zumo requiere cierta cantidad de fruta fresca (kg) y, salvo el de naranja a granel, botellas vacías (unidades).  
+La empresa puede adquirir hasta 800 kg de fruta fresca por semana, en cualquier combinación de frutas, y dispone de exactamente 200 botellas que desea utilizar por completo para no tener sobrantes en el almacén.  
+
+Los beneficios unitarios y consumos por litro producido son los siguientes:
+
+\[
+\begin{array}{lccc}
+\text{Zumo (variable)} & \text{Fruta fresca (kg/litro)} & \text{Botellas (unidades/litro)} & \text{Beneficio (€ por litro)} \\
+\hline
+\text{Manzana }          & 2 & 1 & 3 \\
+\text{Piña }             & 3 & 1 & 4 \\
+\text{Frutos rojos }     & 4 & 1 & 5 \\
+\text{Naranja a granel } & 2 & 0 & 3 \\
+\hline
+\end{array}
+\]
+
+La empresa desea maximizar el beneficio total, respetando el límite semanal de fruta fresca y utilizando todas las botellas disponibles.
+
+El modelo de Programación Lineal que permite determinar el plan de producción óptimo es el siguiente:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 3x_1 + 4x_2 + 5x_3 + 3x_4\\
+s.a.:\\
+2x_1 + 3x_2 + 4x_3 + 2x_4 \leq 800\\
+1x_1 + 1x_2 + 1x_3 = 200\\
+x_1,\,\,x_2,\,\,x_3,\,\,x_4\geq 0\\
+\end{split}
+\end{equation}
+
+donde $x_1$, $x_2$, $x_3$ y $x_4$ representan, respectivamente, los litros producidos de zumo de manzana, piña, frutos rojos y naranja a granel.
+
+Se dispone de la tabla correspondiente a una solución mediante el método de las dos fases.
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $a_2$\\ 
+ & $-600$ & $0$ & $1$ & $2$ & $3$ & $0$ & $-3$ \\ 
+\hline
+$h_1$ & 400  & $0$ & $1$ & $2$ & $2$ & $1$ & $-2$\\ 
+$x_1$ & 200  & $1$ & $1$ & $1$ & $0$ & $0$ & $1$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+Se pide:
+
+\begin{enumerate}[label=\alph*)]
+    \item Obtener y describir el plan de producción que permita obtener beneficio máximo.
+
+    \item Interpretar, para el plan óptimo de producción, el significado del criterio del simplex de la variable $x_2$ incluyendo en la explicación el valor de las tasas de sustitución de esa variable con respecto a las variables básicas.
+    
+    \item Calcular el rango dentro del cual puede variar la disponibilidad total de fruta sin que cambie la gama de zumos correspondiente a la solución óptima.
+
+    \item Indicar cuál sería el impacto sobre el plan óptimo de producción si, en lugar de tener que utilizar obligatoriamente 200 botellas, hubiera que utilizar exactamente 199 botellas.
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+ 

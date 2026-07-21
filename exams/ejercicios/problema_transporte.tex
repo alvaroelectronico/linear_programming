@@ -1,0 +1,21 @@
+Una empresa cuenta con 4 plantas de producción (Orígenes: $O_1, O_2, O_3, O_4$) y debe abastecer a 4 centros de distribución (Destinos: $D_1, D_2, D_3, D_4$). En la Tabla \ref{tab:enunciado} se presentan los costes unitarios de transporte, las capacidades de oferta de cada origen y los requerimientos de demanda de cada destino.
+
+\begin{table}[htbp]
+\centering
+\caption{Matriz inicial de costos, oferta y demanda.}
+\label{tab:enunciado}
+\begin{tabular}{cccccc}
+\toprule
+& $D_1$ & $D_2$ & $D_3$ & $D_4$ & \textbf{Oferta} \\
+\midrule
+$O_1$ & 10 & 20 & 5  & 7  & \textbf{15} \\
+$O_2$ & 13 & 9  & 12 & 8  & \textbf{25} \\
+$O_3$ & 4  & 15 & 7  & 9  & \textbf{20} \\
+$O_4$ & 14 & 7  & 1  & 0  & \textbf{40} \\
+\midrule
+\textbf{Demanda} & \textbf{30} & \textbf{20} & \textbf{35} & \textbf{15} &  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Resuelve hasta el óptimo este problema utilizando: 1) el método de Vogel para obtener una solución inicial y, 2) el método de MODI para calcular los costes reducidos.

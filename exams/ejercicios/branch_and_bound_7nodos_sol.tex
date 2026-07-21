@@ -1,0 +1,329 @@
+\begin{enumerate}[label=\alph*)]
+
+\item Resolver mediante el método de Branch and Bound de Dakin,  resolviendo gráficamente la relajación continua de cada subproblema generado en el árbol de enumeración.
+
+Ramificar sobre la variable fraccionaria cuyo valor fraccional esté más cercano a $\tfrac{1}{2}$.
+Entre los nodos activos, seleccionar siempre aquel con la cota más prometedora.
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+nodo/.style={
+draw,
+rounded corners,
+align=center,
+minimum width=3.4cm,
+minimum height=1.6cm,
+font=\small
+},
+rama/.style={-Latex, thick},
+etiqueta/.style={font=\small, fill=white, inner sep=1pt}
+]
+
+\node[nodo] (P1) at (0,0) {
+$P_1$\
+$\bar{x}=\left(\frac{9}{4},\frac{3}{2}\right)$\
+$\bar{z}=\frac{51}{4}=12.75$
+};
+
+\node[nodo] (P2) at (-4,-2.5) {
+$P_2$\
+$\bar{x}=\left(\frac{5}{2},1\right)$\
+$\bar{z}=\frac{23}{2}=11.5$
+};
+
+\node[nodo] (P3) at (4,-2.5) {
+$P_3$\
+$\bar{x}=\left(\frac{3}{2},2\right)$\
+$\bar{z}=\frac{25}{2}=12.5$
+};
+
+\node[nodo] (P4) at (0,-5) {
+$P_4$\
+$\bar{x}=\left(1,\frac{7}{3}\right)$\
+$\bar{z}=\frac{37}{3}=12.33$
+};
+
+\node[nodo] (P5) at (7,-5) {
+$P_5$\
+No factible
+};
+
+\node[nodo] (P6) at (-3,-7.5) {
+$P_6$\
+$\bar{x}=(1,2)$\
+$\bar{z}=11$
+};
+
+\node[nodo] (P7) at (3,-7.5) {
+$P_7$\
+$\bar{x}=(0,3)$\
+$\bar{z}=12$
+};
+
+\draw[rama] (P1) -- node[etiqueta, above left] {$x_2\leq 1$} (P2);
+\draw[rama] (P1) -- node[etiqueta, above right] {$x_2\geq 2$} (P3);
+
+\draw[rama] (P3) -- node[etiqueta, above left] {$x_1\leq 1$} (P4);
+\draw[rama] (P3) -- node[etiqueta, above right] {$x_1\geq 2$} (P5);
+
+\draw[rama] (P4) -- node[etiqueta, above left] {$x_2\leq 2$} (P6);
+\draw[rama] (P4) -- node[etiqueta, above right] {$x_2\geq 3$} (P7);
+
+\node[align=center, font=\small] at (-4,-4.15) {
+$\frac{23}{2}<12$\
+Poda por cota
+};
+
+\node[align=center, font=\small] at (-3,-9) {
+Solución entera\
+peor que $P_7$
+};
+
+\node[align=center, font=\small] at (3,-9) {
+Solución óptima\
+$x^*=(0,3)$,\quad $z^*=12$
+};
+
+\end{tikzpicture}
+\caption{árbol de enumeración del método de \emph{Branch and Bound}.}
+\end{figure}
+
+% \begin{enumerate}
+% \item \textbf{Paso 1. Resolver el nodo inicial $P_1$.}
+
+% ```
+% Se resuelve la relajación lineal del problema original. Se obtiene
+% $\bar{x}^{(1)}=\left(\frac{9}{4},\frac{3}{2}\right)$, con
+% $\bar{z}^{(1)}=\frac{51}{4}$. Como la solución no es entera, se ramifica sobre $x_2$.
+
+% \item \textbf{Paso 2: Generar los nodos $P_2$ y $P_3$.}
+
+% Como $x_2=\frac{3}{2}$, se crean los dos subproblemas
+% $P_2:\ x_2\leq 1$ y $P_3:\ x_2\geq 2$.
+
+% \item \textbf{Paso 3: Resolver el nodo $P_2$.}
+
+% En $P_2$ se obtiene
+% $\bar{x}^{(2)}=\left(\frac{5}{2},1\right)$, con
+% $\bar{z}^{(2)}=\frac{23}{2}$. Como el valor de la función objetivo no es entero, su cota entera es
+% $\left\lfloor \frac{23}{2}\right\rfloor=11$.
+
+% \item \textbf{Paso 4: Resolver el nodo $P_3$.}
+
+% En $P_3$ se obtiene
+% $\bar{x}^{(3)}=\left(\frac{3}{2},2\right)$, con
+% $\bar{z}^{(3)}=\frac{25}{2}$. Su cota entera es
+% $\left\lfloor \frac{25}{2}\right\rfloor=12$. Como esta cota es mejor que la de $P_2$, se continúa por $P_3$.
+
+% \item \textbf{Paso 5: Ramificar el nodo $P_3$.}
+
+% En $P_3$ la variable fraccionaria es $x_1=\frac{3}{2}$. Por tanto, se generan
+% $P_4:\ x_1\leq 1$ y $P_5:\ x_1\geq 2$.
+
+% \item \textbf{Paso 6: Resolver el nodo $P_5$.}
+
+% El nodo $P_5$ es no factible, ya que las restricciones $x_1\geq 2$ y $x_2\geq 2$ implican
+% $2x_1+3x_2\geq 10>9$. Por tanto, se poda por infactibilidad.
+
+% \item \textbf{Paso 7: Resolver el nodo $P_4$.}
+
+% En $P_4$ se obtiene
+% $\bar{x}^{(4)}=\left(1,\frac{7}{3}\right)$, con
+% $\bar{z}^{(4)}=\frac{37}{3}$. Como la solución no es entera, se ramifica sobre $x_2$.
+
+% \item \textbf{Paso 8: Generar los nodos $P_6$ y $P_7$.}
+
+% Como en $P_4$ se tiene $x_2=\frac{7}{3}$, se crean los subproblemas
+% $P_6:\ x_2\leq 2$ y $P_7:\ x_2\geq 3$.
+
+% \item \textbf{Paso 9: Resolver el nodo $P_6$.}
+
+% En $P_6$ se obtiene la solución entera
+% $\bar{x}^{(6)}=(1,2)$, con $z^{(6)}=11$. Esta pasa a ser la mejor solución entera conocida hasta ese momento.
+
+% \item \textbf{Paso 10: Resolver el nodo $P_7$.}
+
+% En $P_7$ se obtiene la solución entera
+% $\bar{x}^{(7)}=(0,3)$, con $z^{(7)}=12$. Esta solución mejora a la obtenida en $P_6$, por lo que pasa a ser la mejor solución entera conocida.
+
+% \item \textbf{Paso 11: Podar el nodo $P_2$.}
+
+% El nodo $P_2$ tenía cota entera igual a $11$. Como la mejor solución entera conocida tiene valor $12$, se cumple $11<12$, y por tanto $P_2$ no puede contener una solución mejor. Se poda por cota.
+
+% \item \textbf{Paso 12: Concluir la solución óptima.}
+
+% No queda ningún nodo activo que pueda mejorar la solución encontrada. Por tanto, la solución óptima del problema entero es
+% $x_1^*=0$, $x_2^*=3$, con valor óptimo $z^*=12$.
+% ```
+
+% \end{enumerate}
+
+
+\newcommand{\gridBnb}{
+\draw[step=1, gray!35, very thin] (0,0) grid (5,6);
+\draw[-Latex] (0,0) -- (5.2,0) node[right] {$x_1$};
+\draw[-Latex] (0,0) -- (0,6.2) node[above] {$x_2$};
+}
+
+\newcommand{\restriccionesOriginales}{
+\draw[thick] (0,6) -- (3,0) node[pos=0.82, below right] {$(1)$};
+\draw[thick] (0,3) -- (4.5,0) node[pos=0.70, above right] {$(2)$};
+}
+
+\newcommand{\direccionObjetivo}{
+\draw[-Latex, dashed] (3.6,1.1) -- (4.5,2.2) node[above] {$z$};
+}
+
+\begin{enumerate}
+\item \textbf{Paso 1. Resolver el nodo inicial $P_1$.}
+
+Se resuelve la relajación lineal del problema original. La solución óptima de la relajación se obtiene en la intersección de las dos restricciones originales, es decir, en $\bar{x}^{(1)}=\left(\frac{9}{4},\frac{3}{2}\right)$, con $\bar{z}^{(1)}=\frac{51}{4}$. Como la solución no es entera, se ramifica sobre $x_2$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \fill[gray!15] (0,0) -- (0,3) -- (2.25,1.5) -- (3,0) -- cycle;
+    \gridBnb
+    \restriccionesOriginales
+    \direccionObjetivo
+    \fill (2.25,1.5) circle (2pt);
+    \node[above right] at (2.25,1.5) {$\left(\frac{9}{4},\frac{3}{2}\right)$};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 2. Generar los nodos $P_2$ y $P_3$.}
+
+Como en $P_1$ se tiene $x_2=\frac{3}{2}$, se generan dos ramas: $P_2:\ x_2\leq 1$ y $P_3:\ x_2\geq 2$.
+
+\item \textbf{Paso 3. Resolver el nodo $P_2$.}
+
+En $P_2$ se añade la restricción $x_2\leq 1$. La solución óptima de la relajación lineal se obtiene en $\bar{x}^{(2)}=\left(\frac{5}{2},1\right)$, con $\bar{z}^{(2)}=\frac{23}{2}$. La cota entera de este nodo es $\left\lfloor\frac{23}{2}\right\rfloor=11$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \fill[gray!15] (0,0) -- (0,1) -- (2.5,1) -- (3,0) -- cycle;
+    \gridBnb
+    \restriccionesOriginales
+    \direccionObjetivo
+    \draw[thick, dashed] (0,1) -- (5,1) node[right] {$x_2\leq 1$};
+    \fill (2.5,1) circle (2pt);
+    \node[above right] at (2.5,1) {$\left(\frac{5}{2},1\right)$};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 4. Resolver el nodo $P_3$.}
+
+En $P_3$ se añade la restricción $x_2\geq 2$. La solución óptima de la relajación lineal se obtiene en $\bar{x}^{(3)}=\left(\frac{3}{2},2\right)$, con $\bar{z}^{(3)}=\frac{25}{2}$. Su cota entera es $\left\lfloor\frac{25}{2}\right\rfloor=12$. Como esta cota es mejor que la de $P_2$, se continúa por $P_3$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \fill[gray!15] (0,2) -- (0,3) -- (1.5,2) -- cycle;
+    \gridBnb
+    \restriccionesOriginales
+    \direccionObjetivo
+    \draw[thick, dashed] (0,2) -- (5,2) node[right] {$x_2\geq 2$};
+    \fill (1.5,2) circle (2pt);
+    \node[above right] at (1.5,2) {$\left(\frac{3}{2},2\right)$};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 5. Ramificar el nodo $P_3$.}
+
+En $P_3$ la variable fraccionaria es $x_1=\frac{3}{2}$. Por tanto, se generan los nodos $P_4:\ x_1\leq 1$ y $P_5:\ x_1\geq 2$.
+
+\item \textbf{Paso 6. Resolver el nodo $P_5$.}
+
+En $P_5$ se tienen las restricciones adicionales $x_2\geq 2$ y $x_1\geq 2$. El nodo es no factible, porque entonces $2x_1+3x_2\geq 10>9$, lo que incumple la segunda restricción original. Por tanto, $P_5$ se poda por infactibilidad.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \gridBnb
+    \restriccionesOriginales
+    \draw[thick, dashed] (0,2) -- (5,2) node[right] {$x_2\geq 2$};
+    \draw[thick, dashed] (2,0) -- (2,6) node[above] {$x_1\geq 2$};
+    \node[align=center] at (3.5,4.5) {No factible};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 7. Resolver el nodo $P_4$.}
+
+En $P_4$ se tienen las restricciones adicionales $x_2\geq 2$ y $x_1\leq 1$. La solución óptima de la relajación lineal se obtiene en $\bar{x}^{(4)}=\left(1,\frac{7}{3}\right)$, con $\bar{z}^{(4)}=\frac{37}{3}$. Como la solución no es entera, se ramifica sobre $x_2$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \fill[gray!15] (0,2) -- (0,3) -- (1,2.333) -- (1,2) -- cycle;
+    \gridBnb
+    \restriccionesOriginales
+    \direccionObjetivo
+    \draw[thick, dashed] (0,2) -- (5,2) node[right] {$x_2\geq 2$};
+    \draw[thick, dashed] (1,0) -- (1,6) node[above] {$x_1\leq 1$};
+    \fill (1,2.333) circle (2pt);
+    \node[above right] at (1,2.333) {$\left(1,\frac{7}{3}\right)$};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 8. Generar los nodos $P_6$ y $P_7$.}
+
+Como en $P_4$ se tiene $x_2=\frac{7}{3}$, se generan los nodos $P_6:\ x_2\leq 2$ y $P_7:\ x_2\geq 3$, manteniendo las restricciones heredadas de $P_4$.
+
+\item \textbf{Paso 9. Resolver el nodo $P_6$.}
+
+En $P_6$ se obtiene la solución entera $\bar{x}^{(6)}=(1,2)$, con $z^{(6)}=11$. Esta pasa a ser la mejor solución entera conocida hasta ese momento.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \draw[line width=3pt, gray!35] (0,2) -- (1,2);
+    \gridBnb
+    \restriccionesOriginales
+    \draw[thick, dashed] (0,2) -- (5,2) node[right] {$x_2=2$};
+    \draw[thick, dashed] (1,0) -- (1,6) node[above] {$x_1\leq 1$};
+    \fill (1,2) circle (2pt);
+    \node[above right] at (1,2) {$(1,2)$};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 10. Resolver el nodo $P_7$.}
+
+En $P_7$ se obtiene la solución entera $\bar{x}^{(7)}=(0,3)$, con $z^{(7)}=12$. Esta solución mejora a la obtenida en $P_6$, por lo que pasa a ser la mejor solución entera conocida.
+
+\begin{center}
+\begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\scriptsize]
+    \gridBnb
+    \restriccionesOriginales
+    \draw[thick, dashed] (0,2) -- (5,2) node[right] {$x_2\geq 2$};
+    \draw[thick, dashed] (1,0) -- (1,6) node[above] {$x_1\leq 1$};
+    \draw[thick, dashed] (0,3) -- (5,3) node[right] {$x_2\geq 3$};
+    \fill (0,3) circle (2pt);
+    \node[above right] at (0,3) {$(0,3)$};
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{Paso 11. Podar el nodo $P_2$.}
+
+El nodo $P_2$ tenía cota entera igual a $11$. Como la mejor solución entera conocida tiene valor $12$, se cumple $11<12$. Por tanto, $P_2$ no puede contener una solución mejor y se poda por cota.
+
+\item \textbf{Paso 12: Concluir la solución óptima.}
+
+No queda ningún nodo activo que pueda mejorar la solución encontrada. Por tanto, la solución óptima del problema entero es $x_1^*=0$, $x_2^*=3$, con valor óptimo $z^*=12$.
+```
+
+\end{enumerate}
+
+
+
+\item Indica qué ocurriría si en cada nodo se ramificara  o si se seleccionaran los nodos activos con un criterio distinto.
+
+
+Si en cada nodo se ramificara con un criterio distinto, o si los nodos activos se seleccionaran en un orden diferente, el resultado final del algoritmo no cambiaría necesariamente, siempre que el procedimiento de \emph{Branch and Bound} se aplicase correctamente.
+
+Lo que sí podría cambiar es el árbol de enumeración generado: podrían explorarse los nodos en otro orden, podrían aparecer antes o después las primeras soluciones enteras y podría variar el número total de nodos que habría que resolver antes de certificar la optimalidad.
+
+Por ejemplo, en lugar de continuar por el nodo con mejor cota, se podría haber explorado antes otro nodo activo. En ese caso, quizá se habría encontrado antes una solución entera peor, o se habrían resuelto nodos que con el criterio seguido en esta resolución se podan más tarde por cota.
+
+Sin embargo, mientras las ramificaciones dividan correctamente la región factible, por ejemplo mediante restricciones del tipo $x_j\leq \lfloor \bar{x}_j\rfloor$ y $x_j\geq \lceil \bar{x}_j\rceil$, y mientras no se descarte ningún nodo que pueda contener una solución mejor que la mejor solución entera conocida, el algoritmo sigue siendo correcto.
+
+Por tanto, los criterios de ramificación y de selección de nodos afectan a la eficiencia del método, pero no a la función objetivo la solución óptima obtenida
+
+
+\end{enumerate}

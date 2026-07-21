@@ -1,0 +1,40 @@
+Un centro de alto rendimiento deportivo planea diseñar una dieta óptima de coste mínimo utilizando un conjunto de $n$ alimentos indexados por $j$ ($j = 1, \dots, n$). Cada alimento tiene un coste asociado de $c_j$ unidades monetarias por porción. 
+
+Para garantizar la salud de los atletas, la dieta debe cumplir simultáneamente con dos tipos de requerimientos biológicos:
+\begin{enumerate}
+    \item Requerimientos mínimos: se deben cubrir al menos $b_i$ unidades de $m$ nutrientes esenciales indexados por $i$ ($i = 1, \dots, m$). El aporte del alimento $j$ al nutriente $i$ viene dado por el parámetro $a_{ij}$.
+    \item Límites máximos tolerados: por prescripción médica, la dieta no debe exceder un límite de $q_k$ unidades de $p$ componentes críticos (como azúcares, sodio o grasas saturadas) indexados por $k$ ($k = 1, \dots, p$). El aporte del alimento $j$ al componente restringido $k$ se define mediante el parámetro $s_{kj}$.
+\end{enumerate}
+
+El modelo de programación lineal Primal (P) que describe esta situación se formula de la siguiente manera:
+
+\begin{align*}
+\text{(P)} \quad \min \quad & z = \sum_{j=1}^{n} c_j x_j \\
+\text{sujeto a:} \quad & \sum_{j=1}^{n} a_{ij} x_j \ge b_i, \quad \forall i = 1, \dots, m \\
+& \sum_{j=1}^{n} s_{kj} x_j \le q_k, \quad \forall k = 1, \dots, p \\
+& x_j \ge 0, \quad \forall j = 1, \dots, n
+\end{align*}
+
+\begin{enumerate}
+    \item Formula el problema dual de (P).
+    \item Indica que significan las variables del dual en ambos problemas.
+\end{enumerate}
+
+-- 
+
+
+\begin{enumerate}
+    \item{Formulación matemática del dual (D):}
+    \begin{align*}
+    \text{(D)} \quad \max \quad & W = \sum_{i=1}^{m} b_i y_i - \sum_{k=1}^{p} q_k w_k \\
+    \text{sujeto a:} \quad & \sum_{i=1}^{m} a_{ij} y_i - \sum_{k=1}^{p} s_{kj} w_k \le c_j, \quad \forall j = 1, \dots, n \\
+    & y_i \ge 0, \quad \forall i = 1, \dots, m \\
+    & w_k \ge 0, \quad \forall k = 1, \dots, p
+    \end{align*}
+    
+    \item Significado de las variables:
+    \begin{itemize}
+        \item $y_i$ representa el ahorro por unidad reducida de relajar la exigencia del nutriente mínimo $i$ en el (P). Suma en la función objetivo del (D) porque obligar a consumir más nutrientes encarece el coste total.
+        \item $w_k$ representa el ahorro por unidad de la restricción del componente $k$. Resta en la función objetivo porque relajar un límite de tolerancia máximo (permitir más grasas/azúcares) expande la región factible, disminuyendo el coste total de la dieta primal.
+    \end{itemize}
+\end{enumerate}

@@ -1,0 +1,27 @@
+\textbf{Indicar cuántas soluciones básicas tiene un problema en cada uno de los siguientes casos:}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{4 restricciones de tipo menor o igual y 10 variables.}
+
+    Al convertir el problema al formato estándar, tendríamos:
+    \begin{itemize}
+        \item 14 variables en total: 10 variables (originales) más 4 variables de holgura, $n=14$
+        \item 4 restricciones, $m=4$
+    \end{itemize}
+    El número de soluciones es $\binom{n}{m}=\binom{14}{4} = \frac{ 14 \cdot 13 \cdot  12  \cdot 11}{4 \cdot 3 \cdot 2 \cdot 1}=1001$
+        
+    \item \textbf{3 restricciones de tipo menor o igual, 2 de tipo igual y 10 variables,}
+    Al convertir el problema al formato estándar, tendríamos:
+    \begin{itemize}
+        \item 13 variables en total: 10 variables (originales) más 3 variables de holgura, $n=13$
+        \item 5 restricciones, $m=5$
+    \end{itemize}    
+    El número de soluciones es $\binom{n}{m}=\binom{13}{6} = \frac{13 \cdot  12  \cdot 11 \cdot 10 \cdot 9 }{ 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}=1287$
+    
+    \item \textbf{4 restricciones de tipo menor o igual, 6 de tipo igual y 6 variables.}
+    Al convertir el problema al formato estándar, tendríamos:
+    \begin{itemize}
+        \item 10 variables en total: 6 variables (originales) más 4 variables de holgura, $n=10$
+        \item 10 restricciones, $m=10$
+    \end{itemize}
+    Como $m = n$ solo puede haber una base, si la matriz de coeficientes tiene determinante no nulo.
+\end{enumerate}

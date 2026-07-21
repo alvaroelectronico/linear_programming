@@ -1,0 +1,160 @@
+Una pequeña empresa elabora cuatro tipos de zumo: manzana, piña, frutos rojos y naranja a granel.  
+Cada tipo de zumo requiere cierta cantidad de fruta fresca (kg) y, salvo el de naranja a granel, botellas vacías (unidades).  
+La empresa puede adquirir hasta 800 kg de fruta fresca por semana, en cualquier combinación de frutas, y dispone de exactamente 200 botellas que desea utilizar por completo para no tener sobrantes en el almacén.  
+
+Los beneficios unitarios y consumos por litro producido son los siguientes:
+
+\[
+\begin{array}{lccc}
+\text{Zumo (variable)} & \text{Fruta fresca (kg/litro)} & \text{Botellas (unidades/litro)} & \text{Beneficio (€ por litro)} \\
+\hline
+\text{Manzana }          & 2 & 1 & 3 \\
+\text{Piña }             & 3 & 1 & 4 \\
+\text{Frutos rojos }     & 4 & 1 & 5 \\
+\text{Naranja a granel } & 2 & 0 & 3 \\
+\hline
+\end{array}
+\]
+
+La empresa desea maximizar el beneficio total, respetando el límite semanal de fruta fresca y utilizando todas las botellas disponibles.
+
+El modelo de Programación Lineal que permite determinar el plan de producción óptimo es el siguiente:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 3x_1 + 4x_2 + 5x_3 + 3x_4\\
+s.a.:\\
+2x_1 + 3x_2 + 4x_3 + 2x_4 \leq 800\\
+1x_1 + 1x_2 + 1x_3 = 200\\
+x_1,\,\,x_2,\,\,x_3,\,\,x_4\geq 0\\
+\end{split}
+\end{equation}
+
+donde $x_1$, $x_2$, $x_3$ y $x_4$ representan, respectivamente, los litros producidos de zumo de manzana, piña, frutos rojos y naranja a granel.
+
+Se dispone de la tabla correspondiente a una solución mediante el método de las dos fases.
+
+\begin{center}
+\begin{tabular}{c|c|cccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $a_2$\\ 
+ & $-600$ & $0$ & $1$ & $2$ & $3$ & $0$ & $-3$ \\ 
+\hline
+$h_1$ & 400  & $0$ & $1$ & $2$ & $2$ & $1$ & $-2$\\ 
+$x_1$ & 200  & $1$ & $1$ & $1$ & $0$ & $0$ & $1$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+
+Se pide:
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Obtener y describir el plan de producción que permita obtener beneficio máximo.}
+
+    La solución correspondiente a la tabla no es óptima porque no se cumple $V^B\leq 0$, por lo que es necesario continuar aplicando el método del Simplex.
+
+
+         \begin{center}
+        \begin{tabular}{c|c|cccccc|}
+         & $z$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $h_1$ & $a_2$\\ 
+         & $-600$ & $0$ & $1$ & $2$ & $3$ & $0$ & $-3$ \\ 
+        \hline
+        $h_1$ & 400  & $0$ & $1$ & $2$ & $2$ & $1$ & $-2$\\ 
+        $x_1$ & 200  & $1$ & $1$ & $1$ & $0$ & $0$ & $1$\\ 
+        \hline
+         & $-1200$ & $0$ & $-1/2$ & $-1$ & $0$ & $-3/2$ & $0$ \\ 
+        \hline
+        $x_4$ & 200  & $0$ & $1/2$ & $1$ & $1$ & $1/2$ & $-1$\\ 
+        $x_1$ & 200  & $1$ & $1$ & $1$ & $0$ & $0$ & $1$\\ 
+        \hline
+        \end{tabular}
+        \end{center}
+
+    El plan óptimo de producción pasa por:
+    \begin{itemize}
+        \item Producir 200 litros de zumo de manzana y 200 de zumo de naranja a granel.
+        \item No producir nada de zumo de piña ni de manzana.
+        \item Consumir por completo los 800 kg de fruta de los que dispone.
+    \end{itemize}
+    Lo cual ofrece un beneficio de 1200 euros.
+
+    \item \textbf{Interpretar el significado del criterio del simplex de la variable $x_2$ incluyendo en la explicación el valor de las tasas de sustitución de esa variable con respecto a las variables básicas.}
+
+    El criterio del simplex de $x_2$ es:
+
+    \[
+    V^B_{x_2} = c_{x_2}-c^Bp^B_{x_2} = 
+    4 -
+    \begin{pmatrix}
+        3 & 3
+    \end{pmatrix}
+    \begin{pmatrix}
+        1/2 \\
+        1
+    \end{pmatrix}
+    = 4 - 9/2=-1/2
+    \]
+
+    Es decir, $V^B_{x_2}$ es la diferencia entre:
+    \begin{itemize}
+        \item $c_{x_2}=4$, que la contribución unitaria por la venta de un litro de zumo de piña y
+        \item lo que se deja de ingresar por el cambio del plan de producción reflejado en el cambio de las variables básicas:
+        \begin{itemize}
+            \item $p^B_{12} = 1/2$ y $c^B_1=c^B_{x_4}=3$, es decir, se produciría medio kilo menos de zumo de naranja a granel y como cada uno ofrece un beneficio de 3 euros, se renunciaría a 1,5 euros.
+            \item $p^B_{22} = 1$ y $c^B_2=c^B_{x_1}=3$, es decir, se producirá 1 kilo menos de manzana y como cada una ofrece un beneficio de 3 euros, se renunciaría a 3 euros.
+        \end{itemize}
+    \end{itemize}
+
+    El resultado es que, por un lado, se incrementarían el beneficio en 4 pero se reduciría en 4.5 euros, por otro, y el resultado neto es una reducción del beneficio de 0.5 euros.
+
+    
+    \item \textbf{Calcular el rango dentro del cual puede variar la disponibilidad total de fruta sin que cambie la gama de zumos correspondiente a la solución óptima.}
+
+    Para calcular el rango es necesario hacer el análisis de sensibilidad de $b_1$.
+
+    \[
+    u^B = B^{-1}b = 
+    \begin{pmatrix}
+    1/2 & -1\\
+    0 & 1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    b_1\\
+    200\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+    b_1/2-200\\
+    200\\
+    \end{pmatrix}\geq 0 \Rightarrow b_1 \geq 400
+    \]
+
+    Si se dispusiese de menos de 400 kilos de fruta, la solución correspondiente al plan óptimo de producción sería no factible y, por lo tanto, habría que calcular un nuevo plan de producción.
+
+    \textbf{\item Indicar cuál sería el impacto sobre el plan óptimo de producción si se en lugar de tener que utilizar obligatoriamente 200 botellas, hubiera que utilizar exactamente 199 botellas.}
+
+    El precio sombra de la segunda restricción es $\pi^B_2=0$, lo cual significa que, dentro de cierto rango, el aumento o la disminución de $b_2$ conduce al mismo valor de $z$, es decir, el benificio no cambia. Esto es así por lo siguiente. Si hubiera que hacer uso de 199 botellas, $b_2=199$ y, por lo tanto, el plan óptimo de producción sería:
+
+        \[
+    u^B = B^{-1}b = 
+    \begin{pmatrix}
+    1/2 & -1\\
+    0 & 1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+    800\\
+    199\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+    201\\
+    199\\
+    \end{pmatrix}\geq 0
+    \]
+
+    Es decir, el nuevo plan de producción pasaría por vender un litro más de zumo de naranja y uno menos de zumo de manzana, como el beneficio unitario por esos litros es el mismo, el beneficio no cambia y, además, como el zumo de naranja no consume botellas, se haría uso de una menos, es decir, exactamente las 199 de las se dispondría.
+
+    
+    
+    
+
+\end{enumerate}

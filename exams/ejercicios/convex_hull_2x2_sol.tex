@@ -1,0 +1,47 @@
+Dado el siguiente problema de Programación Lineal Entera:
+
+\[
+\begin{aligned}
+x + 2y &\le 4 \\
+2x + y &\le 4 \\
+x, y &\in \mathbb{Z^+}
+\end{aligned}
+\]
+
+\begin{itemize}
+
+\item[a)] Dibujar la región factible del problema relajado.
+
+Los vértices de la región factible son: \[
+(0,0), \ (2,0), \left(\frac{4}{3}, \frac{4}{3}\right), \ (0,2)
+\]
+
+\item[b)] Determinar las soluciones enteras factibles.
+
+Las soluciones enteras factibles son:
+
+\[
+(0,0), (1,0), (2,0), (0,1), (1,1), (0,2)
+\]
+
+\item[c)] Indicar qué restricciones definen el \textit{convex hull} de dicho problema.
+
+El convex hull se obtiene como la envolvente convexa de los puntos enteros factibles.
+
+Los vértices extremos son:
+
+\[
+(0,0), \ (2,0), \ (1,1), \ (0,2)
+\]
+
+El convex hull queda definido por:
+
+\[
+\begin{aligned}
+x &\ge 0 \\
+y &\ge 0 \\
+x + y &\le 2
+\end{aligned}
+\]
+\end{itemize}
+

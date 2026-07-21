@@ -1,0 +1,44 @@
+Resolver el siguiente problema de programación lineal mediante el método de \textbf{Lemke}:
+
+\begin{equation}
+\begin{split}
+\mbox{min. } z = 3x_1 + 4x_2 + 5x_3 \\
+s.a.:\\
+2x_1 + 3x_2 + 4x_3 \leq 20\\
+1x_1 + 1x_2 + 1x_3 \geq 20\\
+x_1,\,\,x_2,\,\,x_3\geq 0\\
+\notag
+\end{split}
+\end{equation}
+
+Las tablas correspondientes a la resolución mediante el método de Lemke son las siguientes, tras reformular el problema como sigue.
+
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = -3x_1 - 4x_2 - 5x_3 \\
+s.a.:\\
+2x_1 + 3x_2 + 4x_3 + h_1 = 20\\
+1x_1 + 1x_2 + 1x_3 - h_2 = 20\\
+x_1,\,\,x_2,\,\,x_3,\,h_1,\, h_2\geq 0\\
+\notag
+\end{split}
+\end{equation}
+
+\begin{center}
+\begin{tabular}{c|c|ccccc|}
+ & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$\\ 
+ & $0$ & $-3$ & $-4$ & $-5$ & $0$ & $0$ \\ 
+\hline
+$h_1$ & 50  & $2$ & $3$ & $4$ & $1$ & $0$\\ 
+$h_2$ & -20  & $-1$ & $-1$ & $-1$ & $0$ & $1$\\ 
+\hline
+ & $60$ & $0$ & $-1$ & $-2$ & $0$ & $-3$ \\ 
+\hline
+$h_1$ & 10  & $0$ & $1$ & $2$ & $1$ & $2$\\ 
+$x_1$ & 20  & $1$ & $1$ & $1$ & $0$ & $-1$\\ 
+\hline
+\end{tabular}
+\end{center}
+
+Solución del problema original: $z=60$, $x_1=20$, $x_2=0$.

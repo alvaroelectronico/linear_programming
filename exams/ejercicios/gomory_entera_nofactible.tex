@@ -1,0 +1,21 @@
+Dado este problema, encuentra la solución óptima entera mediante el algoritmo de Gomory de las formas enteras:
+
+\begin{align*}
+\max \quad & z = 3x_1 + 4x_2 \\
+\text{s.a.} \quad & 2x_1 + 2x_2 \geq 1 \\
+                  & 2x_1 + 2x_2 \leq 1.5 \\
+                  & x_1, x_2  \in \mathbb{Z^+}
+\end{align*}
+
+Se ofrece esta solución factible habiendo aplicado el método de las dos fases:
+
+\begin{center}
+\begin{tabular}{c|c|cccc|}
+ & $z$ & $x_1$ & $x_2$ & $h_1$ & $h_2$ \\ 
+ & $-2.25$ & $0$ & $1$ & $0$ & $-3/4$  \\ 
+\hline
+$x_1$ & $3/4$ & $1$ & $1$ & $0$ & $1/4$ \\ 
+$h_1$ & $1/2$ & $0$ & $0$ & $1$ & $1/2$ \\ 
+\hline
+\end{tabular}
+\end{center}

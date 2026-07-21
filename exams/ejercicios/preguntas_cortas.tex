@@ -1,0 +1,38 @@
+Responde las siguientes preguntas:
+
+a) Pensando en un problema de transporte equilibrado, ¿puedes demostrar que la solución del problema de transporte, $x_{ij}=\frac{O_i D_j }{\sum _i O_i}$, es factible y no óptima única?
+
+
+
+b) Dados dos posibles movimientos de empeoramiento idénticos en el Recocido Simulado (la función objetivo empeora el mismo valor), ¿por qué la probabilidad de aceptar el movimiento de empeoramiento es mayor cuanto menor es la temperatura?
+
+
+
+
+c) Al aplicar los algoritmos genéticos al problema \textit{knapsack} se han generado los dos individuos indicados. Se quieren cruzar los dos individuos con las posiciones de cruce: posición 1 (entre el primer y segundo bit) y posición 4 (entre el bit 4º y 5º). Construye los descendientes de estos dos individuos en ambos cruces.
+
+\begin{align}
+\max \quad & z = \sum_{i=1}^{5} v_i x_i \\
+\text{s.a.:} \quad 
+& \sum_{i=1}^{5} w_i x_i \le 15 \\
+& x_i \in \{0,1\} \quad \forall i \in \{1,2,3,4,5\}
+\end{align}
+
+Donde los parámetros de los objetos ($i$) corresponden a:
+\begin{itemize}
+    \item Pesos ($w_i$): $w = [2, 3, 5, 7, 1]$
+    \item Valores ($v_i$): $v = [10, 20, 30, 40, 10]$
+\end{itemize}
+
+\begin{itemize}
+    \item Individuo 1: $I_1 = [1, 0, 1, 1, 0]$
+    \item Individuo 2 $I_2 = [0, 1, 1, 0, 1]$
+    
+\end{itemize}
+
+
+d) ¿Se puede considerar Branch and Bound una técnica de fuerza bruta? Justifica tu respuesta.
+
+
+
+e) El análisis de sensibilidad de un problema LP continuo, ¿sigue siendo válido para un problema MIP?

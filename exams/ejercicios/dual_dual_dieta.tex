@@ -1,0 +1,57 @@
+Un organismo encargado de planificar programas de nutrición deportiva desea establecer un sistema de valoración económica de los requerimientos dietéticos de sus atletas.
+
+Se consideran:
+
+\begin{itemize}
+    \item $m$ nutrientes esenciales indexados por $i$ ($i=1,\ldots,m$), para los que es necesario alcanzar al menos $b_i$ unidades.
+    \item $p$ componentes restringidos indexados por $k$ ($k=1,\ldots,p$), cuya presencia en la dieta no debe superar $q_k$ unidades.
+    \item $n$ alimentos indexados por $j$ ($j=1,\ldots,n$), cada uno con un coste unitario $c_j$.
+\end{itemize}
+
+Se introducen las siguientes variables de valoración:
+
+\begin{itemize}
+    \item $y_i$: valoración marginal asociada al cumplimiento del requerimiento mínimo del nutriente $i$.
+    \item $w_k$: penalización marginal asociada a la restricción sobre el componente crítico $k$.
+\end{itemize}
+
+El objetivo es determinar dichas valoraciones de forma que el valor total neto de los requerimientos nutricionales sea máximo, respetando que la valoración imputada a cada alimento no exceda su coste real.
+
+El modelo de programación lineal se formula como:
+
+\[
+(P)\qquad
+\max \quad
+z=
+\sum_{i=1}^{m} b_i y_i
+-
+\sum_{k=1}^{p} q_k w_k
+\]
+
+sujeto a
+
+\[
+\sum_{i=1}^{m} a_{ij}y_i
+-
+\sum_{k=1}^{p} s_{kj}w_k
+\le c_j,
+\qquad
+j=1,\ldots,n,
+\]
+
+\[
+y_i \ge 0,
+\qquad
+i=1,\ldots,m,
+\]
+
+\[
+w_k \ge 0,
+\qquad
+k=1,\ldots,p.
+\]
+
+\begin{enumerate}
+    \item Formula el problema dual de $(P)$.
+    \item Interpreta económicamente las variables del problema dual obtenido.
+\end{enumerate}

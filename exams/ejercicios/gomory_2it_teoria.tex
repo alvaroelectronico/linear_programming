@@ -1,0 +1,49 @@
+
+\begin{enumerate}
+
+\item Calcula la solución óptima de la relajación lineal del siguiente problema de programación lineal entera:
+
+\[
+\begin{array}{ll}
+\max & z = 7x_1 + 11x_2 \\[1ex]
+\text{s.a.} &
+x_1+x_2\le 7 \\[1ex]
+&
+4x_1+7x_2\le 38 \\[1ex]
+&
+x_1,x_2 \in \mathbb{Z}^+ 
+\end{array}
+\]
+
+A continuación se indica una solución básica factible de la que se recomienda partir:
+
+\begin{center}
+\begin{tabular}{c|c|cccc|}
+ & $z$ & $x_1$ & $x_2$ &  $h_1$ & $h_2$ \\ 
+ & -418/7 & $5/7$ & 0  & 0 & -11/7 \\ 
+\hline
+$h_1$ & 11/7  & 3/7 & 0 & 1 & -1/7\\ 
+$x_2$ & 38/7  & 4/7 & 1 & 0 & 1/1\\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+\item Obtén el corte de Gomory asociado a la variable básica cuya parte fraccionaria sea mayor en la solución óptima de la relajación lineal obtenida.
+
+\item Añade el corte obtenido y determina la solución óptima del problema entero aplicando el método del Simplex dual.
+
+\item Expresa el corte de Gomory obtenido únicamente en función de las variables originales \(x_1\) y \(x_2\).
+
+\item Responde razonadamente a las siguientes cuestiones relacionadas con la teoría de los planos de corte:
+
+\begin{enumerate}
+\item ¿Por qué el corte de Gomory obtenido elimina la solución óptima de la relajación lineal?
+
+% \item ¿Por qué dicho corte no elimina ninguna solución entera factible del problema original?
+
+\item Sea \(X_{LP}\) la región factible de la relajación lineal, \(X_I\) el conjunto de soluciones enteras factibles y \(X_C\) la región obtenida tras añadir el corte. Representa la relación existente entre estos tres conjuntos.
+\end{enumerate}
+
+\end{enumerate}
+

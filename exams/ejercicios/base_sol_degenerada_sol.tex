@@ -1,0 +1,90 @@
+Dado el siguiente problema de programación lineal:
+
+\begin{equation}
+\begin{split}
+\mbox {max. }z=2x_1+1x_2+3x_3\\
+s.a.:\\
+4x_1+2x_2+1x_3 \leq 60\\
+2x_1+6x_2 -1x_3 \leq 20\\
+1x_1+2x_3 \leq 10\\
+x_1,\,x_2,\,x_3 \geq 0
+\notag
+\end{split}
+\end{equation}
+
+Se pide
+\begin{enumerate}
+    \item \textbf{Identificar la base correspondiente a la solución  en la que $x_1=0$, $x_2=25/6$, $x_3=4$.}
+
+    El problema en formato estándar es:
+    
+    \begin{equation}
+    \begin{split}
+    \mbox {max. }z=2x_1+1x_2+3x_3\\
+    s.a.:\\
+    4x_1+2x_2+1x_3 + h_1 = 60\\
+    2x_1+6x_2 -1x_3 + h_2 = 20\\
+    1x_1+2x_3 + h_3 = 10\\
+    x_1,\,x_2,\,x_3,\,h_1,\,h_2,\,h_3 \geq 0
+    \notag
+    \end{split}
+    \end{equation}
+
+    Despejando de las restricciones se obtiene que $h_1=140/3$, $h_2=0$ y $h_3=0$.
+
+    Hay tres variables no nulas que son las variables básicas, $x_2$, $x_3$ y $h_1$, y las correspondientes columnas de la matríz A son las siguientes, en el mismo orden:
+
+    \[
+    \begin{pmatrix}
+       2 &  1 &  1\\
+       6 & -1 &  0\\
+       0 &  2 &  0
+    \end{pmatrix} 
+    \]
+    
+    \item \textbf{Identificar la base correspondiente a la solución  en la que $x_1=10$, $x_2=0$, $x_3=0$.}
+
+    Despejando de las restricciones se obtiene que $h_1=20$, $h_2=0$ y $h_3=0$.
+
+    Hay dos variables no nulas, $x_1$ y $h_1$, que son dos variables básicas y las columnas en la matriz A correspondientes a estas dos variables serán dos de las columnas de la base.
+
+    \[
+            \begin{pmatrix}
+               4 & 1 &  * \\
+               2 & 0 &  *\\
+               1 & 0 &  * 
+            \end{pmatrix} 
+            \]
+    
+    Se puede seleccionar otra variable nula de entre las restantes y las columnas de las tres variables componen cada una de las bases que conducen a la misma solución degenerada.
+    
+    \begin{itemize}
+        \item $x_2$ variable básica. La tercera es la correspondiente a $x_2$ en A:
+            \[
+            \begin{pmatrix}
+               4 &  1 &  2\\
+               2 &  0 &  6 \\
+               1 &  0 &  1 
+            \end{pmatrix} 
+            \]
+        \item $h_2$ variable básica. La tercera es la correspondiente a $h_2$ en A:
+        \[
+            \begin{pmatrix}
+               4 &  1 &  0\\
+               2 &  0 &  1\\
+               1 &  0 &  0
+            \end{pmatrix} 
+            \]
+        
+        \item $h_3$ variable básica. La tercera es la correspondiente a $h_3$ en A:
+
+        \[
+            \begin{pmatrix}
+               4 &  1 &  0\\
+               2 &  0 &  0\\
+               1 &  0 &  1
+            \end{pmatrix} 
+            \]
+    \end{itemize}
+    
+\end{enumerate}

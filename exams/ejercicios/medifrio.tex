@@ -1,0 +1,52 @@
+La empresa \textit{MediFrío} distribuye semanalmente lotes de medicamentos refrigerados desde tres almacenes regionales hasta cuatro hospitales. Debido a una avería en una de sus cámaras frigoríficas, la cantidad total disponible esta semana no permite cubrir toda la demanda prevista.
+
+Los almacenes disponibles son:
+\[
+A_1 \text{ (Madrid)}, \quad A_2 \text{ (Zaragoza)}, \quad A_3 \text{ (Valencia)}.
+\]
+
+Los hospitales que deben recibir los medicamentos son:
+\[
+H_1 \text{ (Hospital Norte)}, \quad
+H_2 \text{ (Hospital Sur)}, \quad
+H_3 \text{ (Hospital Este)}, \quad
+H_4 \text{ (Hospital Oeste)}.
+\]
+
+En la siguiente tabla se indican los costes de transporte, en euros por lote, desde cada almacén hasta cada hospital. En la última columna se indica la oferta disponible en cada almacén.
+
+\[
+\begin{array}{c|cccc|c}
+ & H_1 & H_2 & H_3 & H_4 & \text{Oferta} \\
+\hline
+A_1 & 12 & 18 & 25 & 16 & 50 \\
+A_2 & 20 & 14 & 17 & 22 & 40 \\
+A_3 & 24 & 21 & 13 & 19 & 30 \\
+\hline
+\text{Demanda} & 45 & 35 & 50 & 40 & \\
+\end{array}
+\]
+
+Como puede observarse, la oferta total disponible es inferior a la demanda total de los hospitales. Por tanto, no será posible satisfacer toda la demanda.
+
+En caso de no entregar un lote solicitado por un hospital, la empresa incurre en una penalización distinta según el hospital afectado. Estas penalizaciones, en euros por lote no entregado, son las siguientes:
+
+\[
+\begin{array}{c|cccc}
+ & H_1 & H_2 & H_3 & H_4 \\
+\hline
+\text{Penalización} & 90 & 75 & 110 & 60 \\
+\end{array}
+\]
+
+Se pide:
+
+\begin{enumerate}
+    \item Formular el problema como un problema de transporte equilibrado.
+
+    \item Obtener una solución inicial factible mediante el método de Vogel.
+
+    \item A partir de dicha solución inicial, aplicar el método de stepping stone hasta obtener la solución óptima.
+
+    \item Interpretar la solución obtenida.
+\end{enumerate}

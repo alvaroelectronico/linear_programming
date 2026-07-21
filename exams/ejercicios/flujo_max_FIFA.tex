@@ -1,0 +1,58 @@
+Con motivo del Mundial de Fútbol 2026, la FIFA ha diseñado una red logística para transportar material deportivo, equipaciones, equipos de retransmisión y suministros médicos desde un centro logístico principal hasta el Centro de Operaciones de la Final.
+
+La red se modela mediante un grafo dirigido en el que cada arco tiene asociada una capacidad máxima de transporte expresada en toneladas por día.
+
+Los nodos de la red son:
+
+\begin{itemize}
+    \item $A$: Aeropuerto de Ciudad de México.
+    \item $B$: Aeropuerto de Monterrey.
+    \item $C$: Aeropuerto de Guadalajara.
+    \item $D$: Centro de Distribución Norte.
+    \item $E$: Centro de Distribución Centro.
+    \item $F$: Centro de Distribución Sur.
+    \item $G$: Estadio Azteca.
+    \item $H$: Estadio BBVA.
+    \item $I$: Estadio Akron.
+    \item $S$: Centro Logístico Central.
+    \item $T$: Centro de Operaciones de la Final .
+\end{itemize}
+
+Las capacidades de transporte de los arcos son las siguientes:
+
+\[
+\begin{array}{|c|c|}
+\hline
+\text{Arco} & \text{Capacidad} \\
+\hline
+S \rightarrow A & 30 \\
+S \rightarrow B & 20 \\
+S \rightarrow C & 25 \\
+A \rightarrow D & 15 \\
+A \rightarrow E & 10 \\
+B \rightarrow D & 10 \\
+B \rightarrow F & 15 \\
+C \rightarrow E & 15 \\
+C \rightarrow F & 10 \\
+D \rightarrow G & 20 \\
+D \rightarrow H & 5 \\
+E \rightarrow G & 10 \\
+E \rightarrow I & 15 \\
+F \rightarrow H & 15 \\
+F \rightarrow I & 10 \\
+G \rightarrow T & 20 \\
+H \rightarrow T & 15 \\
+I \rightarrow T & 20 \\
+\hline
+\end{array}
+\]
+
+\begin{enumerate}
+    \item Representa la red mediante un grafo dirigido indicando las capacidades en cada arco.
+
+    \item Determina el flujo máximo que puede enviarse desde el nodo  $S$ hasta el nodo  $T$ utilizando el algoritmo de Ford-Fulkerson; obteniendo una distribución de flujo máxima para todos los arcos de la red.
+
+    \item Determina un corte mínimo de la red y calcula su capacidad.
+
+    \item Interpreta el significado del corte mínimo en el contexto de la logística del Mundial de Fútbol 2026.
+\end{enumerate}

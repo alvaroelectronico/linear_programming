@@ -1,0 +1,81 @@
+Responde las siguientes preguntas:
+
+\textbf{a) Pensando en un problema de transporte equilibrado, ¿puedes demostrar que la solución del problema de transporte, $x_{ij}=\frac{O_i D_j }{\sum _i O_i}$, es factible y no puede ser solución óptima y única?}
+
+En los apuntes se demuestra que es solución factible.
+
+En esta solución todas las variables son básicas (I+J), luego es una solución no básica. Por lo tanto no puede ser óptima única.
+
+
+b) \textbf{Dados dos posibles movimientos de empeoramiento idénticos en el Recocido Simulado (la función objetivo empeora el mismo valor), ¿por qué la probabilidad de aceptar el movimiento de empeoramiento es mayor cuanto menor es la temperatura?}
+
+En realidad ocurre lo contrario: cuanto menor es la temperatura, menor es la probabilidad de aceptar un movimiento de empeoramiento en el algoritmo de Recocido Simulado.
+
+La probabilidad de aceptar un empeoramiento se  define como:  $P = e^{-\Delta E / T}$ donde:
+
+\begin{itemize}
+    \item  $\Delta E>0$ es cuánto empeora la función objetivo.
+    \item $T$ es la temperatura.
+    \item $P$ es la probabilidad de aceptar ese movimiento.
+\end{itemize}
+
+Si se comparan dos movimientos con el mismo empeoramiento ($\Delta E$ igual):
+
+\begin{itemize}
+    \item Temperatura alta → el cociente $\Delta E/T$ es pequeño → el exponente negativo es menos extremo → $P$ es relativamente grande.
+    \item Temperatura baja → $\Delta E/T$ crece → el exponente es más negativo → $P$ disminuye mucho.
+\end{itemize}
+
+
+c) \textbf{Al aplicar los algoritmos genéticos al problema \textit{knapsack} se han generado los dos individuos indicados. Se quieren cruzar los dos individuos con las posiciones de cruce: posición 1 (entre el primer y segundo bit) y posición 4 (entre el bit 4º y 5º). Construye los descendientes de estos dos individuos en ambos cruces.}
+
+\begin{align}
+\max \quad & z = \sum_{i=1}^{5} v_i x_i \\
+\text{s.a.:} \quad 
+& \sum_{i=1}^{5} w_i x_i \le 14 \\
+& x_i \in \{0,1\} \quad \forall i \in \{1,2,3,4,5\}
+\end{align}
+
+Donde los parámetros de los objetos ($i$) corresponden a:
+\begin{itemize}
+    \item Pesos ($w_i$): $w = [2, 3, 5, 7, 1]$
+    \item Valores ($v_i$): $v = [10, 20, 30, 40, 10]$
+\end{itemize}
+
+\begin{itemize}
+    \item Individuo 1: $I_1 = [1, 0, 1, 1, 0]$
+    \item Individuo 2 $I_2 = [0, 1, 1, 0, 1]$
+    
+\end{itemize}
+
+%\begin{table}[h]
+\begin{center}
+    
+
+%\caption{Resultados del cruce de individuos y evaluación de factibilidad ($W_{\text{máx}} = 14$)}
+%\label{tab:resumen_cruces}
+\begin{tabular}{ccccc}
+\toprule
+Descendiente & Punto de Cruce & Cromosoma Resultante & Peso Total & Factibilidad ($\le 14$) \\
+\midrule
+$D_{1A}$ & Posición 1 & $[1, 1, 1, 0, 1]$ & 11 & Sí \\
+$D_{1B}$ & Posición 1 & $[0, 0, 1, 1, 0]$ & 12 & Sí \\
+$D_{2A}$ & Posición 4 & $[1, 0, 1, 1, 1]$ & 15 & No  \\
+$D_{2B}$ & Posición 4 & $[0, 1, 1, 0, 0]$ & 8  & Sí \\
+\bottomrule
+\end{tabular}
+%\end{table}
+\end{center}
+
+d) \textbf{¿Se puede considerar Branch and Bound una técnica de fuerza bruta? Justifica tu respuesta.}
+
+No. El algoritmo de \textit{Branch and Bound} busca la enumeración implícita vía las podas en algunos de los subproblemas.
+
+
+e) \textbf{El análisis de sensibilidad de un problema LP continuo, ¿sigue siendo válido para un problema MIP?}
+
+No, el análisis de sensibilidad clásico de Programación Lineal (LP) continua no es válido directamente para un problema MIP (Mixed Integer Programming).
+
+La razón principal es que en un LP continuo: la región factible es convexa, la solución óptima cambia de manera “suave” ante pequeños cambios en los parámetros y los precios sombra / costes reducidos tienen interpretación económica estable.
+
+En cambio, en un MIP: algunas variables deben ser enteras, la región factible deja de ser convexa y pequeños cambios en coeficientes o restricciones pueden provocar saltos bruscos en la solución óptima entera.

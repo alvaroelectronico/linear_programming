@@ -1,0 +1,49 @@
+Dado el siguiente problema de programación lineal:
+
+\[
+\begin{aligned}
+\mbox{max.} \quad & z = 8x_1 + 6x_2 + 5x_3  + 4x_4 \\
+\text{s.a.} \quad & \\
+& 2x_1 + 3x_2 + 1x_3 + 2x_4 \le 40 & \text{(tiempo de máquina)} \\
+& 1x_1 + 1x_2 + 2x_3 + 1x_4 \le 30 & \text{(material disponible)} \\
+& 3x_1 + 2x_2 + 2x_3 + 4x_4 \le 60 & \text{(mano de obra)} \\
+& x_1, x_2, x_3, x_4 \ge 0 &
+\end{aligned}
+\]
+
+Se pide:
+\begin{enumerate}[label=\alph*)]
+    \item Formular el problema dual asociado.
+
+    \item Se conocen las tablas siguientes tablas, correspondientes a soluciones óptimas del problema primal y del dual (formulado como problema de maximización antes de resolver) con información parcial y \textbf{haciendo uso de las propiedades de las relaciones entre los dos problemas}, se pide recuperar la solución óptima del primal.
+
+        \[
+    \begin{array}{c|c|ccccccc|}
+          &        & x_1    & x_2 & x_3    & x_4 & x^h_1 & x^h_2  & x^h_3\\ 
+          & \ldots & \ldots & -1  & \ldots & -6  & -1    & \ldots & -2 \\ 
+    \hline
+          & \ldots & 1      & 4   & 0      & 0   & 2     & 0      & -1\\ 
+          & 10     & 0      & 7   & 0      & -3  & 4     & 1      & -3\\ 
+          & \ldots & 0      & -5  & 1      & 2   & -3    & 0      & 2\\ 
+    \hline
+    \end{array}
+    \]
+    
+    \[
+    \begin{array}{c|c|ccccccc|}
+           & z      & y_1    & y_2 & y_3    & y^h_1 & y^h_2 & y^h_3  & y^h_4\\ 
+           & \ldots & \ldots & -10 & \ldots & -20   & 0     & \ldots & \ldots \\ 
+    \hline
+           & 1/5       & 0   & -7/5   & 0      & -4/5  & 1/5   & 1      & 0\\ 
+           & \ldots    & 1   & 1/5    & 0      & 2/5   & -3/5  & 0      & 0\\ 
+           & 32/5      & 0   & 1/5    & 0      & -8/5  & 2/5   & 0      & 1\\ 
+        & \ldots    & 0   & 1/5    & 1      & -3/5  & 2/5   & 0      & 0\\ 
+    \hline
+    \end{array}
+    \]
+    
+    
+    \item ¿Cuál es el valor de la función objetivo de la solución óptima?
+
+    \textbf{Nota}: $x^h_j$ hace referencia a las variables de holgura del primal;  $y^h_i$ hace referencia a las variables de holgura del dual.
+\end{enumerate}

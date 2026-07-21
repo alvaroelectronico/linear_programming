@@ -1,0 +1,121 @@
+\textbf{1) Grafo dirigido}
+
+La red logística para el transporte de material de la FIFA se modela mediante un grafo dirigido $G = (V, E)$, donde los nodos representan aeropuertos, centros de distribución y estadios, y los arcos representan las rutas con sus respectivas capacidades máximas de transporte (en toneladas por día).
+
+A continuación se presenta la representación gráfica de la red:
+
+\begin{center}
+\begin{tikzpicture}[
+    vertex/.style={circle, draw=blue!60, fill=blue!5, thick, minimum size=7mm},
+    edge/.style={->, >=Stealth, thick, draw=gray!80},
+    edge_label/.style={font=\small, fill=white, inner sep=2pt}
+]
+
+    % Nodos
+    \node[vertex] (S) at (0, 0) {$S$};
+    
+    \node[vertex] (A) at (2.5, 2.5) {$A$};
+    \node[vertex] (B) at (2.5, 0) {$B$};
+    \node[vertex] (C) at (2.5, -2.5) {$C$};
+    
+    \node[vertex] (D) at (5.5, 2.5) {$D$};
+    \node[vertex] (E) at (5.5, 0) {$E$};
+    \node[vertex] (F) at (5.5, -2.5) {$F$};
+    
+    \node[vertex] (G) at (8.5, 2.5) {$G$};
+    \node[vertex] (H) at (8.5, 0) {$H$};
+    \node[vertex] (I) at (8.5, -2.5) {$I$};
+    
+    \node[vertex] (T) at (11, 0) {$T$};
+
+    % Arcos desde S
+    \draw[edge] (S) -- node[edge_label, above left] {30} (A);
+    \draw[edge] (S) -- node[edge_label, above] {20} (B);
+    \draw[edge] (S) -- node[edge_label, below left] {25} (C);
+
+    % Arcos desde A, B, C hacia D, E, F
+    \draw[edge] (A) -- node[edge_label, above] {15} (D);
+    \draw[edge] (A) -- node[edge_label, near start, below left] {10} (E);
+    
+    \draw[edge] (B) -- node[edge_label, near start, above left] {10} (D);
+    \draw[edge] (B) -- node[edge_label, near start, below left] {15} (F);
+    
+    \draw[edge] (C) -- node[edge_label, near start, above left] {15} (E);
+    \draw[edge] (C) -- node[edge_label, below] {10} (F);
+
+    % Arcos desde D, E, F hacia G, H, I
+    \draw[edge] (D) -- node[edge_label, above] {20} (G);
+    \draw[edge] (D) -- node[edge_label, near start, below left] {5} (H);
+    
+    \draw[edge] (E) -- node[edge_label, near start, above left] {10} (G);
+    \draw[edge] (E) -- node[edge_label, near start, below left] {15} (I);
+    
+    \draw[edge] (F) -- node[edge_label, near start, above left] {15} (H);
+    \draw[edge] (F) -- node[edge_label, below] {10} (I);
+
+    % Arcos hacia T
+    \draw[edge] (G) -- node[edge_label, above right] {20} (T);
+    \draw[edge] (H) -- node[edge_label, above] {15} (T);
+    \draw[edge] (I) -- node[edge_label, below right] {20} (T);
+
+\end{tikzpicture}
+\end{center}
+
+\textbf{2) Flujo máximo (algoritmo de Ford-Fulkerson)}
+
+Aplicando el algoritmo de Ford-Fulkerson, se identifican de manera iterativa los caminos aumentantes desde la fuente ($S$) hasta el sumidero ($T$). El flujo máximo total que puede enviarse a través de la red es de 55 toneladas por día.
+
+A continuación se detalla la distribución óptima del flujo final frente a la capacidad de cada arco:
+
+\begin{center}
+\begin{tabular}{cccl}
+\toprule
+\textbf{Arco} & \textbf{Flujo asignado} & \textbf{Capacidad máxima} & \textbf{Estado del arco} \\
+\midrule
+$S \rightarrow A$ & 15 & 30 & Con holgura \\
+$S \rightarrow B$ & 20 & 20 & \textbf{Saturado} \\
+$S \rightarrow C$ & 20 & 25 & Con holgura \\ \midrule
+$A \rightarrow D$ & 15 & 15 & \textbf{Saturado} \\
+$A \rightarrow E$ & 0  & 10 & Vacío \\
+$B \rightarrow D$ & 5  & 10 & Con holgura \\
+$B \rightarrow F$ & 15 & 15 & \textbf{Saturado} \\
+$C \rightarrow E$ & 15 & 15 & \textbf{Saturado} \\
+$C \rightarrow F$ & 5  & 10 & Con holgura \\ \midrule
+$D \rightarrow G$ & 20 & 20 & \textbf{Saturado} \\
+$D \rightarrow H$ & 0  & 5  & Vacío \\
+$E \rightarrow G$ & 0  & 10 & Vacío \\
+$E \rightarrow I$ & 15 & 15 & \textbf{Saturado} \\
+$F \rightarrow H$ & 15 & 15 & \textbf{Saturado} \\
+$F \rightarrow I$ & 5  & 10 & Con holgura \\ \midrule
+$G \rightarrow T$ & 20 & 20 & \textbf{Saturado} \\
+$H \rightarrow T$ & 15 & 15 & \textbf{Saturado} \\
+$I \rightarrow T$ & 20 & 20 & \textbf{Saturado} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{3) Corte mínimo y capacidad}
+
+De acuerdo con el \textbf{Teorema del Flujo máximo-Corte mínimo}, el valor del flujo máximo en una red es igual a la capacidad del corte mínimo que separa S de T. 
+
+El corte mínimo óptimo se define separando el grafo en dos conjuntos disjuntos de nodos: $V_S$ (lado de la fuente) y $V_T$ (lado del destino), aislando el Centro de Operaciones de la Final ($T$). Los arcos que cruzan este corte hacia el destino son precisamente las conexiones directas de última milla desde los estadios hacia $T$:
+
+\[
+E_{\text{corte}} = \{ G \rightarrow T,\, H \rightarrow T,\, I \rightarrow T \}
+\]
+
+La capacidad del corte mínimo se calcula como la suma de las capacidades de estos arcos:
+\[
+\text{Capacidad del corte} = c(G \rightarrow T) + c(H \rightarrow T) + c(I \rightarrow T) = 20 + 15 + 20 = 55 \text{ toneladas/día}
+\]
+
+\textbf{4) Interpretación logística en el contexto del Mundial 2026}
+
+El análisis del corte mínimo revela información estratégica fundamental para la operación logística de la FIFA durante el torneo:
+
+\begin{itemize}
+    \item El cuello de botella del sistema no se encuentra en las puertas de entrada al país (aeropuertos $A, B, C$) ni en el almacenamiento intermedio ($D, E, F$), sino en los canales de distribución final que conectan los estadios con el Centro de Operaciones ($T$). El sistema está limitado a un máximo estricto de \textbf{55 toneladas/día}.
+    \item Si la demanda logística aumentara de imprevisto por encima de las 55 toneladas diarias, cualquier inversión realizada en expandir los aeropuertos o los centros de distribución intermedios sería inútil, ya que la infraestructura de última milla está operando a su saturación máxima (100\% de capacidad en $G \rightarrow T$, $H \rightarrow T$ e $I \rightarrow T$).
+    \item Para incrementar la capacidad total de la red o mitigar riesgos ante contingencias, la FIFA debe priorizar el refuerzo y la ampliación de los recursos de transporte dedicados exclusivamente a la salida de los estadios (Estadio Azteca, Estadio BBVA y Estadio Akron) hacia el Centro de Operaciones de la Final.
+\end{itemize}
+
