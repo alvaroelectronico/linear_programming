@@ -1,59 +1,49 @@
-Quiero desarrollar código que me permita resolver problemas de programación lineal. 
+# CLAUDE.md
 
-Quiero implementar el método del Simplex, el método de las dos fases y el metodo del Simplex (simplex dual).
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-* A partir de un problema formulado como texto plano como sigue:
-max 3x1 + 4x2
-x1+2x2<=50
-x1+x2>=10
-Y quiero que identifique coeficientes, signos, etc. Puede haber espacios, nombres diferentes de x_1, x_2, etc.
+## Project
 
-* Quiero que los nombres de variables puedan ser cualquier y que introduzcas variables de holgura cuando hagan falta como: h_1, h_2...
+`linprog` is an educational linear-programming library for the MCIO1 course. It parses LP problems written as plain text, solves them with the primal simplex, two-phase or dual simplex (Lemke) methods using **exact rational arithmetic** (`fractions.Fraction`, never floats), and renders every intermediate object — formulations, basis quantities, stacked tableaux, sensitivity derivations — as **LaTeX fragments in Spanish** for composing exams and answer keys. Zero runtime dependencies.
 
-* Quiero leer los elementos del problema: número de variables, número de restricciones, matriz de coeficientes A, matriz de contribuciones unitarias al beneficio c, matriz de disponibilidad de los recursos b, signo de las restricciones.
-* Quiero poder recuperar esos elementos en formato .tex
-* Quiero poder formular el problema en forma estandar en .tex
-* Quiero poder formular el problema en forma canónica en .tex
-* En el caso del método de las dos fases, quiero poder recuperar el .tex la formulación de la primera fase y la formulación del problema de las segunda fase. Para ello, sigue la nomenclatura de la documentación que te doy.
+## Commands
 
+```bash
+pip install -e ".[dev]"      # editable install; dev extra = pytest
+pytest                       # full suite
+pytest tests/test_two_phase.py                       # one module
+pytest tests/test_two_phase.py::test_infeasible_golden  # one test
+python sandbox.py            # runnable usage examples, grown per feature
+python -m ejercicios         # regenerate every tex/<id>.tex (+ _sol)
+python -m ejercicios lemke   # regenerate one exercise
+pdflatex main.tex            # compile the exam document (latexmk is broken on this machine)
+```
 
-Quiero poder recuperar la siguiente información para cualquier base de un problema del problema, tanto en el formato en el que se consuma internamente la información como en .tex para luego componer exámenes y sus soluciones.
-* Base, B
-* Inversa de la base B^-1
-* Contribuciones unitarias al beneficio de las variables básicas, c^B
-* Precio sombra de las restricciones \pi^i
-* Criterio del simplex, coste reducido, de las variables V^B_j
+## Architecture
 
+One data chain, one direction: `Problem → StandardForm → Basis`; solvers produce `list[Basis]`; rendering consumes any of them. No module holds rendering logic except `latex.py`/`sensitivity.py`, and data classes store no derived state (everything is a `property`/`cached_property`).
 
-Cuando resuelvo un problema con un método, quiero poder recuperar:
-* Todas las bases por las que transita el método
-* La tabla con la información de todas las bases por las que transita
+- [linprog/parser.py](linprog/parser.py) — `parse_problem(text)`: first line `max`/`min` + expression, then one constraint per line (`<=`, `>=`, `=`). Forgiving: optional spaces, `x1 ≡ x_1`, implicit/decimal/fraction coefficients, variables and constants on either side.
+- [linprog/problem.py](linprog/problem.py) — `Problem` (what the user wrote) with derived `A`, `b`, `c`, `variables` (order of first appearance), plus `split_equalities()` (Lemke prerequisite) and `standard()` → `StandardForm`: max form (min negates `c`; original kept for rendering), `b >= 0` (negative rows flipped), slack `h_i` and artificial `a_i` **named after their 1-based constraint row**, columns ordered decision → slacks → artificials. Exposes `initial_basis()`, `slack_basis()`, `phase1_c()`.
+- [linprog/basis.py](linprog/basis.py) — minimal exact linear algebra (Gauss–Jordan `inverse`) and `Basis(sf, column_indices)`: works for **any** basis, not just solver-visited ones. Cached: `B`, `B_inv`, `u`, `pi`, `V`, `z`, `B_inv_A`, feasibility/optimality flags. `reduced_costs(c)`/`objective_value(c)` take arbitrary cost vectors (used for the phase-1 row).
+- [linprog/solvers.py](linprog/solvers.py) — `simplex`, `two_phase`, `dual_simplex`, each iteration building a fresh `Basis` (revised style, no mutable tableau). `Solution` = status + all visited bases; everything else derived (`values`, `objective_value` un-negates min, `phase1_end` feeds the tableau split). Spanish terminal messages (`MSG_UNBOUNDED`, `MSG_INFEASIBLE`) live here.
+- [linprog/latex.py](linprog/latex.py) — ALL rendering: formulations (`problem_tex`, `standard_form_tex`, `canonical_form_tex`, `phase1_tex`), `elements_tex`, per-basis fragments (`shadow_prices_tex`/`reduced_costs_tex` with `verbose=` spelling out the matrix chain), and `tableau(bases, two_phase_split=, include_artificials=, value_label=)`. Spanish wording is module-level constants at the top.
+- [linprog/sensitivity.py](linprog/sensitivity.py) — ranges for `b_i` and `c_j` without sympy: perturbed quantities are affine in the parameter, each component a `(const, coef)` pair. `rhs_range`/`cost_range` → `Interval`; `*_tex` render the worked derivation.
 
-En general, para un conjunto de bases (que puede ser solo una, la primera, una intermedia o la última de uno de los metodos de resolución) quiero poder obtener la o las tablas, con este formato:
+### Exercise layer (application on top of the library)
 
-\begin{center}
-\begin{tabular}{c|c|ccccc|}
- & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$\\ 
- & $0$ & $-3$ & $-4$ & $-5$ & $0$ & $0$ \\ 
-\hline
-$h_1$ & 50  & $2$ & $3$ & $4$ & $1$ & $0$\\ 
-$h_2$ & -20  & $-1$ & $-1$ & $-1$ & $0$ & $1$\\ 
-\hline
- & $60$ & $0$ & $-1$ & $-2$ & $0$ & $-3$ \\ 
-\hline
-$h_1$ & 10  & $0$ & $1$ & $2$ & $1$ & $2$\\ 
-$x_1$ & 20  & $1$ & $1$ & $1$ & $0$ & $-1$\\ 
-\hline
-\end{tabular}
+`ejercicios/` is NOT packaged — it runs from the repo root and imports the installed `linprog`. One module per exercise, no dataclasses, no registry: `ejercicios/<id>.py` defines `statement() -> str` (required) and `solution() -> str` (optional), both returning Spanish LaTeX fragments composed with `join_blocks` + `linprog.latex` calls. `python -m ejercicios` (see [ejercicios/__init__.py](ejercicios/__init__.py)) discovers those modules (files starting with `_` are skipped, e.g. the documented [ejercicios/_plantilla.py](ejercicios/_plantilla.py) template) and writes `tex/<id>.tex` / `tex/<id>_sol.tex`, which the hand-maintained [main.tex](main.tex) pulls in with `\input`. Generated `tex/` files ARE committed. The `/nuevo-ejercicio` skill (`.claude/skills/nuevo-ejercicio/`) walks through authoring a new exercise; never modify `linprog/` or test goldens to accommodate one exercise's rendering.
 
-Quiero poder generar texto en .tex para luego elaborar exámenes, documentos, etc. En particular, quiero:
-* Recuperar elementos de una variable básica: base, inversa de la base, precios sombra, criterios del simplex. En el caso de los precio sombra o de los criterios del simplex, quiero que haya un argumento para que sea verboso o no, y que en caso de que sí, recupere la fórmula genérica y el detalle de todos los elementos para calcularlo.
-* Recuperar el análisis de sensibilidad con el detalle de todos los cálculos para un término b_i y para un término c_j
+## Conventions that must not drift
 
-Quiero que exista un argumento en donde proceda para que se generen los números como \frac{}{} o sin ello (y que por defecto sea sin ello).
+- **Exact arithmetic**: solvers and algebra use `Fraction` on plain lists — tableaux must match hand calculations digit for digit. Never introduce floats or numpy.
+- **Course pivot rules** (max form): optimal when `V_j <= 0` over real (non-artificial) columns; entering = most positive `V_j`, ties to lowest index; leaving = min ratio, ties to lowest row. Dual simplex: most negative `u_i` leaves, entering minimises `V_j/d_j` over negative `d_j`, artificials excluded.
+- **Tableau layout** (documented in `tableau()`): label column, `$z$` value column (objective rows show `-z^B`, body rows `u_i`), one column per variable; iterations stacked with `\hline`; two-phase blocks before `phase1_end` carry `Fase 1` + `Fase 2` rows.
+- **`frac` toggle** on every rendering function, keyword-only, default `False` (inline `a/b`); `frac=True` gives `\frac{-1}{4}` with the sign in the numerator. Coefficient 1 is left implicit (`x_2`, not `1x_2`).
+- **Golden tests**: `tests/` asserts exact Fractions and whole LaTeX fragments (normalized by `conftest.normalize`, which strips `$` and whitespace) against transcriptions of real exam solutions in `examples/`. When output format changes, check the corresponding `examples/*.tex` before touching a golden.
+- Code and comments in **English**; generated LaTeX (exam material) in **Spanish**.
 
-Redacta comentarios y código en inglés.
+## Untracked reference material
 
-En old_code tienes código que hacía lo que quiero hacer ahora, pero que quiero rehacer de cero, paso a ppaso.
-
-En \examples tienes muchos ejemplos del tipo de exámenes que pongo y cómo quiero generar fragmentos de texto, etc.
+- `examples/` — 61 real exam-solution `.tex` fragments; the source of truth for output formats (key ones: `dos_fases_a_sol.tex`, `lemke_sol.tex`, `empresa_minera_a_sol.tex`, the `dos_fases_no_*` variants).
+- `old_code/` — remains of the previous, more complex iteration (mostly bytecode). Reference only; do not resurrect its architecture. The git branch `old_code` preserves the old history.

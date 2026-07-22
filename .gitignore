@@ -12,4 +12,7 @@ old_code/
 *.fdb_latexmk
 *.fls
 *.log
+*.out
+*.toc
 *.synctex.gz
+main.pdf
