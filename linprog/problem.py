@@ -76,6 +76,17 @@ class Problem:
     def senses(self) -> list[Sense]:
         return [constraint.sense for constraint in self.constraints]
 
+    def add_constraints(self, *lines: str) -> Problem:
+        """A new Problem with the given constraint lines appended (parsed with
+        the same forgiving format as ``parse_problem``)."""
+        from .parser import parse_constraint  # local import: parser imports this module
+
+        return Problem(
+            goal=self.goal,
+            objective=self.objective,
+            constraints=self.constraints + tuple(parse_constraint(line) for line in lines),
+        )
+
     def split_equalities(self) -> Problem:
         """An equivalent problem with every ``=`` constraint replaced by the
         pair ``<=`` / ``>=`` (in place, keeping the row order).  This is the

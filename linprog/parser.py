@@ -82,7 +82,9 @@ def _parse_expression(text: str, *, context: str) -> tuple[dict[str, Fraction], 
     return coeffs, constant
 
 
-def _parse_constraint(line: str) -> Constraint:
+def parse_constraint(line: str) -> Constraint:
+    """Parse a single constraint line (same forgiving format as the ones in
+    ``parse_problem``)."""
     for sense in ("<=", ">=", "="):
         if sense in line:
             left, _, right = line.partition(sense)
@@ -121,7 +123,7 @@ def parse_problem(text: str) -> Problem:
     if not objective:
         raise ParseError(f"Objective has no variables: {lines[0]!r}")
 
-    constraints = tuple(_parse_constraint(line) for line in lines[1:])
+    constraints = tuple(parse_constraint(line) for line in lines[1:])
     if not constraints:
         raise ParseError("The problem has no constraints")
     return Problem(goal=goal, objective=objective, constraints=constraints)  # type: ignore[arg-type]

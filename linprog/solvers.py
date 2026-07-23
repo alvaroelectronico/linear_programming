@@ -20,7 +20,8 @@ from fractions import Fraction
 from typing import Sequence
 
 from .basis import Basis
-from .problem import StandardForm
+from .parser import parse_constraint
+from .problem import Constraint, Problem, StandardForm
 
 # Spanish wording used in the exams for the terminal states.
 MSG_UNBOUNDED = (
@@ -232,6 +233,81 @@ def dual_simplex(sf: StandardForm, start: Sequence[int] | None = None) -> Soluti
         basis = Basis(sf, indices)
         bases.append(basis)
     raise RuntimeError("Dual simplex did not converge (cycling?)")
+
+
+@dataclass
+class PostOptimization:
+    """Result of adding constraints to an already-optimal basis.
+
+    ``initial`` is the old basis extended with the new rows' slacks: same
+    reduced costs (still V <= 0), possibly infeasible.  ``solution`` is the
+    re-optimisation from there (a single-basis OPTIMAL solution when the old
+    plan already satisfied the new constraints).  Render the row-introduction
+    tableau with ``latex.introduce_rows_tex`` and the re-optimisation with
+    ``latex.tableau(post.solution.bases, ...)``.
+    """
+
+    sf: StandardForm  # standard form of the extended problem
+    initial: Basis  # old basis + new rows' slacks
+    solution: Solution
+    new_rows: range  # row positions of the added constraints
+
+    @property
+    def was_feasible(self) -> bool:
+        """True when the old optimal plan already satisfied the new rows."""
+        return self.initial.is_feasible
+
+
+def postoptimize(
+    basis: Basis, new_constraints: str | Sequence[str]
+) -> PostOptimization:
+    """Add constraints to a solved problem and re-optimise (dual simplex).
+
+    ``basis`` must be an optimal basis of the original problem.  Each new
+    constraint is parsed like a ``parse_problem`` line; ``=`` constraints are
+    split into a ``<=`` / ``>=`` pair so that every new row carries a slack.
+    The old basis plus those slacks still satisfies the optimality criterion,
+    so if some new row is violated the re-optimisation is exactly a dual
+    simplex (Lemke) run — as in the course's post-optimisation exercises.
+    """
+    if isinstance(new_constraints, str):
+        new_constraints = [new_constraints]
+    if not new_constraints:
+        raise ValueError("No constraints to add")
+    if not basis.is_optimal:
+        raise ValueError("postoptimize needs an optimal basis to start from")
+
+    added: list[Constraint] = []
+    for line in new_constraints:
+        constraint = parse_constraint(line)
+        if constraint.sense == "=":
+            added.append(Constraint(constraint.coeffs, "<=", constraint.rhs))
+            added.append(Constraint(constraint.coeffs, ">=", constraint.rhs))
+        else:
+            added.append(constraint)
+
+    old_problem = basis.sf.problem
+    extended = Problem(
+        goal=old_problem.goal,
+        objective=old_problem.objective,
+        constraints=old_problem.constraints + tuple(added),
+    )
+    sf = extended.standard()
+
+    n_old_rows = basis.sf.n_rows
+    new_rows = range(n_old_rows, sf.n_rows)
+    # Map by NAME: column indices shift when new slacks/artificials appear.
+    start = [sf.variables.index(name) for name in basis.names]
+    start += [sf.variables.index(f"h_{row + 1}") for row in new_rows]
+    initial = Basis(sf, start)
+
+    if initial.is_feasible:
+        solution = Solution(status=Status.OPTIMAL, bases=[initial])
+    else:
+        solution = dual_simplex(sf, start=start)
+    return PostOptimization(
+        sf=sf, initial=initial, solution=solution, new_rows=new_rows
+    )
 
 
 def simplex(sf: StandardForm, start: Sequence[int] | None = None) -> Solution:

@@ -37,6 +37,12 @@ La idea es intercalar texto en español con llamadas a linprog. API útil:
     rhs_range(b, i) / rhs_range_tex(b, i)      intervalo de b_i (i por fila, 0-based)
     cost_range(b, j) / cost_range_tex(b, j)    intervalo de c_j (j por columna)
 
+  Post-optimización (añadir restricciones a una base óptima):
+    post = postoptimize(base_optima, "x_3 <= 8")   (o lista; '=' se desdobla)
+    post.was_feasible / post.initial / post.solution (Solution normal)
+    introduce_rows_tex(post, ...)   tabla de introducción de las filas nuevas
+    tableau(post.solution.bases, ...)   tabla de la re-optimización (Lemke)
+
   Todas las funciones de render aceptan frac= (False -> a/b, True -> \\frac{a}{b}).
 """
 

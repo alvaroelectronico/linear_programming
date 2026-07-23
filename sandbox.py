@@ -385,3 +385,34 @@ print("--- worked c_{x_1} derivation (non-basic variable) ---")
 print()
 print(sensitivity.cost_range_tex(best_mn, 0))
 
+# ---------------------------------------------------------------------------
+# Phase 10 — post-optimization: add constraints and re-optimize (Lemke)
+# ---------------------------------------------------------------------------
+from linprog import postoptimize
+
+# From the empresa_minera optimal basis, force "at most 15 tonnes of x_4":
+post = postoptimize(best_mn, "x_4 <= 15")
+print()
+print("was feasible: ", post.was_feasible)         # False: x_4 = 20 > 15
+print("new rows:     ", list(post.new_rows))
+print("initial u:    ", post.initial.u)            # h_4 shows up negative
+print("new solution: ", post.solution.values)
+print("new z:        ", post.solution.z)
+
+# The row-introduction tableau (old basis + raw new row + eliminated row),
+# exactly as in the cargoplan exam solution:
+print()
+print("--- row introduction ---")
+print()
+print(latex.introduce_rows_tex(post, include_artificials=False))
+
+# ...and the re-optimization tableau (Lemke iterations):
+print()
+print("--- re-optimization ---")
+print()
+print(latex.tableau(post.solution.bases, include_artificials=False))
+
+# '=' constraints are split automatically into <= / >= (h_i pairs), as done
+# by hand in the exams; a constraint the old plan already satisfies keeps the
+# old basis (post.was_feasible is True and there is nothing to re-optimize).
+

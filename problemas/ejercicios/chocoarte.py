@@ -11,7 +11,7 @@ cocoa range [30, 60]; after adding x_3 <= 8: h_4 = -2 forces one Lemke pivot
 (h_1 enters, the only negative entry) -> x_2 = 22, x_3 = 8, z = 1020.
 """
 
-from linprog import Basis, dual_simplex, latex, parse_problem, sensitivity
+from linprog import Basis, latex, parse_problem, postoptimize, sensitivity
 
 from . import join_blocks
 
@@ -21,17 +21,6 @@ problem = parse_problem(
     x_1 + x_2 + 2x_3 <= 40
     2x_1 + 2x_2 + 2x_3 <= 60
     x_1 + x_2 + x_3 >= 12
-    """
-)
-
-# The same problem with the post-optimisation constraint of question 5.
-extended = parse_problem(
-    """
-    max 25x_1 + 30x_2 + 45x_3
-    x_1 + x_2 + 2x_3 <= 40
-    2x_1 + 2x_2 + 2x_3 <= 60
-    x_1 + x_2 + x_3 >= 12
-    x_3 <= 8
     """
 )
 
@@ -105,12 +94,9 @@ def solution() -> str:
     pi_cacao, pi_horas, pi_compromiso = opt.pi
     b1_range = sensitivity.rhs_range(opt, 0)
 
-    # Question 5: dual simplex on the extended problem, starting from the
-    # optimal basis plus the new constraint's slack h_4.
-    sf_ext = extended.standard()
-    start = [sf_ext.variables.index(name) for name in [*OPTIMAL_BASIS, "h_4"]]
-    post = dual_simplex(sf_ext, start=start)
-    post_values = post.values
+    # Question 5: add the moulds constraint and re-optimise (dual simplex).
+    post = postoptimize(opt, "x_3 <= 8")
+    post_values = post.solution.values
 
     item_1 = join_blocks(
         r"\item \textbf{Formulación en formato estándar y de la primera fase.}",
@@ -174,21 +160,25 @@ def solution() -> str:
 
     item_5 = join_blocks(
         r"\item \textbf{Post-optimización con $x_3 \leq 8$ (método de Lemke).}"
-        r" Se añade la restricción con su holgura, $x_3 + h_4 = 8$, y se"
-        r" incorpora a la tabla óptima tomando $h_4$ como variable básica de la"
-        r" nueva fila. Como $x_3 = 10 > 8$, resulta $h_4 = -2 < 0$: la base"
-        r" sigue cumpliendo el criterio de optimalidad pero deja de ser"
-        r" factible, exactamente la situación que resuelve el método de Lemke:",
-        latex.tableau(post.bases, include_artificials=False, frac=True),
+        r" Se añade la restricción con su holgura, $x_3 + h_4 = 8$, como nueva"
+        r" fila de la tabla óptima, con $h_4$ como variable básica. En la"
+        r" primera versión de la fila aparecen los coeficientes tal cual se"
+        r" escriben; a continuación se eliminan de ella las variables básicas"
+        r" ($x_3$) para expresarla en función de las no básicas:",
+        latex.introduce_rows_tex(post, include_artificials=False, frac=True),
+        r"Como $x_3 = 10 > 8$, resulta $h_4 = -2 < 0$: la base sigue cumpliendo"
+        r" el criterio de optimalidad pero deja de ser factible, exactamente la"
+        r" situación que resuelve el método de Lemke:",
+        latex.tableau(post.solution.bases, include_artificials=False, frac=True),
         rf"Sale de la base $h_4$ (única componente negativa) y entra $h_1$, la"
         rf" única columna con elemento negativo en su fila. El nuevo plan"
         rf" óptimo es $x_2 = {latex.fmt(post_values['x_2'])}$,"
         rf" $x_3 = {latex.fmt(post_values['x_3'])}$ y"
         rf" $x_1 = {latex.fmt(post_values['x_1'])}$, con beneficio"
-        rf" $z = {latex.fmt(post.z)}$ euros: limitar las figuras cuesta"
-        rf" {latex.fmt(opt.z - post.z)} euros semanales. Ahora sobra cacao"
-        r" (la holgura $h_1$ es básica y positiva) y su precio sombra pasa a"
-        r" ser cero.",
+        rf" $z = {latex.fmt(post.solution.z)}$ euros: limitar las figuras cuesta"
+        rf" {latex.fmt(opt.z - post.solution.z)} euros semanales. Ahora sobra"
+        r" cacao (la holgura $h_1$ es básica y positiva) y su precio sombra"
+        r" pasa a ser cero.",
     )
 
     return join_blocks(

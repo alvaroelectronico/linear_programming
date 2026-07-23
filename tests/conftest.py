@@ -56,6 +56,19 @@ def no_acotado_a():
 
 
 @pytest.fixture
+def cargoplan():
+    # examples/cargoplan_a_sol.tex (optimal basis (h_1, h_3, x_2), z = 60000)
+    return parse_problem(
+        """
+        max 50x_1 + 40x_2 + 60x_3
+        6x_1 + 4x_2 + 8x_3 <= 8000
+        3x_1 + 2x_2 + 5x_3 <= 3000
+        x_2 + x_3 >= 500
+        """
+    )
+
+
+@pytest.fixture
 def lemke_min():
     # examples/lemke_sol.tex, after splitting the equality by hand (part 1)
     return parse_problem(

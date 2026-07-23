@@ -156,7 +156,25 @@ b_1\\
 
 Mientras la disponibilidad semanal de cacao se mantenga entre 30 y 60 kg, las variables básicas de la solución óptima —y, por lo tanto, la gama de productos— no cambian.
 
-\item \textbf{Post-optimización con $x_3 \leq 8$ (método de Lemke).} Se añade la restricción con su holgura, $x_3 + h_4 = 8$, y se incorpora a la tabla óptima tomando $h_4$ como variable básica de la nueva fila. Como $x_3 = 10 > 8$, resulta $h_4 = -2 < 0$: la base sigue cumpliendo el criterio de optimalidad pero deja de ser factible, exactamente la situación que resuelve el método de Lemke:
+\item \textbf{Post-optimización con $x_3 \leq 8$ (método de Lemke).} Se añade la restricción con su holgura, $x_3 + h_4 = 8$, como nueva fila de la tabla óptima, con $h_4$ como variable básica. En la primera versión de la fila aparecen los coeficientes tal cual se escriben; a continuación se eliminan de ella las variables básicas ($x_3$) para expresarla en función de las no básicas:
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+  & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $h_4$\\
+ & $-1050$ & $-5$ & $0$ & $0$ & $-15$ & $\frac{-15}{2}$ & $0$ & $0$\\
+\hline
+$x_2$ & $20$ & $1$ & $1$ & $0$ & $-1$ & $1$ & $0$ & $0$\\
+$x_3$ & $10$ & $0$ & $0$ & $1$ & $1$ & $\frac{-1}{2}$ & $0$ & $0$\\
+$h_3$ & $18$ & $0$ & $0$ & $0$ & $0$ & $\frac{1}{2}$ & $1$ & $0$\\
+\hline
+ & $8$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ & $1$\\
+\hline
+$h_4$ & $-2$ & $0$ & $0$ & $0$ & $-1$ & $\frac{1}{2}$ & $0$ & $1$\\
+\hline
+\end{tabular}
+\end{center}
+
+Como $x_3 = 10 > 8$, resulta $h_4 = -2 < 0$: la base sigue cumpliendo el criterio de optimalidad pero deja de ser factible, exactamente la situación que resuelve el método de Lemke:
 
 \begin{center}
 \begin{tabular}{c|c|ccccccc|}

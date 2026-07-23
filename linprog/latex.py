@@ -195,6 +195,19 @@ def _tableau_row(label: str, value: Fraction, cells: Sequence[Fraction], *, frac
     return f"{label} & {numbers}\\\\"
 
 
+def _tableau_open(sf, n_shown: int, value_label: str) -> list[str]:
+    return [
+        r"\begin{center}",
+        r"\begin{tabular}{" + "c|c|" + "c" * n_shown + "|}",
+        " & ".join(
+            [" ", f"${value_label}$", *(f"${v}$" for v in sf.variables[:n_shown])]
+        ) + r"\\",
+    ]
+
+
+_TABLEAU_CLOSE = [r"\end{tabular}", r"\end{center}"]
+
+
 def tableau(
     bases: Sequence,
     *,
@@ -221,13 +234,7 @@ def tableau(
     """
     sf = bases[0].sf
     n_shown = sf.n_cols if include_artificials else sf.n_cols - sf.n_artificials
-    lines = [
-        r"\begin{center}",
-        r"\begin{tabular}{" + "c|c|" + "c" * n_shown + "|}",
-        " & ".join(
-            [" ", f"${value_label}$", *(f"${v}$" for v in sf.variables[:n_shown])]
-        ) + r"\\",
-    ]
+    lines = _tableau_open(sf, n_shown, value_label)
     for k, basis in enumerate(bases):
         if two_phase_split is None:
             lines.append(_tableau_row("", -basis.z, basis.V[:n_shown], frac=frac))
@@ -245,7 +252,48 @@ def tableau(
                 f"${name}$", basis.u[i], basis.B_inv_A[i][:n_shown], frac=frac,
             ))
         lines.append(r"\hline")
-    lines += [r"\end{tabular}", r"\end{center}"]
+    lines += _TABLEAU_CLOSE
+    return "\n".join(lines)
+
+
+def introduce_rows_tex(
+    post,
+    *,
+    include_artificials: bool = True,
+    frac: bool = False,
+    value_label: str = "z",
+) -> str:
+    """The row-introduction tableau of a post-optimisation (see
+    examples/cargoplan_a_sol.tex): the old basis block over the extended
+    columns, then the new rows as written (unlabeled, straight from the
+    standard form), then the same rows once the basic variables have been
+    eliminated from them (which may expose an infeasible value).  Re-optimise
+    and render ``tableau(post.solution.bases, ...)`` for the Lemke part.
+    """
+    sf = post.sf
+    initial = post.initial
+    n_shown = sf.n_cols if include_artificials else sf.n_cols - sf.n_artificials
+    n_old = sf.n_rows - len(post.new_rows)
+
+    lines = _tableau_open(sf, n_shown, value_label)
+    lines.append(_tableau_row("", -initial.z, initial.V[:n_shown], frac=frac))
+    lines.append(r"\hline")
+    for pos in range(n_old):
+        lines.append(_tableau_row(
+            f"${initial.names[pos]}$", initial.u[pos],
+            initial.B_inv_A[pos][:n_shown], frac=frac,
+        ))
+    lines.append(r"\hline")
+    for row in post.new_rows:
+        lines.append(_tableau_row("", sf.b[row], sf.A[row][:n_shown], frac=frac))
+    lines.append(r"\hline")
+    for pos in range(n_old, sf.n_rows):
+        lines.append(_tableau_row(
+            f"${initial.names[pos]}$", initial.u[pos],
+            initial.B_inv_A[pos][:n_shown], frac=frac,
+        ))
+    lines.append(r"\hline")
+    lines += _TABLEAU_CLOSE
     return "\n".join(lines)
 
 
