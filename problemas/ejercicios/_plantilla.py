@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-"""PLANTILLA de ejercicio. Copia este archivo a ejercicios/<id>.py (el nombre
-del archivo es el id del ejercicio), edita el modelo, el enunciado y la
-solución, y ejecuta `python -m ejercicios <id>` para generar:
+"""PLANTILLA de ejercicio. Copia este archivo a problemas/ejercicios/<id>.py
+(el nombre del archivo es el id del ejercicio), edita el modelo, el enunciado
+y la solución, y ejecuta `python -m problemas.ejercicios <id>` desde la raíz
+del repo para generar:
 
-    tex/<id>.tex        (enunciado,  desde statement())
-    tex/<id>_sol.tex    (solución,   desde solution() — opcional)
+    problemas/tex/<id>.tex        (enunciado,  desde statement())
+    problemas/tex/<id>_sol.tex    (solución,   desde solution() — opcional)
 
-que main.tex importa con \\input{tex/<id>} y \\input{tex/<id>_sol}.
+que problemas/main.tex importa con \\input{tex/<id>} y \\input{tex/<id>_sol}.
 
 La idea es intercalar texto en español con llamadas a linprog. API útil:
 

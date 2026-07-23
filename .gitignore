@@ -15,4 +15,4 @@ old_code/
 *.out
 *.toc
 *.synctex.gz
-main.pdf
+problemas/*.pdf

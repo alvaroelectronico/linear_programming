@@ -1,0 +1,183 @@
+\begin{enumerate}
+
+\item \textbf{Formulación en formato estándar y de la primera fase.}
+
+En formato estándar, las dos primeras restricciones incorporan variables de holgura ($h_1$, $h_2$) y la de compromiso una variable de exceso ($h_3$):
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 25x_1 + 30x_2 + 45x_3\\
+s.a.:\\
+x_1 + x_2 + 2x_3 + h_1 = 40\\
+2x_1 + 2x_2 + 2x_3 + h_2 = 60\\
+x_1 + x_2 + x_3 - h_3 = 12\\
+x_1,\,x_2,\,x_3,\,h_1,\,h_2,\,h_3\geq 0
+\end{split}
+\end{equation}
+
+La restricción de compromiso no aporta una variable básica inicial (su holgura entra con signo negativo), por lo que se añade la variable artificial $a_3$ y la primera fase minimiza su valor:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z' = -a_3\\
+s.a.:\\
+x_1 + x_2 + 2x_3 + h_1 = 40\\
+2x_1 + 2x_2 + 2x_3 + h_2 = 60\\
+x_1 + x_2 + x_3 - h_3 + a_3 = 12\\
+x_1,\,x_2,\,x_3,\,h_1,\,h_2,\,h_3,\,a_3\geq 0
+\end{split}
+\end{equation}
+
+\item \textbf{Tabla óptima mediante el método de la matriz completa.} La base propuesta está formada por las columnas de $x_2$, $x_3$ y $h_3$ en la matriz de coeficientes del problema estándar:
+
+\begin{equation}
+\begin{split}
+B =\begin{pmatrix}
+1 & 2 & 0\\
+2 & 2 & 0\\
+1 & 1 & -1\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+B^{-1} =\begin{pmatrix}
+-1 & 1 & 0\\
+1 & \frac{-1}{2} & 0\\
+0 & \frac{1}{2} & -1\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+Los valores de las variables básicas y el beneficio se obtienen directamente de la inversa:
+
+\begin{equation}
+\begin{split}
+z^B=c^Bu^B = \begin{pmatrix}
+30 & 45 & 0\\
+\end{pmatrix}
+\begin{pmatrix}
+20\\
+10\\
+18\\
+\end{pmatrix}
+ = 1050
+\end{split}
+\end{equation}
+
+Es decir, $u^B = B^{-1}b \geq 0$ (solución factible) con $x_2 = 20$, $x_3 = 10$, $h_3 = 18$ y beneficio semanal $z = 1050$ euros. La tabla asociada a la base es:
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+  & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $a_3$\\
+ & $-1050$ & $-5$ & $0$ & $0$ & $-15$ & $\frac{-15}{2}$ & $0$ & $0$\\
+\hline
+$x_2$ & $20$ & $1$ & $1$ & $0$ & $-1$ & $1$ & $0$ & $0$\\
+$x_3$ & $10$ & $0$ & $0$ & $1$ & $1$ & $\frac{-1}{2}$ & $0$ & $0$\\
+$h_3$ & $18$ & $0$ & $0$ & $0$ & $0$ & $\frac{1}{2}$ & $1$ & $-1$\\
+\hline
+\end{tabular}
+\end{center}
+
+\item \textbf{Optimalidad mediante el criterio del simplex.} Los multiplicadores del símplex y los costes reducidos de la base son:
+
+\begin{equation}
+\begin{split}
+\pi^B = c^BB^{-1} = \begin{pmatrix}
+30 & 45 & 0\\
+\end{pmatrix}
+\begin{pmatrix}
+-1 & 1 & 0\\
+1 & \frac{-1}{2} & 0\\
+0 & \frac{1}{2} & -1\\
+\end{pmatrix}
+ = \begin{pmatrix}
+15 & \frac{15}{2} & 0\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+V^B = c-c^BB^{-1}A = \begin{pmatrix}
+25 & 30 & 45 & 0 & 0 & 0\\
+\end{pmatrix}
+ - \begin{pmatrix}
+30 & 45 & 0\\
+\end{pmatrix}
+\begin{pmatrix}
+-1 & 1 & 0\\
+1 & \frac{-1}{2} & 0\\
+0 & \frac{1}{2} & -1\\
+\end{pmatrix}
+\begin{pmatrix}
+1 & 1 & 2 & 1 & 0 & 0\\
+2 & 2 & 2 & 0 & 1 & 0\\
+1 & 1 & 1 & 0 & 0 & -1\\
+\end{pmatrix}
+ = \begin{pmatrix}
+-5 & 0 & 0 & -15 & \frac{-15}{2} & 0\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+Todos los costes reducidos son no positivos ($V^B \leq 0$), por lo que la base es óptima. En particular, $V^B_{x_1} = -5$: producir tabletas clásicas empeoraría el beneficio, porque consumen los mismos recursos que los bombones (1 kg de cacao y 2 horas por lote) con menor beneficio unitario.
+
+\item \textbf{Precio sombra del cacao y rango de disponibilidad.}
+
+El precio sombra del cacao es $\pi^B_1 = 15$: cada kilogramo adicional aumentaría el beneficio en 15 euros, por lo que al obrador le interesa comprar cacao adicional siempre que el sobreprecio por kilogramo no supere los 15 euros. (El de las horas es $\pi^B_2 = 15/2$ y el del compromiso, $\pi^B_3 = 0$, por no estar saturada esa restricción.)
+
+Para el rango se admite una disponibilidad genérica $b_1$ y se exige que la solución básica siga siendo factible:
+
+\begin{equation}
+\begin{split}
+u^B = B^{-1}b = 
+\begin{pmatrix}
+-1 & 1 & 0\\
+1 & \frac{-1}{2} & 0\\
+0 & \frac{1}{2} & -1\\
+\end{pmatrix}
+\begin{pmatrix}
+b_1\\
+60\\
+12\\
+\end{pmatrix}
+\geq 0 \Rightarrow
+\begin{pmatrix}
+60 - b_1\\
+-30 + b_1\\
+18\\
+\end{pmatrix}
+\geq 0 \Rightarrow
+30 \leq b_1 \leq 60
+\end{split}
+\end{equation}
+
+Mientras la disponibilidad semanal de cacao se mantenga entre 30 y 60 kg, las variables básicas de la solución óptima —y, por lo tanto, la gama de productos— no cambian.
+
+\item \textbf{Post-optimización con $x_3 \leq 8$ (método de Lemke).} Se añade la restricción con su holgura, $x_3 + h_4 = 8$, y se incorpora a la tabla óptima tomando $h_4$ como variable básica de la nueva fila. Como $x_3 = 10 > 8$, resulta $h_4 = -2 < 0$: la base sigue cumpliendo el criterio de optimalidad pero deja de ser factible, exactamente la situación que resuelve el método de Lemke:
+
+\begin{center}
+\begin{tabular}{c|c|ccccccc|}
+  & $z$ & $x_1$ & $x_2$ & $x_3$ & $h_1$ & $h_2$ & $h_3$ & $h_4$\\
+ & $-1050$ & $-5$ & $0$ & $0$ & $-15$ & $\frac{-15}{2}$ & $0$ & $0$\\
+\hline
+$x_2$ & $20$ & $1$ & $1$ & $0$ & $-1$ & $1$ & $0$ & $0$\\
+$x_3$ & $10$ & $0$ & $0$ & $1$ & $1$ & $\frac{-1}{2}$ & $0$ & $0$\\
+$h_3$ & $18$ & $0$ & $0$ & $0$ & $0$ & $\frac{1}{2}$ & $1$ & $0$\\
+$h_4$ & $-2$ & $0$ & $0$ & $0$ & $-1$ & $\frac{1}{2}$ & $0$ & $1$\\
+\hline
+ & $-1020$ & $-5$ & $0$ & $0$ & $0$ & $-15$ & $0$ & $-15$\\
+\hline
+$x_2$ & $22$ & $1$ & $1$ & $0$ & $0$ & $\frac{1}{2}$ & $0$ & $-1$\\
+$x_3$ & $8$ & $0$ & $0$ & $1$ & $0$ & $0$ & $0$ & $1$\\
+$h_3$ & $18$ & $0$ & $0$ & $0$ & $0$ & $\frac{1}{2}$ & $1$ & $0$\\
+$h_1$ & $2$ & $0$ & $0$ & $0$ & $1$ & $\frac{-1}{2}$ & $0$ & $-1$\\
+\hline
+\end{tabular}
+\end{center}
+
+Sale de la base $h_4$ (única componente negativa) y entra $h_1$, la única columna con elemento negativo en su fila. El nuevo plan óptimo es $x_2 = 22$, $x_3 = 8$ y $x_1 = 0$, con beneficio $z = 1020$ euros: limitar las figuras cuesta 30 euros semanales. Ahora sobra cacao (la holgura $h_1$ es básica y positiva) y su precio sombra pasa a ser cero.
+
+\end{enumerate}

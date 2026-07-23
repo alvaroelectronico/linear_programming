@@ -1,0 +1,28 @@
+El obrador artesano \textbf{ChocoArte} elabora y comercializa tres productos por lotes: \textbf{tabletas clásicas (T)}, \textbf{cajas de bombones (B)} y \textbf{figuras de chocolate (F)}. Los lotes pueden ser fraccionados (medio lote, un cuarto de lote, etc.). Por cada lote, el obrador obtiene un beneficio neto de \textbf{25, 30 y 45 euros}, respectivamente.
+
+Cada semana el obrador dispone de \textbf{40 kg de cacao}: un lote de tabletas o de bombones consume \textbf{1 kg}, mientras que un lote de figuras, por su mayor tamaño, consume \textbf{2 kg}. Además, la elaboración de cualquier lote (atemperado, moldeado y envasado) ocupa \textbf{2 horas de obrador}, y la disponibilidad semanal es de \textbf{60 horas}.
+
+Por otra parte, ChocoArte tiene un compromiso con una cadena de pastelerías por el que debe suministrar en total \textbf{al menos 12 lotes semanales}, entre los tres productos.
+
+El modelo de programación lineal que permite determinar el plan de producción semanal óptimo es el siguiente, donde $x_1$, $x_2$ y $x_3$ representan los lotes semanales de tabletas, bombones y figuras, respectivamente:
+
+\begin{equation}
+\begin{split}
+\mbox{max. } z = 25x_1 + 30x_2 + 45x_3\\
+s.a.:\\
+x_1 + x_2 + 2x_3 \leq 40\\
+2x_1 + 2x_2 + 2x_3 \leq 60\\
+x_1 + x_2 + x_3 \geq 12\\
+x_1,\,x_2,\,x_3\geq 0
+\end{split}
+\end{equation}
+
+Se pide:
+
+\begin{enumerate}
+    \item \textbf{Formular} el problema equivalente en formato estándar y el problema correspondiente a la primera fase del método de las dos fases.
+    \item Se sabe que en la solución óptima se producen bombones y figuras y que el compromiso con la cadena de pastelerías se supera con holgura, es decir, que las variables básicas son $x_2$, $x_3$ y $h_3$. \textbf{Construir}, mediante el método de la matriz completa y sin realizar iteraciones, la tabla del símplex asociada a esa base, indicando $B$, $B^{-1}$, el valor de las variables básicas y el beneficio semanal.
+    \item \textbf{Justificar}, mediante el criterio del simplex, que la base anterior es efectivamente óptima, calculando los multiplicadores del símplex y los costes reducidos.
+    \item \textbf{Interpretar} económicamente el precio sombra del cacao (¿interesaría comprar cacao adicional y hasta qué precio por kilogramo?) y \textbf{calcular} el rango dentro del cual puede variar la disponibilidad semanal de cacao sin que cambie la gama de productos de la solución óptima.
+    \item Por limitaciones de moldes, el obrador estudia limitar la producción de figuras a un máximo de \textbf{8 lotes semanales} ($x_3 \leq 8$). \textbf{Incorporar} esta restricción a la tabla óptima y obtener el nuevo plan de producción aplicando el método de Lemke (símplex dual), interpretando el efecto sobre el beneficio.
+\end{enumerate}

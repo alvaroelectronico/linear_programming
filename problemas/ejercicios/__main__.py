@@ -1,4 +1,5 @@
-"""Regenerate the .tex files: ``python -m ejercicios [id ...]`` (all by default)."""
+"""Regenerate the .tex files: ``python -m problemas.ejercicios [id ...]``
+(all by default), run from the repo root."""
 
 from __future__ import annotations
 

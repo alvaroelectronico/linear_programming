@@ -2,7 +2,7 @@ import types
 
 import pytest
 
-import ejercicios
+from problemas import ejercicios
 
 
 def test_discover_finds_exercises_and_skips_template():
@@ -53,7 +53,7 @@ def test_solution_is_optional(tmp_path, monkeypatch):
 
 
 def test_cli_reports_unknown_exercise(capsys):
-    from ejercicios.__main__ import main
+    from problemas.ejercicios.__main__ import main
 
     assert main(["no_existe"]) == 1
     assert "no_existe" in capsys.readouterr().err

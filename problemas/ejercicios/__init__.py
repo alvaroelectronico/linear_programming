@@ -1,14 +1,16 @@
 """Exercise authoring layer: one Python module per exercise -> .tex files.
 
-An exercise is any ``ejercicios/<id>.py`` (no leading underscore) defining:
+An exercise is any ``problemas/ejercicios/<id>.py`` (no leading underscore)
+defining:
 
-    def statement() -> str    # required -> tex/<id>.tex
-    def solution() -> str     # optional -> tex/<id>_sol.tex
+    def statement() -> str    # required -> problemas/tex/<id>.tex
+    def solution() -> str     # optional -> problemas/tex/<id>_sol.tex
 
 Both return LaTeX fragments (Spanish exam material) built by interleaving
 plain text with `linprog` calls — see ``_plantilla.py`` for a walkthrough.
-``python -m ejercicios [id ...]`` regenerates the .tex files that a
-hand-maintained ``main.tex`` includes with ``\\input``.
+``python -m problemas.ejercicios [id ...]`` (from the repo root) regenerates
+the .tex files that the hand-maintained ``problemas/main.tex`` includes with
+``\\input``.
 """
 
 from __future__ import annotations

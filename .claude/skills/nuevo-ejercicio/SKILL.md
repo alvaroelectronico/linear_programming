@@ -1,13 +1,13 @@
----
+﻿---
 name: nuevo-ejercicio
-description: Crea un ejercicio de programación lineal nuevo en ejercicios/<id>.py (enunciado y solución en LaTeX vía linprog), genera sus .tex y los muestra. Usar cuando el usuario pida crear o añadir un ejercicio, problema o enunciado de examen.
+description: Crea un ejercicio de programación lineal nuevo en problemas/ejercicios/<id>.py (enunciado y solución en LaTeX vía linprog), genera sus .tex y los muestra. Usar cuando el usuario pida crear o añadir un ejercicio, problema o enunciado de examen.
 ---
 
 # Nuevo ejercicio de programación lineal
 
-Crear `ejercicios/<id>.py` a partir de la descripción del usuario, generar sus
+Crear `problemas/ejercicios/<id>.py` a partir de la descripción del usuario, generar sus
 `.tex` y enseñárselos. El resultado son fragmentos LaTeX en español que
-`main.tex` importa con `\input{tex/<id>}` y `\input{tex/<id>_sol}`.
+`problemas/main.tex` importa con `\input{tex/<id>}` y `\input{tex/<id>_sol}`.
 
 ## Pasos
 
@@ -19,9 +19,9 @@ Crear `ejercicios/<id>.py` a partir de la descripción del usuario, generar sus
    esencial, preguntar; si el usuario da una historia aplicada sin modelo,
    formular el modelo y confirmarlo con él antes de seguir.
 
-2. **Leer las referencias.** `ejercicios/_plantilla.py` (la API disponible y
+2. **Leer las referencias.** `problemas/ejercicios/_plantilla.py` (la API disponible y
    la estructura del módulo) y un ejercicio existente (p. ej.
-   `ejercicios/dos_fases_a.py`). Para el estilo de redacción, los
+   `problemas/ejercicios/dos_fases_a.py`). Para el estilo de redacción, los
    solucionarios reales en `examples/` son la referencia de tono y formato.
 
 3. **Verificar el modelo antes de escribir.** Resolverlo en un python de un
@@ -31,7 +31,7 @@ Crear `ejercicios/<id>.py` a partir de la descripción del usuario, generar sus
    (hay `=` o `>=`), `dual_simplex` (requiere V<=0 inicial; usar
    `problem.split_equalities()` si hay igualdades).
 
-4. **Escribir `ejercicios/<id>.py`** siguiendo la plantilla: módulo con
+4. **Escribir `problemas/ejercicios/<id>.py`** siguiendo la plantilla: módulo con
    `problem = parse_problem(...)`, `statement()` y `solution()` que devuelven
    `join_blocks(...)` intercalando texto y llamadas a `linprog.latex` /
    `linprog.sensitivity`. Convenciones:
@@ -45,13 +45,13 @@ Crear `ejercicios/<id>.py` a partir de la descripción del usuario, generar sus
    - Cerrar la solución con `sol.message` (vacío si hay óptimo; frase en
      español si no acotado / no factible).
 
-5. **Generar y enseñar.** Ejecutar `python -m ejercicios <id>`, mostrar los
+5. **Generar y enseñar.** Ejecutar `python -m problemas.ejercicios <id>`, mostrar los
    `.tex` generados y preguntar si se añaden las líneas `\input` a
-   `main.tex` (no añadirlas sin confirmar). Iterar sobre el contenido con el
+   `problemas/main.tex` (no añadirlas sin confirmar). Iterar sobre el contenido con el
    usuario hasta que lo dé por bueno.
 
 ## Límites
 
 - No tocar `linprog/` (la librería) ni los goldens de `tests/` para acomodar
   un ejercicio: si el render no encaja, se discute primero.
-- No compilar el PDF salvo que el usuario lo pida (`pdflatex main.tex`).
+- No compilar el PDF salvo que el usuario lo pida (`cd problemas; pdflatex main.tex`).

@@ -14,9 +14,9 @@ pytest                       # full suite
 pytest tests/test_two_phase.py                       # one module
 pytest tests/test_two_phase.py::test_infeasible_golden  # one test
 python sandbox.py            # runnable usage examples, grown per feature
-python -m ejercicios         # regenerate every tex/<id>.tex (+ _sol)
-python -m ejercicios lemke   # regenerate one exercise
-pdflatex main.tex            # compile the exam document (latexmk is broken on this machine)
+python -m problemas.ejercicios         # regenerate every problemas/tex/<id>.tex (+ _sol)
+python -m problemas.ejercicios lemke   # regenerate one exercise
+cd problemas; pdflatex main.tex        # compile the exam document (latexmk is broken on this machine)
 ```
 
 ## Architecture
@@ -32,7 +32,7 @@ One data chain, one direction: `Problem → StandardForm → Basis`; solvers pro
 
 ### Exercise layer (application on top of the library)
 
-`ejercicios/` is NOT packaged — it runs from the repo root and imports the installed `linprog`. One module per exercise, no dataclasses, no registry: `ejercicios/<id>.py` defines `statement() -> str` (required) and `solution() -> str` (optional), both returning Spanish LaTeX fragments composed with `join_blocks` + `linprog.latex` calls. `python -m ejercicios` (see [ejercicios/__init__.py](ejercicios/__init__.py)) discovers those modules (files starting with `_` are skipped, e.g. the documented [ejercicios/_plantilla.py](ejercicios/_plantilla.py) template) and writes `tex/<id>.tex` / `tex/<id>_sol.tex`, which the hand-maintained [main.tex](main.tex) pulls in with `\input`. Generated `tex/` files ARE committed. The `/nuevo-ejercicio` skill (`.claude/skills/nuevo-ejercicio/`) walks through authoring a new exercise; never modify `linprog/` or test goldens to accommodate one exercise's rendering.
+Everything teaching-material lives under `problemas/` (NOT packaged — it runs from the repo root and imports the installed `linprog`): exercise sources in `problemas/ejercicios/`, generated fragments in `problemas/tex/`, master document `problemas/main.tex`. One module per exercise, no dataclasses, no registry: `problemas/ejercicios/<id>.py` defines `statement() -> str` (required) and `solution() -> str` (optional), both returning Spanish LaTeX fragments composed with `join_blocks` + `linprog.latex` calls. `python -m problemas.ejercicios` (see [problemas/ejercicios/__init__.py](problemas/ejercicios/__init__.py)) discovers those modules (files starting with `_` are skipped, e.g. the documented [problemas/ejercicios/_plantilla.py](problemas/ejercicios/_plantilla.py) template) and writes `tex/<id>.tex` / `tex/<id>_sol.tex`, which the hand-maintained [problemas/main.tex](problemas/main.tex) pulls in with `\input` (compile from inside `problemas/`). Generated `tex/` files ARE committed. The `/nuevo-ejercicio` skill (`.claude/skills/nuevo-ejercicio/`) walks through authoring a new exercise; never modify `linprog/` or test goldens to accommodate one exercise's rendering.
 
 ## Conventions that must not drift
 
